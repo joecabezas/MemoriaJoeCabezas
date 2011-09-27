@@ -1,0 +1,42 @@
+Resumen
+
+Abstract
+
+//lo mismo que el resumen, pero en ingles
+KEYWORDS van en al abstract
+
+Glosario
+
+Indice
+
+//puede ser dividido en indice de contenidos, de tablas y figuras
+
+Introduccion
+
+//explicar que son las mallas geometricas
+
+//explicar las consideraciones fisicas del mundo real
+
+//explicar como representar un objeto en 3d
+
+//posibles usos, como simulaciones, estudio de fuerzas
+
+//nombrar algunas tecnicas y mencionar que la de MC se analizara a fondo mas adelante
+
+Estado del Arte
+
+//explicar los usos y aplicaciones (medicas por ejemplo)
+
+//explicar los metodos
+
+//explicar marching cubes
+
+//explicar los problemas que trae
+
+
+Objetivos
+
+//tratar de explicar como mejorar el problema, o arreglarlo
+
+
+Referencias
