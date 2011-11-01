@@ -1,5 +1,7 @@
 Resumen
 
+En este documento, se expondrá el estado del arte actual del proceso de extracción de superficies de un conjunto de puntos en tres dimensiones, mostrando algunas técnicas actuales para tal propósito, mostrando los problemas que tienen y como otras técnicas intentan resolver aquellos problemas.
+
 Abstract
 
 //lo mismo que el resumen, pero en ingles
@@ -14,12 +16,43 @@ Indice
 Introduccion
 
 //explicar que son las mallas geometricas
+//quiza esto deba ir despues de las consideraciones fisicas
 
 //explicar las consideraciones fisicas del mundo real
 
+[[Potencial subtitulo]]
+Consideraciones Fisicas
+
+En la realidad, vivimos inmersos en un mundo que podemos describirlo en tres dimensiones, y con ello, cualquier partícula (objetos, personas, etc.) tienen una posición especifica dentro de un sistema de referencia continuo, es decir, que no existe una distancia mínima para el desplazamiento.
+
+Por ejemplo, usando un aceramiento a la definicion de límites: si un objeto en un espacio continuo se desplaza una distancia $d$ positiva ($d > 0$), siempre existira una particula que pueda desplazarce una distancia menor, sin importar lo pequeña que sea $d$.
+
+Es esta continuidad del espacio del mundo real, lo que dificulta la tarea de representar cualquier objeto en una simulación virtual.
+
+En un espacio en tres dimensiones simulado computacionalmente, debido principalmente a los limites de memoria de los sistemas actuales, no pueden simular un espacio continuo, sino que todo elemento dentro de un espacio virtual debe estar inmerso en un espacio discreto, es decir, que existe una cantidad mínima para el desplazamiento.
+
+Los objetos en el mundo real estan compuestos de materia, la que está compuesta por átomos, la unión de ellos, crean objetos sólidos, con un nivel de detalle tan fino como atómico, debido a la continuidad del espacio real.
+
+Los objetos en un mundo virtual, no están (ni pueden aún), ser descritos por unidades atómicas, ya que supondría una cantidad enorme y muy costosa de memoria para almacenar cada átomo, y por ello, los objetos son representados por una cantidad discreta de triángulos que en conjunto forman una superficie la cual describe la forma visible del objeto representado.
+
+Debido a la no continuidad del espacio virtual, es que los objetos representados ahi, no son más que simples discretizaciones, [[burdas copias...]] de los objetos reales, y en consecuencia, sin las propiedades físicas que presentan los objetos reales, como la densidad, roce, etc.
+
+Por ejemplo, en el mundo real, podemos pulir una superficie de manera que sea perfectamente lisa y no presente roce, pero por muy lisa que parezca, debido a la continuidad, podemos acercarnos de manera infinita a la superficie y notar que en realidad, aún tiene imperfecciones que son mas pequeñas que lo minimo visible por el ojo humano, y con ello, eventualmente la superficie si presenta roce, por estas imperfecciones microscópicas. Sin embargo, al representar esta superficie en el mundo virtual, simplemente constaria de un plano perfecto en tres dimensiones, el cual, es perfectamente liso, y sin la cantidad infinita de detalles que presenta la superficie en la realidad.
+
 //explicar como representar un objeto en 3d
+//quiza aca deba explicar lo que son las mallas
+
+[[potencial subtitulo]]
+Representación de los objetos en tres dimensiones
+
+Los objetos en tres dimensiones, como anteriormente se ejemplificó, son representados principalmente por planos triangulares que en conjunto forman una superficie que describe la forma externa y visible del objeto [[aca empieza tal vez la explicacion de mallas]]
 
 //posibles usos, como simulaciones, estudio de fuerzas
+
+[[subtitulo potencial]]
+Usos de las Mallas Geométricas
+
+Las mallas geométricas tienen diferentes usos en la práctica, desde simulaciones fisicas tales como, estudio de fuerzas, interaccion de objetos, simulación de fluidos, etc. Tambien tienen usos gráficos, como para hacer visualizaciones de cuerpos en tres dimensiones, visualizacion de funciones matemáticas, e incluso usos artísticos como gráficos realistas, películas y videojuegos.
 
 //nombrar algunas tecnicas y mencionar que la de MC se analizara a fondo mas adelante
 
