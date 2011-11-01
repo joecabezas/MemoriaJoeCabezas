@@ -17,8 +17,24 @@ Introduccion
 
 //explicar que son las mallas geometricas
 //quiza esto deba ir despues de las consideraciones fisicas
+[[Potencial Subtitulo]]
+Mallas Geométricas
 
-//explicar las consideraciones fisicas del mundo real
+Las mallas geométricas son una herramienta fundamental en la ciencia e ingienería, entre sus usos mas comunes estan el modelamiento de fenómenos físicos[[Poner aca mas usos]]
+
+Las mallas geométricas son un conjunto de polígonos (triángulos, cuadriláteros, tetraedros), que definen una superficie en un espacio definido, en el que la interseccion de dos elementos de una malla, puede ser el conjunto vacío, un vértice, una arista o una cara en común.
+
+Las mallas tienen asociadas un conjunto de elementos topológicos tales como: Vértices, Aristas, y Caras poligonales.
+
+Regularmente, las mallas geompetricas se usan para describir, dependiendo su dimensión, una región en un plano, o un volumen en un espacio. Realizar esta discretización consiste en aproximar el dominio a simular dividiéndolo en elementos geométricos mas sencillos, comunmente triángulos, de tal manera ue la interseccion de dos elementos, sean un vértice, una arista, o el conjunto vacío.
+
+Existen casos triviales como la dicretizacion de un dominio rectangular, cuya solución es directa, dividiendo el dominio en un arreglo uniforme de triángulos, pero cuando se desea discretizar un elemento de geometría irregular, la solución no es tan trivial, y se necesita de un método de generación de mallas más elaborado.
+
+Uno de los primeros algoritmos de generación de mallas, fue el propuesto por el matemático Ruso Boris Nikolaevich Delanuay. En honor a su autor, este algoritmo de triangulación se denomina como el "Algoritmo de Triangulacion de Delanuay", el cual a partir de una colección de puntos en un espacio, generar una malla geométrica formada por triángulos que sean lo más equilátero posible.
+
+Sin embargo, para muchos problemas de ingienería, las mallas generadas por la triangulación de Delanuay, no son suficientes para resolver un problema o su análisis numérico, es posible en algunos casos que sea necesario agregar nuevos puntos con el fin de mejorar la calidd de la malla. A este proceso de mejoramiento, se le conoce como Refinamiento[[glosario]].
+
+En tres dimensiones, en particular, las mallas geometricas son una representación de un objeto físico, y para efectos de su visualización, los elementos internos de una malla pueden ser omitidos, y con ello, solo se utilizan mallas que describan la superficie del objeto.
 
 [[Potencial subtitulo]]
 Consideraciones Fisicas
