@@ -1,6 +1,6 @@
 Resumen
 
-En este documento, se expondrá el estado del arte actual del proceso de extracción de superficies de un conjunto de puntos en tres dimensiones, mostrando algunas técnicas actuales para tal propósito, mostrando los problemas que tienen y como otras técnicas intentan resolver aquellos problemas.
+	En este documento, se expondrá el estado del arte actual del proceso de extracción de superficies de un conjunto de puntos en tres dimensiones, mostrando algunas técnicas actuales para tal propósito, mostrando los problemas que tienen y como otras técnicas intentan resolver aquellos problemas.
 
 Abstract
 
@@ -9,74 +9,99 @@ KEYWORDS van en al abstract
 
 Glosario
 
+	Malla Geométrica:
+	Vértices:
+	Arco:
+	Aristas:
+	Voxel:
+
+
 Indice
 
 //puede ser dividido en indice de contenidos, de tablas y figuras
 
-Introduccion
+Introducción
 
-//explicar que son las mallas geometricas
-//quiza esto deba ir despues de las consideraciones fisicas
-[[Potencial Subtitulo]]
-Mallas Geométricas
+	Mallas Geométricas
 
-Las mallas geométricas son una herramienta fundamental en la ciencia e ingienería, entre sus usos mas comunes estan el modelamiento de fenómenos físicos[[Poner aca mas usos]]
+		Las mallas geométricas son una herramienta fundamental en la ciencia e ingienería, son un conjunto de polígonos (triángulos, cuadriláteros, tetraedros), que definen una superficie en un espacio definido, en el que la interseccion de dos elementos de una malla, puede ser el conjunto vacío, un vértice, una arista o una cara en común. Las mallas tienen asociadas un conjunto de elementos topológicos tales como: Vértices, Aristas, y Caras poligonales.
 
-Las mallas geométricas son un conjunto de polígonos (triángulos, cuadriláteros, tetraedros), que definen una superficie en un espacio definido, en el que la interseccion de dos elementos de una malla, puede ser el conjunto vacío, un vértice, una arista o una cara en común.
+		Regularmente, las mallas geompetricas se usan para describir, dependiendo su dimensión, una región en un plano, o un volumen en un espacio. Realizar esta discretización consiste en aproximar el dominio a simular dividiéndolo en elementos geométricos mas sencillos, comunmente triángulos, de tal manera ue la interseccion de dos elementos, sean un vértice, una arista, o el conjunto vacío.
 
-Las mallas tienen asociadas un conjunto de elementos topológicos tales como: Vértices, Aristas, y Caras poligonales.
+		Existen casos triviales como la dicretizacion de un dominio rectangular, cuya solución es directa, dividiendo el dominio en un arreglo uniforme de triángulos, pero cuando se desea discretizar un elemento de geometría irregular, la solución no es tan trivial, y se necesita de un método de generación de mallas más elaborado.
 
-Regularmente, las mallas geompetricas se usan para describir, dependiendo su dimensión, una región en un plano, o un volumen en un espacio. Realizar esta discretización consiste en aproximar el dominio a simular dividiéndolo en elementos geométricos mas sencillos, comunmente triángulos, de tal manera ue la interseccion de dos elementos, sean un vértice, una arista, o el conjunto vacío.
+		Sin embargo, para muchos problemas de ingienería, las mallas generadas por la triangulación de Delanuay, no son suficientes para resolver un problema o su análisis numérico, es posible en algunos casos que sea necesario agregar nuevos puntos con el fin de mejorar la calidd de la malla. A este proceso de mejoramiento, se le conoce como Refinamiento[[glosario]].
 
-Existen casos triviales como la dicretizacion de un dominio rectangular, cuya solución es directa, dividiendo el dominio en un arreglo uniforme de triángulos, pero cuando se desea discretizar un elemento de geometría irregular, la solución no es tan trivial, y se necesita de un método de generación de mallas más elaborado.
+		En tres dimensiones, en particular, las mallas geometricas son una representación de un objeto físico, y para efectos de su visualización, los elementos internos de una malla pueden ser omitidos, y con ello, solo se utilizan mallas que describan la superficie del objeto.
 
-Uno de los primeros algoritmos de generación de mallas, fue el propuesto por el matemático Ruso Boris Nikolaevich Delanuay. En honor a su autor, este algoritmo de triangulación se denomina como el "Algoritmo de Triangulacion de Delanuay", el cual a partir de una colección de puntos en un espacio, generar una malla geométrica formada por triángulos que sean lo más equilátero posible.
+	Usos de las Mallas Geométricas
 
-Sin embargo, para muchos problemas de ingienería, las mallas generadas por la triangulación de Delanuay, no son suficientes para resolver un problema o su análisis numérico, es posible en algunos casos que sea necesario agregar nuevos puntos con el fin de mejorar la calidd de la malla. A este proceso de mejoramiento, se le conoce como Refinamiento[[glosario]].
+		Las mallas geométricas tienen diferentes usos en la práctica, desde simulaciones fisicas tales como, estudio de fuerzas, interaccion de objetos, simulación de fluidos, etc. Tambien tienen usos gráficos, como para hacer visualizaciones de cuerpos en tres dimensiones, visualizacion de funciones matemáticas, e incluso usos artísticos como gráficos realistas, películas y videojuegos.
 
-En tres dimensiones, en particular, las mallas geometricas son una representación de un objeto físico, y para efectos de su visualización, los elementos internos de una malla pueden ser omitidos, y con ello, solo se utilizan mallas que describan la superficie del objeto.
+	Consideraciones Físicas
 
-[[Potencial subtitulo]]
-Consideraciones Fisicas
+		En la realidad, vivimos inmersos en un mundo que podemos describirlo en tres dimensiones, y con ello, cualquier partícula (objetos, personas, etc.) tienen una posición especifica dentro de un sistema de referencia continuo, es decir, que no existe una distancia mínima para el desplazamiento.
 
-En la realidad, vivimos inmersos en un mundo que podemos describirlo en tres dimensiones, y con ello, cualquier partícula (objetos, personas, etc.) tienen una posición especifica dentro de un sistema de referencia continuo, es decir, que no existe una distancia mínima para el desplazamiento.
+		Por ejemplo, usando un aceramiento a la definicion de límites: si un objeto en un espacio continuo se desplaza una distancia $d$ positiva ($d > 0$), siempre existira una particula que pueda desplazarce una distancia menor, sin importar lo pequeña que sea $d$.
 
-Por ejemplo, usando un aceramiento a la definicion de límites: si un objeto en un espacio continuo se desplaza una distancia $d$ positiva ($d > 0$), siempre existira una particula que pueda desplazarce una distancia menor, sin importar lo pequeña que sea $d$.
+		Es esta continuidad del espacio del mundo real, lo que dificulta la tarea de representar cualquier objeto en una simulación virtual.
 
-Es esta continuidad del espacio del mundo real, lo que dificulta la tarea de representar cualquier objeto en una simulación virtual.
+		En un espacio en tres dimensiones simulado computacionalmente, debido principalmente a los limites de memoria de los sistemas actuales, no pueden simular un espacio continuo, sino que todo elemento dentro de un espacio virtual debe estar inmerso en un espacio discreto, es decir, que existe una cantidad mínima para el desplazamiento.
 
-En un espacio en tres dimensiones simulado computacionalmente, debido principalmente a los limites de memoria de los sistemas actuales, no pueden simular un espacio continuo, sino que todo elemento dentro de un espacio virtual debe estar inmerso en un espacio discreto, es decir, que existe una cantidad mínima para el desplazamiento.
+		Los objetos en el mundo real estan compuestos de materia, la que está compuesta por átomos, la unión de ellos, crean objetos sólidos, con un nivel de detalle tan fino como atómico, debido a la continuidad del espacio real.
 
-Los objetos en el mundo real estan compuestos de materia, la que está compuesta por átomos, la unión de ellos, crean objetos sólidos, con un nivel de detalle tan fino como atómico, debido a la continuidad del espacio real.
+		Los objetos en un mundo virtual, no están (ni pueden aún), ser descritos por unidades atómicas, ya que supondría una cantidad enorme y muy costosa de memoria para almacenar cada átomo, y por ello, los objetos son representados por una cantidad discreta de triángulos que en conjunto forman una superficie la cual describe la forma visible del objeto representado.
 
-Los objetos en un mundo virtual, no están (ni pueden aún), ser descritos por unidades atómicas, ya que supondría una cantidad enorme y muy costosa de memoria para almacenar cada átomo, y por ello, los objetos son representados por una cantidad discreta de triángulos que en conjunto forman una superficie la cual describe la forma visible del objeto representado.
+		Debido a la no continuidad del espacio virtual, es que los objetos representados ahi, no son más que simples discretizaciones, [[burdas copias...]] de los objetos reales, y en consecuencia, sin las propiedades físicas que presentan los objetos reales, como la densidad, roce, etc.
 
-Debido a la no continuidad del espacio virtual, es que los objetos representados ahi, no son más que simples discretizaciones, [[burdas copias...]] de los objetos reales, y en consecuencia, sin las propiedades físicas que presentan los objetos reales, como la densidad, roce, etc.
+		Por ejemplo, en el mundo real, podemos pulir una superficie de manera que sea perfectamente lisa y no presente roce, pero por muy lisa que parezca, debido a la continuidad, podemos acercarnos de manera infinita a la superficie y notar que en realidad, aún tiene imperfecciones que son mas pequeñas que lo minimo visible por el ojo humano, y con ello, eventualmente la superficie si presenta roce, por estas imperfecciones microscópicas. Sin embargo, al representar esta superficie en el mundo virtual, simplemente constaria de un plano perfecto en tres dimensiones, el cual, es perfectamente liso, y sin la cantidad infinita de detalles que presenta la superficie en la realidad.
 
-Por ejemplo, en el mundo real, podemos pulir una superficie de manera que sea perfectamente lisa y no presente roce, pero por muy lisa que parezca, debido a la continuidad, podemos acercarnos de manera infinita a la superficie y notar que en realidad, aún tiene imperfecciones que son mas pequeñas que lo minimo visible por el ojo humano, y con ello, eventualmente la superficie si presenta roce, por estas imperfecciones microscópicas. Sin embargo, al representar esta superficie en el mundo virtual, simplemente constaria de un plano perfecto en tres dimensiones, el cual, es perfectamente liso, y sin la cantidad infinita de detalles que presenta la superficie en la realidad.
+	Objetos en tres dimensiones.
 
-//explicar como representar un objeto en 3d
-//quiza aca deba explicar lo que son las mallas
+		Los objetos en tres dimensiones, como anteriormente se ejemplificó, son representados principalmente por planos triangulares que en conjunto forman una superficie que describe la forma externa y visible del objeto. El proceso completo para obtener un objeto en tres dimensiones, depende de la tecnologia usada y el propósito por el cual se genera un modelo en dos o tres dimensiones.
 
-[[potencial subtitulo]]
-Representación de los objetos en tres dimensiones
+		Uno de los primeros algoritmos de generación de mallas, fue el propuesto por el matemático Ruso Boris Nikolaevich Delanuay. En honor a su autor, este algoritmo de triangulación se denomina como el "Algoritmo de Triangulacion de Delanuay", el cual a partir de una colección de puntos en un espacio, genera una malla geométrica formada por triángulos que sean lo más equiláteros posible.
 
-Los objetos en tres dimensiones, como anteriormente se ejemplificó, son representados principalmente por planos triangulares que en conjunto forman una superficie que describe la forma externa y visible del objeto [[aca empieza tal vez la explicacion de mallas]]
-
-//posibles usos, como simulaciones, estudio de fuerzas
-
-[[subtitulo potencial]]
-Usos de las Mallas Geométricas
-
-Las mallas geométricas tienen diferentes usos en la práctica, desde simulaciones fisicas tales como, estudio de fuerzas, interaccion de objetos, simulación de fluidos, etc. Tambien tienen usos gráficos, como para hacer visualizaciones de cuerpos en tres dimensiones, visualizacion de funciones matemáticas, e incluso usos artísticos como gráficos realistas, películas y videojuegos.
-
-//nombrar algunas tecnicas y mencionar que la de MC se analizara a fondo mas adelante
+		Para extraer la información de la forma de un cuerpo, existen tecnologías capaces de extraer la superficie de éstos, tales como software capaces de generar un modelo en tres dimensiones a partir de un arreglo de fotografias que rodean al objeto, también existe la tecnología de usar un arreglo de cámaras que capturan, en tiempo real, una nube de puntos infrarojos que son emitidos desde el aparato, y con ello, crear un modelo en tres dimensiones. En el ámbito médico, también existe tecnología para poder extraer información del interior del cuerpo humano, usando equipos de imagenología de resonancia magnética, la cual es una técnica no invasiva que utiliza el fenómeno de la resonancia magnética para obtener información de la estructura y composición del cuerpo a analizar, luego, la información obtenida es procesada a través de un software que genera la malla geométrica del área de interés por el científico.
 
 Estado del Arte
 
-//explicar los usos y aplicaciones (medicas por ejemplo)
+	En el caso de las imágenes obtenidas por resonancia magnética, lo que se obtiene son un arreglo de imágenes de distintos niveles en un mismo eje geométrico de un cuerpo. Luego, para generar una malla geométrica del cuerpo existen diversas técnicas, muchas de ellas basadas en voxels como por ejemplo, Marching Cubes y Marching Tetrahedrons.
 
-//explicar los metodos
+	En esta investigación se dará especial énfasis en el algoritmo de Marching Cubes, se explicará su funcionamiento, resultados y problemas que actualmente presenta.
+
+	Para entender mejor cómo funciona Marching Cubes, es de utilidad primero ver el caso reducido a dos dimensiones, el que puede ser llamado como "Marching Squares".
+
+	Marching Squares.
+
+		En dos dimensiones para obtener el contorno de una figura, se puede usar este algoritmo que se basa en crear divisiones cuadrilaterales uniformes del espacio, y en cada una de ellas dibujar un patron específico del caso que encierra esa división, finalmente todas las divisiones tienen dibujadas un patron específico o un espacio vacío, obteniendo asi el contorno de la imagen tratada.
+
+		El siguiente caso, ejemplifica el proceso completo.
+
+			Ejemplo
+			[[fuente][http://www.cs.carleton.edu/cs_comps/0405/shape/marching_cubes.html]]
+
+				Se supone la siguiente imagen a tratar para obtener su contorno.
+				[[marchingsquare/orig.jpg]]
+
+				Luego se divide el espacio en un arreglo uniforme de cuadriláteros, en este caso una matriz de 7x8 celdas.
+				[[marchingsquare/orig.jpg]]
+
+				Luego para poder obtener el patron a dibujar en cada celda, se hace un proceso de reconocimiento, en un principio es necesario, etiquetar cada vértice de cada celda dependiendo si están dento o fuera de la region de interés. Esto puede ser calculado de distintas formas que dependen intrínsicamente del problema, en este caso, basta con detectar si el vértice está sobre un pixel blanco o no, en otros casos, puede depender de que si el valor del pixel en escala de grises supera (o es inferior) a un valor fijo determinado por el científico.
+
+				A continuación muestra como quedan etiquetados los vértices, dependiendo si estan dentro de la figura (en rojo), o si están fuera de la figura (en azul)
+				[[marchingsquare/labeledobj.jpg]]
+
+				Si ahora se analiza celda a celda, se ve que existen ocho combinaciones distintas de vértices etiquetados como dentro o fuera de la region en una misma celda, y además se entiende que si uno de los lados de una celda (una arista) esta formada por un vértice marcado como dentro y otro fuera, significa que por esa arista corta el borde de la figura, y por lo tanto, esa arista la dejamos marcada como una arista de contorno detectada, que en este ejemplo se marca de color morado.
+				[[marchingsquare/purpledobj.jpg]]
+
+				Luego por cada celda, se unen los puntos morados formados en el paso anterior, creando así uno de los ocho patrones posibles, lo cual se puede entender como una de las 8 formas en que un cuadrilátero puede ser atravesado por una linea, formando asi el contorno buscado como muestra la siguiente imagen.
+				[[marchingsquare/purpledobj.jpg]]
+
+
+	Marching Cubes
+
+		Marching Cubes es un algoritmo de extracción de una superficie poligonal de un cuerpo en un espacio escalar en tres dimensiones
 
 //explicar marching cubes
 
