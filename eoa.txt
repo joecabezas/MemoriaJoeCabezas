@@ -1,19 +1,32 @@
 Resumen
 
-	En este documento, se expondrá el estado del arte actual del proceso de extracción de superficies de un conjunto de puntos en tres dimensiones, mostrando algunas técnicas actuales para tal propósito, mostrando los problemas que tienen y como otras técnicas intentan resolver aquellos problemas.
+	En este documento, se expondrá el estado del arte actual del proceso de extracción de superficies de un conjunto de puntos en un dominio tridimensional, se describirán algunas técnicas actuales para tal propósito usando ejemplos, exponiendo los problemas e implicancias que estos presentan y cómo otras técnicas intentan resolver aquellos problemas.
 
 Abstract
 
-//lo mismo que el resumen, pero en ingles
-KEYWORDS van en al abstract
+	In this Paper, will describe the state of art of the surface extraction process from a set of points in a three dimensional domain, it will describe some existing techniques for this purpose by using examples, showing the problems and implications they present and how other techniques try to solve those problems.
+
+	Keywords: 3D Meshing, Polygonising, Scalar Field, 3D Contouring, Surface Reconstruction, Marching Cubes, Marching Squares, Marching Tetrahedrons
 
 Glosario
 
-	Malla Geométrica:
-	Vértices:
-	Arco:
-	Aristas:
+	Vértice:
+		Es el punto donde concurren las dos semirrectas que conforman un ángulo.
+
+	Arista:
+		Es, en geometría, el segmento de recta donde intersecan dos planos. Por extensión también se conoce con este nombre al segmento común que tienen dos caras vecinas de un poliedro.
+
+	Poliedro:
+		Un poliedro es, un cuerpo geométrico cuyas caras son planas y encierran un volumen finito. La palabra poliedro viene del griego clásico πολύεδρον (polyedron), de la raíz πολύς (polys), "muchas" y de έδρα (edra), "base", "asiento", "cara".
+
+	Tetraedro:
+		Un tetraedro es un poliedro de cuatro caras. Con este número de caras ha de ser un poliedro convexo, y sus caras triangulares, encontrándose tres de ellas en cada vértice. Si las cuatro caras del tetraedro son triángulos equiláteros, iguales entre sí, el tetraedro se denomina regular.
+
+	Píxel:
+		Un píxel (acrónimo del inglés picture element, "elemento de imagen") es la menor unidad homogénea en color que forma parte de una imagen digital.
+
 	Voxel:
+		El vóxel (del inglés volumetric pixel) es una unidad cúbica que compone un objeto tridimensional. Constituye la unidad mínima procesable de un espacio tridimensional y es, por tanto, el equivalente del píxel en un objeto 3D.
 
 
 Indice
@@ -24,9 +37,9 @@ Introducción
 
 	Mallas Geométricas
 
-		Las mallas geométricas son una herramienta fundamental en la ciencia e ingienería, son un conjunto de polígonos (triángulos, cuadriláteros, tetraedros), que definen una superficie en un espacio definido, en el que la interseccion de dos elementos de una malla, puede ser el conjunto vacío, un vértice, una arista o una cara en común. Las mallas tienen asociadas un conjunto de elementos topológicos tales como: Vértices, Aristas, y Caras poligonales.
+		Las mallas geométricas son una herramienta fundamental en la ciencia e ingienería, son un conjunto de polígonos (triángulos, cuadriláteros, tetraedros), que definen una superficie en un espacio definido, en el que la intersección de dos elementos de una malla, puede ser el conjunto vacío, un vértice, una arista o una cara en común. Las mallas tienen asociadas un conjunto de elementos topológicos tales como: Vértices, Aristas, y Caras poligonales.
 
-		Regularmente, las mallas geompetricas se usan para describir, dependiendo su dimensión, una región en un plano, o un volumen en un espacio. Realizar esta discretización consiste en aproximar el dominio a simular dividiéndolo en elementos geométricos mas sencillos, comunmente triángulos, de tal manera que la interseccion de dos elementos, sean un vértice, una arista, o el conjunto vacío.
+		Regularmente, las mallas geompetricas se usan para describir, dependiendo su dimensión, una región en un plano, o un volumen en un espacio. Realizar esta discretización consiste en aproximar el dominio a simular dividiéndolo en elementos geométricos mas sencillos, comunmente triángulos, de tal manera que la intersección de dos elementos, sean un vértice, una arista, o el conjunto vacío.
 
 		Existen casos triviales como la dicretizacion de un dominio rectangular, cuya solución es directa, dividiendo el dominio en un arreglo uniforme de triángulos, pero cuando se desea discretizar un elemento de geometría irregular, la solución no es tan trivial, y se necesita de un método de generación de mallas más elaborado.
 
@@ -118,7 +131,11 @@ Estado del Arte
 
 		Idea
 
-			Marching Cubes es un algoritmo de extracción de una superficie poligonal de un cuerpo en un espacio escalar en tres dimensiones
+			Marching Cubes es un algoritmo de extracción de una superficie poligonal de un cuerpo en un espacio escalar en tres dimensiones. Existen muchas aplicaciones para este tipo de técnicas, dos de las más comunes son:
+
+				* Reconstruccion de una superficie a partir de un set de imágenes médicas, como por ejemplo los obtenidos en imágenes de resonancia magnética, los que pueden formar un volumen en tres dimensiones.
+
+				* Crear un contorno tridimensional de un campo escalar matemático, en este caso el valor de una cierta función es conocido en todo el espacio, pero es representada como vértices de una malla tridimensional.
 
 			Adopta la misma idea que hay detrás de Marching Squares, pero llevando los conceptos a tres dimensiones, en este caso, el dominio es un espacio tridimensional, en el cual existe un cuerpo al que se desea extraer su superficie. Luego, el espacio es dividido en regiones uniformes (cubos), por los cuales la superficie del objeto corta las aristas de estos cubos.
 
@@ -178,9 +195,24 @@ Estado del Arte
 
 			En el ejemplo anterior, en vez de usar el patron etiquetado como 6e, debería usarse el 6c de la figura anterior, solucionando asi el potencial error topológico.
 
+			Otra posible solución, es usar pirámides o tetraedros (Marching Tetrahedrons), los cuales son más sencillas de utilizar ya que sólo existen 16 posibles combinaciones totales (al igual que marching squares, ya que en ambos casos, los elementos tienen cuatro vértices), los cuales pueden ser reducidos a sólo cuatro, la poligonización tetrahédrica se muestra a continuación.
+			[[marchingtetrahedrons/image_004.gif]]
+
+			De hecho, en el caso de Marching Cubes, cada cubo puede al final, descomponerse en 5 pirámides o tetrahedros como se muestra en la siguiente imagen:
+			[[marchingtetrahedrons/image_006.gif]]
+
+Conclusiones
+
+	Las mallas geométricas son una gran herramienta dentro de la ciencia e ingienería, sus aplicaciones son muchas, y en general se usan para representar un objeto o cuerpo de manera discretizadamente.
+
+	Por esto y a las implicaciones físicas es que no se puede hacer un estudio infinitesimal de los cuerpos en tres dimensiones y es necesario crear modelos discretizados de ellos, para facilitar el trabajo con estos.
+
+	Para los fines de visualización existen diversas técnicas basadas en elementos finitos como Marching Squares, Marching Cubes y Marching Tetrahedrons, los cuales, dependiendo de su dimensión y objetivos, son capaces de extraer de manera discretizada el contorno o superficie de un cuerpo en estudio, para finalmente poder trabajar con él.
+
+	No obstante, estos métodos presentan problemas causados por la discretización misma que genera malas aproximaciones y para mejorarlas requieren de mayor poder de cómputo, o también presentan problemas topológicos causando errores de cálculo importantes. Aún asi, hasta la fecha se han investigado y aún se pueden crear nuevas técnicas para poder enfrentar estas situaciones, y generar mallas cada vez de mayor calidad.
+
 Objetivos
 
-//tratar de explicar como mejorar el problema, o arreglarlo
 En esta investigación, se estudiarán las distintas técnicas que se han expuesto en el estado del arte, se comprobarán los problemas topológicos que traen y se estudiarán las mejoras que actualmente se han implementado durante la existencia de estos algoritmos, para que finalmente, se pueda proponer un flujo de trabajo que permita, a partir de una nube de puntos, poder extraer una superficie del volumen de alta calidad.
 
 Referencias
