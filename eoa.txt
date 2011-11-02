@@ -26,7 +26,7 @@ Introducción
 
 		Las mallas geométricas son una herramienta fundamental en la ciencia e ingienería, son un conjunto de polígonos (triángulos, cuadriláteros, tetraedros), que definen una superficie en un espacio definido, en el que la interseccion de dos elementos de una malla, puede ser el conjunto vacío, un vértice, una arista o una cara en común. Las mallas tienen asociadas un conjunto de elementos topológicos tales como: Vértices, Aristas, y Caras poligonales.
 
-		Regularmente, las mallas geompetricas se usan para describir, dependiendo su dimensión, una región en un plano, o un volumen en un espacio. Realizar esta discretización consiste en aproximar el dominio a simular dividiéndolo en elementos geométricos mas sencillos, comunmente triángulos, de tal manera ue la interseccion de dos elementos, sean un vértice, una arista, o el conjunto vacío.
+		Regularmente, las mallas geompetricas se usan para describir, dependiendo su dimensión, una región en un plano, o un volumen en un espacio. Realizar esta discretización consiste en aproximar el dominio a simular dividiéndolo en elementos geométricos mas sencillos, comunmente triángulos, de tal manera que la interseccion de dos elementos, sean un vértice, una arista, o el conjunto vacío.
 
 		Existen casos triviales como la dicretizacion de un dominio rectangular, cuya solución es directa, dividiendo el dominio en un arreglo uniforme de triángulos, pero cuando se desea discretizar un elemento de geometría irregular, la solución no es tan trivial, y se necesita de un método de generación de mallas más elaborado.
 
@@ -92,25 +92,111 @@ Estado del Arte
 				A continuación muestra como quedan etiquetados los vértices, dependiendo si estan dentro de la figura (en rojo), o si están fuera de la figura (en azul)
 				[[marchingsquare/labeledobj.jpg]]
 
-				Si ahora se analiza celda a celda, se ve que existen ocho combinaciones distintas de vértices etiquetados como dentro o fuera de la region en una misma celda, y además se entiende que si uno de los lados de una celda (una arista) esta formada por un vértice marcado como dentro y otro fuera, significa que por esa arista corta el borde de la figura, y por lo tanto, esa arista la dejamos marcada como una arista de contorno detectada, que en este ejemplo se marca de color morado.
+				Si ahora se analiza celda a celda, se ve que existen dieciséis combinaciones distintas de vértices etiquetados como dentro o fuera de la region en una misma celda, como muestra la siguiente imagen.
+				[[marchingsquare/cases.gif]]
+
+				Además se entiende que si uno de los lados de una celda (una arista) esta formada por un vértice marcado como dentro y otro fuera, significa que por esa arista corta el borde de la figura, y por lo tanto, esa arista la dejamos marcada como una arista de contorno detectada, que en este ejemplo se marca de color morado.
 				[[marchingsquare/purpledobj.jpg]]
 
-				Luego por cada celda, se unen los puntos morados formados en el paso anterior, creando así uno de los ocho patrones posibles, lo cual se puede entender como una de las 8 formas en que un cuadrilátero puede ser atravesado por una linea, formando asi el contorno buscado como muestra la siguiente imagen.
+				Luego por cada celda, se unen los puntos morados formados en el paso anterior, creando así uno de los dieciséis patrones posibles, lo cual se puede entender como una de las 8 formas en que un cuadrilátero puede ser atravesado por una linea, formando asi el contorno buscado como muestra la siguiente imagen.
 				[[marchingsquare/purpledobj.jpg]]
+
+				Posteriormente, dependiendo de los requerimientos de la investigación, se puede mejorar la aproximación haciendo una interpolación lineal de los valores de los vértices para calcular en que punto aproximadamente la figura (a la que se quiere extraer su contorno), corta con la arista, un ejemplo del resultado de esta aproximación se muestra en la siguiente imagen.
+				[[marchingsquare/2Dintersected.jpg]]
+
+	Consecuencias
+
+				Evidentemente existen ciertas falencias, por ejemplo, el contorno obtenido no simula adecuadamente el objeto estudiado, debido a errores causados por la fragmentacion de las divisiones iniciales, una solución directa para mejorar esto es aumentar las divisiones, es decir, hacer que todas las celdas sean mas pequeñas, y asi hacer una mejor aproximación del contorno del objeto en estudio. De la misma Manera, existen otras técnicas como hacer particiones con celdas de tamaño variable en las particiones, o subdividir aquellas celdas que hayan sido detectadas como de frontera y asi obtener un mejor desempeño en el algoritmo.
+
+				Otro problema es que algunos casos presentan ambigüedad, es decir, no es trivial calcular a cual caso pertenece una cierta configuracion, por ejemplo, tomando el quinto y décimo caso descritos anteriormente, se supone el siguiente ejemplo:
+				[[marchingsquare/marchingSAmbEx.gif]]
+
+				Este cuadrado, tiene dos vértices diagonalmente opuestos marcados. Sin conocer como es la figura ni cómo son las divisiones vecinas, no se puede saber con exactitud si se trata del quinto o el décimo caso, por lo que el algoritmo puede erróneamente separar el contorno formando asi dos figuras separadas, o las une, de manera que sólo exista una figura con un contorno compartido.
 
 
 	Marching Cubes
 
-		Marching Cubes es un algoritmo de extracción de una superficie poligonal de un cuerpo en un espacio escalar en tres dimensiones
+		Idea
 
-//explicar marching cubes
+			Marching Cubes es un algoritmo de extracción de una superficie poligonal de un cuerpo en un espacio escalar en tres dimensiones
 
-//explicar los problemas que trae
+			Adopta la misma idea que hay detrás de Marching Squares, pero llevando los conceptos a tres dimensiones, en este caso, el dominio es un espacio tridimensional, en el cual existe un cuerpo al que se desea extraer su superficie. Luego, el espacio es dividido en regiones uniformes (cubos), por los cuales la superficie del objeto corta las aristas de estos cubos.
 
+		Consideraciones Geométricas
+
+			Un cubo tiene seis caras, ocho vértices y doce aristas, las cuales, para efectos de esta investigación serán numeradas de la siguiente manera:
+			[[marchingsquare/convention.gif]]
+
+			De la misma manera que el caso de dos dimensiones, debido a que cada uno de los ocho vértices puede tener dos estados, vétice marcado como interno o externo (dentro o fuera de la superficie del cuerpo), se tienen 256 combinaciones posibles, es decir, una superficie puede atravesar a un cubo de 256 maneras posibles. Sin embargo, al igual que en su homólogo en dos dimensiones, que tiene dieciséis formas posibles, estas pueden ser reducidas a un numero inferior de patrones, ya que entre ellos existen diferencias sólamente de rotación y reflexión.
+
+			En el caso de tres dimensiones, los 256 patrones pueden ser reducidos de la misma manera, en efecto, dos de esos casos son triviales, ya que tienen todos sus vértices marcados como internos o externos, por lo tanto, ambos casos no contribuyen a la superficie que se quiere extraer.
+
+			Si se consideran las simetrías, hay solamente catorce posibles configuraciones únicas en los restantes 254 casos. Por ejemplo, aquellos casos que solamente tienen un vértice marcado como interno, sólo representan un triángulo que atraviesa las aristas que convergen a ése vértice y existen ocho casos como éste, uno por cada vértice del cubo.
+
+			Finalmente las quince familias de posibles casos son los que se describen en la siguiente imagen.
+			[[marchingsquare/MarchingCubes.svg]]
+
+		Procedimiento
+
+			El procedimiento es similar al explicado a Marching Squares, en primer lugar se divide el espacio en un arreglo uniforme de regiones cúbicas, luego, se evalúa cada vértice para etiquetarlo como un vértice interno o externo, luego, calcular a cuál de los 15 casos pertenece y generar los triángulos, para que, finalmente, extraer así la superficie.
+
+			En resumen, el procedimiento reducido a un solo cubo, ocurre según lo siguiente, en un comienzo se tiene un cubo.
+			[[marchingsquare/cube_01.png]]
+
+			Suponiendo que este cubo tiene sólamente un vértice que quedó dentro del cuerpo, éste vértice queda marcado como un vértice interno, los siete restantes quedan marcados como vértices externos.
+			[[marchingsquare/cube_02.png]]
+
+			Luego se crea un triángulo cuyos vértices se apoyan en los puntos medios de las aristas que comparten el vértice marcado como interno, de esta manera, se tiene un cubo que es atravesado por una superficie que precisamente deja un sólo vértice dentro (o fuera, dependiendo de la reflexión del caso)
+			[[marchingsquare/cube_03.png]]
+
+		Consecuencias
+
+			Nuevamente, de la misma manera que su versión en dos dimensiones, presenta las mismas falencias, por ejemplo, sin ninguna interpolación, y dependiendo de la resolucion de la división, la superficie extraída puede presentar un efecto de escalonamiento (aliasing) como el que se muestra en las siguientes imagenes.
+
+			La forma original:
+			[[marchingsquare/mc_blobs.gif]]
+
+			Usando Marching Cubes con 12 divisiones:
+			[[marchingsquare/mc_blobs_12.gif]]
+
+			Usando Marching Cubes con 20 divisiones:
+			[[marchingsquare/mc_blobs_20.gif]]
+
+			Usando Marching Cubes con 50 divisiones:
+			[[marchingsquare/mc_blobs_50.gif]]
+
+			Se puede apreciar que al aumentar la resolución, la calidad aumenta, pero computacionalmente requiere mas cómputo y memoria, ya que aumentan la cantidad de caras que describen la superficie extraída, como se ve en la siguiente imagen.
+			[[marchingsquare/polygonise3.gif]]
+
+			Otro problema importante son los posibles problemas topológicos que tiene este algoritmo, debido a los casos ambiguos que se explican de la misma manera que en su versión en dos dimensiones, y algunos casos donde se forman agujeros dependiendo de que ciertos casos queden adyacentes.
+
+			Por ejemplo, si se juntan los siguientes casos, pueden generar agujeros en el modelo final en 3 dimensiones.
+			[[marchingsquare/MCAmbEx.gif]]
+
+			Para poder evitar estos errores, se introducen seis nuevas familias de casos:
+			[[marchingsquare/MCAmb.gif]]
+
+			En el ejemplo anterior, en vez de usar el patron etiquetado como 6e, debería usarse el 6c de la figura anterior, solucionando asi el potencial error topológico.
 
 Objetivos
 
 //tratar de explicar como mejorar el problema, o arreglarlo
-
+En esta investigación, se estudiarán las distintas técnicas que se han expuesto en el estado del arte, se comprobarán los problemas topológicos que traen y se estudiarán las mejoras que actualmente se han implementado durante la existencia de estos algoritmos, para que finalmente, se pueda proponer un flujo de trabajo que permita, a partir de una nube de puntos, poder extraer una superficie del volumen de alta calidad.
 
 Referencias
+
+	W.Lorensen, H.Cline
+	Marching Cubes: A High Resolution 3D Surface Construction Algorithm
+	Computer Graphics, 21 (4): 163-169, July 1987
+
+	http://paulbourke.net/geometry/polygonise/
+
+	http://ldc.usb.ve/~vtheok/cursos/ci5322/marching/marching.html
+
+	http://www.exaflop.org/docs/marchcubes/
+
+	http://www.cs.carleton.edu/cs_comps/0405/shape/marching_cubes.html
+
+	http://cns.bu.edu/~lavanya/Graphics/cs580/p5/web-page/p5.html
+
+	http://paulbourke.net/geometry/polygonise/
