@@ -6,9 +6,8 @@
 \usepackage{txfonts}
 \usepackage{listings}
 \usepackage{multirow}
-\usepackage[spanish, english]{babel}
+\usepackage[polutonikogreek,english,spanish]{babel}
 \usepackage{epsfig}
-%\usepackage[utf8]{inputenc}
 \usepackage{sty/utfsm_tesis}
 
 %Include Table of Contents as the first entry in TOC
@@ -54,6 +53,10 @@
 			   {1.3 \defbaselineskip}}
 \newcommand{\singlespacing}{\setlength{\baselineskip}{\defbaselineskip}}
 
+%Comandos de Joe
+\newcommand{\jcq}[1]{``#1''}
+%fin comandos de Joe
+
 \lstloadlanguages{C++, sh, IDL, make}
 \lstset{basicstyle=\small\sffamily, commentstyle=\slshape,
         numbers=left, numberstyle=\tiny, numbersep=10pt,
@@ -72,10 +75,11 @@
 \newcommand{\doctitle}{ACS Component Code Generation Framework}
 
 \begin{document}
+
 \selectlanguage{spanish}
 
 
-\profguia{Sr. Claudio Lobos}
+\profguia{Dr. Claudio Lobos}
 \profcorr{Sra. Elizabeth Montero}
 
 %\input{include/cover.tex}
