@@ -1,0 +1,169 @@
+\chapter{Estado del Arte}
+\label{ch:estadoDelArte}
+
+En el caso de las imágenes obtenidas por resonancia magnética, lo que se obtiene son un 
+arreglo de imágenes de distintos niveles en un mismo eje geométrico de un cuerpo. Luego, para 
+generar una malla geométrica del cuerpo existen diversas técnicas, muchas de ellas basadas en 
+\jcq{voxels} como por ejemplo, Marching Cubes, Marching Tetrahedrons y Marching Diamonds.
+En esta investigación se dará especial énfasis en el algoritmo de Marching Cubes, se 
+explicará su funcionamiento, resultados y problemas que actualmente presenta.
+Para entender mejor cómo funciona Marching Cubes, es de utilidad primero ver el caso 
+reducido a dos dimensiones, el que puede ser llamado como \jcq{Marching Squares}.
+
+\section{Marching Squares}
+\label{sec:marchingSquares}
+
+En dos dimensiones, para obtener el contorno de una figura, se puede usar este algoritmo 
+que se basa en crear divisiones cuadradas uniformes del espacio, y en cada una de ellas dibujar un 
+patrón específico del caso que encierra esa división, finalmente todas las divisiones tienen 
+dibujadas un patrón específico o un espacio vacío, obteniendo así el contorno de la imagen 
+tratada. El siguiente caso, ejemplifica el proceso completo.
+
+Se supone la imagen de la figura \ref{f:estadoDelArte:original} para tratar obtener su contorno.
+
+\begin{figure}
+\centering
+	\fbox{
+		\includegraphics[width=0.7\textwidth]{images/marchingsquare/original.jpg}
+	}
+\caption{Figura original de estudio, a la que se desea extraer su contorno}
+\label{f:estadoDelArte:original}
+\end{figure}
+
+Luego se divide el espacio en un arreglo uniforme de cuadriláteros, en este caso una 
+matriz de 7x8 celdas como muestra la figura \ref{f:estadoDelArte:division}
+
+Para poder obtener el patrón a dibujar en cada celda, se hace un proceso de 
+reconocimiento. En un principio es necesario etiquetar cada vértice de cada celda dependiendo si 
+están dentro o fuera de la región de interés. Esto puede ser calculado de distintas formas que 
+dependen intrínsecamente del problema, para este caso, basta con detectar si el vértice está sobre 
+un pixel blanco o no, en otros casos, puede depender de que si el valor del pixel en escala de 
+grises supera (o es inferior) a un valor fijo determinado por el científico.
+
+\begin{figure}
+\centering
+	\includegraphics[width=0.7\textwidth]{images/marchingsquare/division.jpg}
+\caption{Figura original dividida en un arreglo uniforme de celdas}
+\label{f:estadoDelArte:division}
+\end{figure}
+
+A continuación, se muestra como quedan etiquetados los vértices, dependiendo si están 
+dentro de la figura (en rojo), o si están fuera de la figura (en azul), como muestra la figura \ref{f:estadoDelArte:labeledobj}
+
+\begin{figure}
+\centering
+	\includegraphics[width=0.7\textwidth]{images/marchingsquare/labeledobj.jpg}
+\caption{Etiquetado de vértices según su condición relativa a la figura}
+\label{f:estadoDelArte:labeledobj}
+\end{figure}
+
+Si ahora se analiza celda a celda, se ve que existen dieciséis combinaciones distintas de 
+vértices etiquetados como dentro o fuera de la región en una misma celda, como muestra la figura 
+\ref{f:estadoDelArte:cases}
+
+\begin{figure}
+\centering
+	\fbox{
+		\includegraphics[width=\textwidth]{images/marchingsquare/cases.jpg}
+	}
+\caption{Los dieciséis casos posibles en Marching Squares}
+\label{f:estadoDelArte:cases}
+\end{figure}
+
+Además se entiende que si uno de los lados de una celda (una arista) esta formada por un 
+vértice marcado como dentro y otro fuera, significa que por esa arista corta el borde de la figura, 
+y por lo tanto, esa arista la dejamos marcada como una arista de contorno detectada, que en este 
+ejemplo se marca de color morado, como muestra la figura \ref{f:estadoDelArte:purpledobj}
+
+\begin{figure}
+\centering
+	\includegraphics[width=0.7\textwidth]{images/marchingsquare/purpledobj.jpg}
+\caption{Aristas marcadas por las cuales cortará el contorno calculado}
+\label{f:estadoDelArte:purpledobj}
+\end{figure}
+
+Luego, por cada celda, se unen los puntos morados formados en el paso anterior, creando 
+así uno de los dieciséis patrones posibles, lo cual se puede entender como una de las dieciséis 
+formas en que un cuadrilátero puede ser atravesado por una linea, formando así el contorno 
+buscado, como muestra la figura \ref{f:estadoDelArte:connectedobj}
+
+\begin{figure}
+\centering
+	\includegraphics[width=0.7\textwidth]{images/marchingsquare/connectedobj.jpg}
+\caption{Contorno calculado usando las aristas marcadas en el paso anterior}
+\label{f:estadoDelArte:connectedobj}
+\end{figure}
+
+Posteriormente, dependiendo de los requerimientos de la investigación, se puede mejorar 
+la aproximación haciendo una interpolación lineal de los valores de los vértices para calcular en 
+que punto aproximadamente la figura (a la que se quiere extraer su contorno), corta con la arista, 
+un ejemplo del resultado de esta aproximación se muestra en la figura \ref{f:estadoDelArte:2Dintersected}
+
+\begin{figure}
+\centering
+	\includegraphics[width=0.7\textwidth]{images/marchingsquare/2Dintersected.jpg}
+\caption{Mejorando la calidad del contorno usando interpolación lineal}
+\label{f:estadoDelArte:2Dintersected}
+\end{figure}
+
+\subsection{Consecuencias}
+\label{subsec:consecuencias}
+
+Evidentemente, existen ciertas falencias, por ejemplo, el contorno obtenido no simula 
+adecuadamente el objeto estudiado, debido a errores causados por la fragmentación de las 
+divisiones iniciales, una solución directa para mejorar esto es aumentar las divisiones, es decir, 
+hacer que todas las celdas sean mas pequeñas, y así hacer una mejor aproximación del contorno 
+del objeto en estudio. De la misma manera, existen otras técnicas, tales como hacer particiones 
+con celdas de tamaño variable en las particiones, o subdividir aquellas celdas que hayan sido 
+detectadas como de frontera y así obtener un mejor desempeño en el algoritmo.
+
+Otro problema es que algunos casos presentan ambigüedad, es decir, no es trivial calcular 
+a cual caso pertenece una cierta configuración, por ejemplo, tomando el quinto y décimo caso 
+descritos anteriormente, se supone el ejemplo descrito por la figura \ref{f:estadoDelArte:marchingSAmbEx}
+
+\begin{figure}[hbp]
+\centering
+	\fbox{
+		\includegraphics[width=0.7\textwidth]{images/marchingsquare/marchingSAmbEx.jpg}
+	}
+\caption{Casos con ambigüedad}
+\label{f:estadoDelArte:marchingSAmbEx}
+\end{figure}
+
+Este cuadrado, tiene dos vértices diagonalmente opuestos marcados. Sin conocer como es 
+la figura ni cómo son las divisiones vecinas, no se puede saber con exactitud si se trata del quinto 
+o el décimo caso, por lo que el algoritmo puede erróneamente separar el contorno, formando así 
+dos figuras separadas, o las une, de manera que sólo exista una figura con un contorno 
+compartido.
+
+\section{Marching Cubes}
+\label{sec:marchingCubes}
+
+\subsection{Idea}
+\label{subsec:idea}
+
+Marching Cubes es un algoritmo de extracción de una superficie poligonal de un cuerpo 
+en un espacio escalar en tres dimensiones. Existen muchas aplicaciones para este tipo de técnicas, 
+dos de las más comunes son:
+
+\begin{itemize}
+	\item Reconstrucción de una superficie a partir de un set de imágenes médicas, como 
+	por ejemplo los obtenidos en imágenes de resonancia magnética, los que pueden formar 
+	un volumen en tres dimensiones.
+
+	\item Crear un contorno tridimensional de un campo escalar matemático, en este caso, 
+	el valor de una cierta función es conocido en todo el espacio, pero es representada como 
+	vértices de una malla tridimensional.
+\end{itemize}
+
+Adopta la misma idea que hay detrás de Marching Squares, pero llevando los conceptos a 
+tres dimensiones, en este caso, el dominio es un espacio tridimensional, en el cual existe un 
+cuerpo al que se desea extraer su superficie. Luego, el espacio es dividido en regiones uniformes 
+(cubos), por los cuales la superficie del objeto corta las aristas de estos cubos.
+
+\subsection{Consideraciones Geométricas}
+\label{subsec:consideracionesGeometricas}
+
+Un cubo tiene seis caras, ocho vértices y doce aristas, las cuales, para efectos de esta 
+investigación serán numeradas de la siguiente manera:
+
