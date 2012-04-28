@@ -165,5 +165,41 @@ cuerpo al que se desea extraer su superficie. Luego, el espacio es dividido en r
 \label{subsec:consideracionesGeometricas}
 
 Un cubo tiene seis caras, ocho vértices y doce aristas, las cuales, para efectos de esta 
-investigación serán numeradas de la siguiente manera:
+investigación serán numeradas como se muestra en la figura \ref{f:estadoDelArte:convention}
+
+\begin{figure}[hbp]
+\centering
+	\fbox{
+		\includegraphics[width=0.9\textwidth]{images/marchingcubes/convention.jpg}
+	}
+\caption{Convención de enumeración de vértices y aristas}
+\label{f:estadoDelArte:convention}
+\end{figure}
+
+De la misma manera que el caso de dos dimensiones, debido a que cada uno de los ocho 
+vértices puede tener dos estados: vértice marcado como interno o externo (dentro o fuera de la 
+superficie del cuerpo), se tienen 256 combinaciones posibles, es decir, una superficie puede
+atravesar a un cubo de 256 maneras posibles. Sin embargo, al igual que en su homólogo en dos 
+dimensiones, que tiene dieciséis formas posibles, estas pueden ser reducidas a un numero inferior 
+de patrones, ya que entre ellos existen diferencias solamente de rotación y reflexión.
+
+En el caso de tres dimensiones, los 256 patrones pueden ser reducidos de la misma 
+manera. Dos de esos casos son triviales, ya que tienen todos sus vértices marcados como internos 
+o externos, por lo tanto, ambos casos no contribuyen a la superficie que se quiere extraer.
+
+Si se consideran las simetrías, hay solamente catorce posibles configuraciones únicas en 
+los restantes 254 casos. Por ejemplo, aquellos casos que solamente tienen un vértice marcado 
+como interno, sólo representan un triángulo que atraviesa las aristas que convergen a ése vértice y 
+existen ocho casos como éste, uno por cada vértice del cubo.
+Finalmente las quince familias de posibles casos son los que se describen en la figura \label{f:estadoDelArte:MarchingCubes}
+
+\begin{figure}[hbp]
+\centering
+	\fbox{
+		\includegraphics[width=0.9\textwidth]{images/marchingcubes/MarchingCubes.svg}
+	}
+\caption{Los quince casos de Marching Cubes}
+\label{f:estadoDelArte:MarchingCubes}
+\end{figure}
+
 
