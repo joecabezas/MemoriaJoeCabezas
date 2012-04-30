@@ -1,25 +1,24 @@
-DIA = $(wildcard *.dia)
+#===STRING MANIPULATIONS===
+SVGS = $(shell find . -name '*.svg')
+DIAS = $(shell find . -name '*.dia')
 
+SVGS2PDF = $(patsubst %.svg,%.pdf,$(SVGS))
+DIAS2PDF = $(patsubst %.dia,%.pdf,$(DIAS))
+
+ALLIMAGES = $(DIAS2PDF) $(SVGS2PDF)
+#==========================
+
+#===CONVERSIONS===
 %.pdf: %.svg
-	inkscape --export-pdf=$@ $<
-	#convert $< $@
+	inkscape --without-gui --export-pdf=$@ $<
 
 %.svg: %.dia
 	dia -t svg $<
+#=================
 
-all: $(patsubst %.dia,%.pdf,$(DIA)) logos
-
-logo_usm.pdf: logo_usm.svg
-	inkscape --export-pdf=$@ $<
-
-logo_inf.pdf: logo_inf.svg
-	inkscape --export-pdf=$@ $<
-
-logos: logo_usm.pdf logo_inf.pdf
+all: $(ALLIMAGES)
 
 clean:
-	rm -f $(patsubst %.dia,%.svg,$(DIA)) \
-              $(patsubst %.dia,%.pdf,$(DIA)) \
-	      logo_usm.pdf logo_inf.pdf
+	rm -f $(ALLIMAGES)
 
-.PHONY: all clean logos
+.PHONY: all clean
