@@ -26,5 +26,4 @@ distclean: clean
 images:
 	-make -C images
 
-
 .PHONY: all clean distclean images
