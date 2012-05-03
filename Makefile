@@ -7,14 +7,11 @@ all: images $(NOMBRE).pdf
 $(NOMBRE).pdf:$(NOMBRE).tex include/*.tex
 	@echo "   Making pdf for first time..."
 	pdflatex -halt-on-error $(NOMBRE).tex #> .my_log || (cat .my_log && rm .my_log && exit 1)
-	#d@rm .my_log
-	@echo "   Making bibtex..."
-	bibtex $(NOMBRE)
+	#echo "   Making bibtex..."
+	#bibtex $(NOMBRE)
 	@echo "   Re-making dvi for satisfying references..."
 	pdflatex $(NOMBRE).tex #&> /dev/null
 	pdflatex $(NOMBRE).tex #&> /dev/null
-	#@echo "   Generating final pdf..."
-	#dvipdf $(NOMBRE).dvi #&> /dev/null
 
 clean:
 	-rm -f $(NOMBRE).{aux,toc,log,tmp,dvi,idx,ilg,ind,out,bbl,blg,lol,lof,lot} .my_log include/*.aux
