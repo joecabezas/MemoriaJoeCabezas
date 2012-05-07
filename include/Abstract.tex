@@ -241,7 +241,7 @@ que comparten el vértice marcado como interno, de esta manera, se tiene un cubo
 atravesado por una superficie que precisamente deja un sólo vértice dentro (o fuera, dependiendo 
 de la reflexión del caso), resultando un triangulo como el de la figura \ref{f:estadoDelArte:cube_03}
 
-\begin{figure}[hbp]
+\begin{figure}[ht]
 \centering
 	\fbox{
 		\includegraphics[width=0.4\textwidth]{images/marchingcubes/cube_03.png}
@@ -256,34 +256,40 @@ de la reflexión del caso), resultando un triangulo como el de la figura \ref{f:
 Nuevamente, al igual que su versión en dos dimensiones, presenta las mismas falencias, 
 por ejemplo, sin ninguna interpolación, y dependiendo de la resolución de la división, la 
 superficie extraída puede presentar un efecto de escalonamiento (\jcq{aliasing}) como el que se 
-muestra en las siguientes imágenes:
+muestra en la figura \ref{f:estadoDelArte;superficies_resultantes_variando_divisiones}
 
-\begin{figure}[hbp]
-\centering
-	\includegraphics[width=0.3\textwidth]{images/marchingcubes/mc_blobs.png}
-\caption{La forma original}
-\label{f:estadoDelArte:mc_blobs}
-\end{figure}
+\begin{figure}
 
-\begin{figure}[hbp]
-\centering
-	\includegraphics[width=0.3\textwidth]{images/marchingcubes/mc_blobs_12.png}
-\caption{Usando Marching Cubes con 12 divisiones}
-\label{f:estadoDelArte:mc_blobs_12}
-\end{figure}
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/marchingcubes/mc_blobs.png}
+		\caption{La forma original}
+		\label{f:estadoDelArte:mc_blobs}
+	\end{subfigure}
+	~
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/marchingcubes/mc_blobs_12.png}
+		\caption{Marching Cubes con 12 divisiones}
+		\label{f:estadoDelArte:mc_blobs_12}
+	\end{subfigure}
 
-\begin{figure}[hbp]
-\centering
-	\includegraphics[width=0.3\textwidth]{images/marchingcubes/mc_blobs_20.png}
-\caption{Usando Marching Cubes con 20 divisiones}
-\label{f:estadoDelArte:mc_blobs_20}
-\end{figure}
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/marchingcubes/mc_blobs_50.png}
+		\caption{Marching Cubes con 50 divisiones}
+		\label{f:estadoDelArte:mc_blobs_50}
+	\end{subfigure}
+	~
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/marchingcubes/mc_blobs_20.png}
+		\caption{Marching Cubes con 20 divisiones}
+		\label{f:estadoDelArte:mc_blobs_20}
+	\end{subfigure}
 
-\begin{figure}[hbp]
-\centering
-	\includegraphics[width=0.3\textwidth]{images/marchingcubes/mc_blobs_50.png}
-\caption{Usando Marching Cubes con 50 divisiones}
-\label{f:estadoDelArte:mc_blobs_50}
+	\caption{Superficies resultantes variando la cantidad de divisiones}
+	\label{f:estadoDelArte;superficies_resultantes_variando_divisiones}
 \end{figure}
 
 Se puede apreciar que al aumentar la resolución, la calidad aumenta, pero 
@@ -309,10 +315,10 @@ internos que comparten la misma cara y otro caso especial en el que cinco vérti
 marcados como internos, pueden generar agujeros en el modelo final en tres dimensiones, como 
 se gráfica en la figura \ref{f:estadoDelArte:MCAmbEx}
 
-\begin{figure}[hbp]
+\begin{figure}[htbp]
 \centering
 	\fbox{
-		\includegraphics[width=0.8\textwidth]{images/marchingcubes/MCAmbEx.png}
+		\includegraphics[width=0.9\textwidth]{images/marchingcubes/MCAmbEx.png}
 	}
 \caption{Casos en los que se generan errores topológicos}
 \label{f:estadoDelArte:MCAmbEx}
@@ -321,7 +327,7 @@ se gráfica en la figura \ref{f:estadoDelArte:MCAmbEx}
 Para poder evitar estos errores, se introducen seis nuevas familias de casos, que están descritas en
 la figura \ref{f:estadoDelArte:MCAmb}
 
-\begin{figure}[hbp]
+\begin{figure}[htb]
 \centering
 	\fbox{
 		\includegraphics[width=0.8\textwidth]{images/marchingcubes/MCAmb.png}
@@ -337,7 +343,7 @@ son más sencillas de utilizar ya que sólo existen 16 posibles combinaciones to
 Marching Squares, ya que en ambos casos, los elementos tienen cuatro vértices), los cuales 
 pueden ser reducidos a sólo cuatro. La poligonización tetraédrica se muestra en la figura \ref{f:estadoDelArte:image_004}
 
-\begin{figure}[hbp]
+\begin{figure}[htb]
 \centering
 	\fbox{
 		\includegraphics[width=0.9\textwidth]{images/marchingtetrahedrons/image_004.png}
@@ -349,7 +355,7 @@ pueden ser reducidos a sólo cuatro. La poligonización tetraédrica se muestra 
 De hecho, en el caso de Marching Cubes, cada cubo puede al final, descomponerse en 
 cinco pirámides o tetraedros como se muestra en la figura \ref{f:estadoDelArte:image_006}
 
-\begin{figure}[hbp]
+\begin{figure}[htb]
 \centering
 	\fbox{
 		\includegraphics[width=0.7\textwidth]{images/marchingtetrahedrons/image_006.png}
