@@ -4,4 +4,58 @@
 \section{Estructura}
 \label{ch:implementacion:sec:estructura}
 
-Para poder
+Para realizar la implementacion del algoritmo se debe primero proponer una convención para enumerar los vertices y aristas de un cubo, para esta implementacion se usara la convencion señalada anteriormente en la figura \ref{f:estadoDelArte:convention}.
+
+\section{CubeIndex}
+\label{ch:implementacion:sec:CubeIndex}
+
+Como se menciono en \ref{subsec:marchingCubes:consideracionesGeometricas}, existen 256 formas posibles de atravesar un cubo con una superficie continua, que es lo mismo decir, existen 256 combinaciones posibles dados 8 vertices que pueden estar en 2 estados distintos (indicando que estan dentro de una superficie cerrada o fuera de ésta)
+
+Para poder identificar cada uno de estos 256 casos, se enumeran del 1 al 256 usando un arreglo de 8 bits, basandose en el estado de cada vertice usando la convención, por ejemplo, un cubo que tiene todos sus vértices marcados como fuera de la superficie (externos), tiene todos sus bits en cero, por lo tanto, el índice, desde ahora \emph{cubeIndex}, de este cubo es $0000 0000_{2} = 0_{10}$ (cero), de la misma manera, usando la convención, si un cubo sólo tiene el tercer vertice (vertice 2), dentro de la superficie, entonces, tiene su tercer bit en 1, y el resto en cero, luego el \emph{cubeIndex} del cubo es $0000 0100_{2} = 4_{10}$, si un cubo es atravesado por la mitad, dejando a la mitad de abajo dentro de la superficie, tiene los vértices 4,5,6 y 7 
+marcados como internos, por lo que los bits 4, 5, 6 y 7 (los ultimos 4), valen 1, por lo tanto, el \emph{cubeIndex} es $1111 0000_{2} = 240_{2}$.
+
+En general, el \emph{cubeIndex} se determina como se muestra en la figura \ref{f:ch:implementacion:sec:CubeIndex:cubeindex:cubeindex}.
+
+\begin{figure}[hbt]
+	\makebox[\textwidth]{\framebox[0.3\textwidth]{\rule{0pt}{0.2\textwidth}}}
+	\caption{Five by Five in Centimetres.}
+	\label{f:ch:implementacion:sec:CubeIndex:cubeindex:cubeindex}
+\end{figure}
+
+\section{edgeTable}
+\label{ch:implementacion:sec:edgeTable}
+
+Luego de establecer como identificar un cubo, es necesario poder conocer que aristas serian intersectadas por la superficie, para poder determinar un punto sobre estas aristas por las cuales se sostendra un triángulo. Por ejemplo, si el vértice $0$, es el unico vértice que queda dentro de la superficie, usando la convención, se puede asumir las aristas $0$, $3$ y $8$ seran aquellas las cuales la superficie intersectara a cubo.
+
+Es por esto que se necesita una forma de relacionar un \emph{cubeIndex} con las aristas que serán atravesadas por la superficie.
+
+Usando la misma estrategia que con el \emph{cubeindex} existen 4096 $2^{12}$ combinaciones posibles de tomar 12 aristas que pueden intersectar a la superficie o no, por esto, cada caso, será identificado con un numero de 12 bits, en el cual, cada bit representa a una arista, usando la convención como se muestra en la figura \ref{f:ch:implementacion:sec:CubeIndex:edgeTable:edge_convention}.
+
+\begin{figure}[hbt]
+	\makebox[\textwidth]{\framebox[0.4\textwidth]{\rule{0pt}{0.3\textwidth}}}
+	\caption{Convención para enumerar las 4096 combinaciones posibles de aristas}
+	\label{f:ch:implementacion:sec:CubeIndex:edgeTable:edge_convention}
+\end{figure}
+
+La \emph{edgeTable} es un \emph{array} (arreglo) diseñado para asociar un \emph{cubeindex} con su correpondiente numero que indica que aristas son intersectadas. este \emph{array} consta de 256 numeros (uno por cada caso o cada \emph{cubeindex}) de 12 bits, un bit para cada una de las 12 aristas del cubo en cuestión por las cuales pasa la superficie.
+
+Para entender mejor, se supone el ejemplo de la figura \ref{f:ch:implementacion:sec:CubeIndex:edgeTable:example}.
+
+\begin{figure}[hbt]
+	\makebox[\textwidth]{\framebox[0.3\textwidth]{\rule{0pt}{0.2\textwidth}}}
+	\caption{Five by Five in Centimetres.}
+	\label{f:ch:implementacion:sec:CubeIndex:edgeTable:example}
+\end{figure}
+
+En este ejemplo, sólamente el vértice $0$, ha sido marcado como interno, luego, el \emph{cubeIndex} es $0000 0001_{2} = 1_{10}$, dado esto, las aristas $0$, $3$ y $8$ serán eventualmente atravesadas por la superficie, por lo tanto:
+
+\begin{quote}
+	edgeTable[1] = 0x109
+\end{quote}
+
+Lo cual en binario tiene un valor equivalente a: $109_{16} = 265_{10} = 0001 0000 1001_{2}$, lo que indica que las aristas $0$, $3$ y $8$ son las que serán atravesadas.
+
+\section{triTable}
+\label{ch:implementacion:sec:triTable}
+
+Una vez que se conocen aquellos
