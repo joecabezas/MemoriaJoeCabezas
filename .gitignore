@@ -17,3 +17,18 @@
 auto
 
 *~
+
+//gitg ignore file list:
+
+/images/marchingcubes/convention.png
+/images/marchingcubes/MCAmbEx.png
+/images/marchingcubes/MCAmb.png
+/images/marchingcubes/mc_blobs_12.png
+/images/marchingcubes/mc_blobs_20.png
+/images/marchingcubes/mc_blobs_50.png
+/images/marchingcubes/mc_blobs.png
+/images/marchingcubes/polygonise3.png
+/images/marchingsquare/cases.png
+/images/marchingsquare/marchingSAmbEx.png
+/images/marchingtetrahedrons/image_004.png
+/images/marchingtetrahedrons/image_006.png
