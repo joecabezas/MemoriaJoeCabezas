@@ -1,22 +1,22 @@
 \chapter{Estado del Arte}
 \label{ch:estadoDelArte}
 
-En el caso de las imágenes obtenidas por resonancia magnética, lo que se obtiene son un 
-arreglo de imágenes de distintos niveles en un mismo eje geométrico de un cuerpo. Luego, para 
-generar una malla geométrica del cuerpo existen diversas técnicas, muchas de ellas basadas en 
+En el caso de las imágenes obtenidas por resonancia magnética, lo que se obtiene son un
+arreglo de imágenes de distintos niveles en un mismo eje geométrico de un cuerpo. Luego, para
+generar una malla geométrica del cuerpo existen diversas técnicas, muchas de ellas basadas en
 \jcq{voxels} como por ejemplo, Marching Cubes, Marching Tetrahedrons y Marching Diamonds.
-En esta investigación se dará especial énfasis en el algoritmo de Marching Cubes, se 
+En esta investigación se dará especial énfasis en el algoritmo de Marching Cubes, se
 explicará su funcionamiento, resultados y problemas que actualmente presenta.
-Para entender mejor cómo funciona Marching Cubes, es de utilidad primero ver el caso 
+Para entender mejor cómo funciona Marching Cubes, es de utilidad primero ver el caso
 reducido a dos dimensiones, el que puede ser llamado como \jcq{Marching Squares}.
 
 \section{Marching Squares}
 \label{sec:marchingSquares}
 
-En dos dimensiones, para obtener el contorno de una figura, se puede usar este algoritmo 
-que se basa en crear divisiones cuadradas uniformes del espacio, y en cada una de ellas dibujar un 
-patrón específico del caso que encierra esa división, finalmente todas las divisiones tienen 
-dibujadas un patrón específico o un espacio vacío, obteniendo así el contorno de la imagen 
+En dos dimensiones, para obtener el contorno de una figura, se puede usar este algoritmo
+que se basa en crear divisiones cuadradas uniformes del espacio, y en cada una de ellas dibujar un
+patrón específico del caso que encierra esa división, finalmente todas las divisiones tienen
+dibujadas un patrón específico o un espacio vacío, obteniendo así el contorno de la imagen
 tratada. El siguiente caso, ejemplifica el proceso completo.
 
 Se supone la imagen de la figura \ref{f:estadoDelArte:original} para tratar obtener su contorno.
@@ -30,14 +30,14 @@ Se supone la imagen de la figura \ref{f:estadoDelArte:original} para tratar obte
 	\label{f:estadoDelArte:original}
 \end{figure}
 
-Luego se divide el espacio en un arreglo uniforme de cuadriláteros, en este caso una 
+Luego se divide el espacio en un arreglo uniforme de cuadriláteros, en este caso una
 matriz de 7x8 celdas como muestra la figura \ref{f:estadoDelArte:division}
 
-Para poder obtener el patrón a dibujar en cada celda, se hace un proceso de 
-reconocimiento. En un principio es necesario etiquetar cada vértice de cada celda dependiendo si 
-están dentro o fuera de la región de interés. Esto puede ser calculado de distintas formas que 
-dependen intrínsecamente del problema, para este caso, basta con detectar si el vértice está sobre 
-un pixel blanco o no, en otros casos, puede depender de que si el valor del pixel en escala de 
+Para poder obtener el patrón a dibujar en cada celda, se hace un proceso de
+reconocimiento. En un principio es necesario etiquetar cada vértice de cada celda dependiendo si
+están dentro o fuera de la región de interés. Esto puede ser calculado de distintas formas que
+dependen intrínsecamente del problema, para este caso, basta con detectar si el vértice está sobre
+un pixel blanco o no, en otros casos, puede depender de que si el valor del pixel en escala de
 grises supera (o es inferior) a un valor fijo determinado por el científico.
 
 \begin{figure}
@@ -47,7 +47,7 @@ grises supera (o es inferior) a un valor fijo determinado por el científico.
 	\label{f:estadoDelArte:division}
 \end{figure}
 
-A continuación, se muestra como quedan etiquetados los vértices, dependiendo si están 
+A continuación, se muestra como quedan etiquetados los vértices, dependiendo si están
 dentro de la figura (en rojo), o si están fuera de la figura (en azul), como muestra la figura \ref{f:estadoDelArte:labeledobj}
 
 \begin{figure}
@@ -57,8 +57,8 @@ dentro de la figura (en rojo), o si están fuera de la figura (en azul), como mu
 	\label{f:estadoDelArte:labeledobj}
 \end{figure}
 
-Si ahora se analiza celda a celda, se ve que existen dieciséis combinaciones distintas de 
-vértices etiquetados como dentro o fuera de la región en una misma celda, como muestra la figura 
+Si ahora se analiza celda a celda, se ve que existen dieciséis combinaciones distintas de
+vértices etiquetados como dentro o fuera de la región en una misma celda, como muestra la figura
 \ref{f:estadoDelArte:cases}
 
 \begin{figure}
@@ -70,9 +70,9 @@ vértices etiquetados como dentro o fuera de la región en una misma celda, como
 \label{f:estadoDelArte:cases}
 \end{figure}
 
-Además se entiende que si uno de los lados de una celda (una arista) esta formada por un 
-vértice marcado como dentro y otro fuera, significa que por esa arista corta el borde de la figura, 
-y por lo tanto, esa arista la dejamos marcada como una arista de contorno detectada, que en este 
+Además se entiende que si uno de los lados de una celda (una arista) esta formada por un
+vértice marcado como dentro y otro fuera, significa que por esa arista corta el borde de la figura,
+y por lo tanto, esa arista la dejamos marcada como una arista de contorno detectada, que en este
 ejemplo se marca de color morado, como muestra la figura \ref{f:estadoDelArte:purpledobj}
 
 \begin{figure}
@@ -82,9 +82,9 @@ ejemplo se marca de color morado, como muestra la figura \ref{f:estadoDelArte:pu
 \label{f:estadoDelArte:purpledobj}
 \end{figure}
 
-Luego, por cada celda, se unen los puntos morados formados en el paso anterior, creando 
-así uno de los dieciséis patrones posibles, lo cual se puede entender como una de las dieciséis 
-formas en que un cuadrilátero puede ser atravesado por una linea, formando así el contorno 
+Luego, por cada celda, se unen los puntos morados formados en el paso anterior, creando
+así uno de los dieciséis patrones posibles, lo cual se puede entender como una de las dieciséis
+formas en que un cuadrilátero puede ser atravesado por una linea, formando así el contorno
 buscado, como muestra la figura \ref{f:estadoDelArte:connectedobj}
 
 \begin{figure}
@@ -94,9 +94,9 @@ buscado, como muestra la figura \ref{f:estadoDelArte:connectedobj}
 \label{f:estadoDelArte:connectedobj}
 \end{figure}
 
-Posteriormente, dependiendo de los requerimientos de la investigación, se puede mejorar 
-la aproximación haciendo una interpolación lineal de los valores de los vértices para calcular en 
-que punto aproximadamente la figura (a la que se quiere extraer su contorno), corta con la arista, 
+Posteriormente, dependiendo de los requerimientos de la investigación, se puede mejorar
+la aproximación haciendo una interpolación lineal de los valores de los vértices para calcular en
+que punto aproximadamente la figura (a la que se quiere extraer su contorno), corta con la arista,
 un ejemplo del resultado de esta aproximación se muestra en la figura \ref{f:estadoDelArte:2Dintersected}
 
 \begin{figure}
@@ -109,16 +109,16 @@ un ejemplo del resultado de esta aproximación se muestra en la figura \ref{f:es
 \subsection{Consecuencias}
 \label{subsec:marchingSquares:consecuencias}
 
-Evidentemente, existen ciertas falencias, por ejemplo, el contorno obtenido no simula 
-adecuadamente el objeto estudiado, debido a errores causados por la fragmentación de las 
-divisiones iniciales, una solución directa para mejorar esto es aumentar las divisiones, es decir, 
-hacer que todas las celdas sean mas pequeñas, y así hacer una mejor aproximación del contorno 
-del objeto en estudio. De la misma manera, existen otras técnicas, tales como hacer particiones 
-con celdas de tamaño variable en las particiones, o subdividir aquellas celdas que hayan sido 
+Evidentemente, existen ciertas falencias, por ejemplo, el contorno obtenido no simula
+adecuadamente el objeto estudiado, debido a errores causados por la fragmentación de las
+divisiones iniciales, una solución directa para mejorar esto es aumentar las divisiones, es decir,
+hacer que todas las celdas sean mas pequeñas, y así hacer una mejor aproximación del contorno
+del objeto en estudio. De la misma manera, existen otras técnicas, tales como hacer particiones
+con celdas de tamaño variable en las particiones, o subdividir aquellas celdas que hayan sido
 detectadas como de frontera y así obtener un mejor desempeño en el algoritmo.
 
-Otro problema es que algunos casos presentan ambigüedad, es decir, no es trivial calcular 
-a cual caso pertenece una cierta configuración, por ejemplo, tomando el quinto y décimo caso 
+Otro problema es que algunos casos presentan ambigüedad, es decir, no es trivial calcular
+a cual caso pertenece una cierta configuración, por ejemplo, tomando el quinto y décimo caso
 descritos anteriormente, se supone el ejemplo descrito por la figura \ref{f:estadoDelArte:marchingSAmbEx}
 
 \begin{figure}[hbp]
@@ -130,10 +130,10 @@ descritos anteriormente, se supone el ejemplo descrito por la figura \ref{f:esta
 \label{f:estadoDelArte:marchingSAmbEx}
 \end{figure}
 
-Este cuadrado, tiene dos vértices diagonalmente opuestos marcados. Sin conocer como es 
-la figura ni cómo son las divisiones vecinas, no se puede saber con exactitud si se trata del quinto 
-o el décimo caso, por lo que el algoritmo puede erróneamente separar el contorno, formando así 
-dos figuras separadas, o las une, de manera que sólo exista una figura con un contorno 
+Este cuadrado, tiene dos vértices diagonalmente opuestos marcados. Sin conocer como es
+la figura ni cómo son las divisiones vecinas, no se puede saber con exactitud si se trata del quinto
+o el décimo caso, por lo que el algoritmo puede erróneamente separar el contorno, formando así
+dos figuras separadas, o las une, de manera que sólo exista una figura con un contorno
 compartido.
 
 \section{Marching Cubes}
@@ -142,29 +142,29 @@ compartido.
 \subsection{Idea}
 \label{subsec:marchingCubes:idea}
 
-Marching Cubes es un algoritmo de extracción de una superficie poligonal de un cuerpo 
-en un espacio escalar en tres dimensiones. Existen muchas aplicaciones para este tipo de técnicas, 
+Marching Cubes es un algoritmo de extracción de una superficie poligonal de un cuerpo
+en un espacio escalar en tres dimensiones. Existen muchas aplicaciones para este tipo de técnicas,
 dos de las más comunes son:
 
 \begin{itemize}
-	\item Reconstrucción de una superficie a partir de un set de imágenes médicas, como 
-	por ejemplo los obtenidos en imágenes de resonancia magnética, los que pueden formar 
+	\item Reconstrucción de una superficie a partir de un set de imágenes médicas, como
+	por ejemplo los obtenidos en imágenes de resonancia magnética, los que pueden formar
 	un volumen en tres dimensiones.
 
-	\item Crear un contorno tridimensional de un campo escalar matemático, en este caso, 
-	el valor de una cierta función es conocido en todo el espacio, pero es representada como 
+	\item Crear un contorno tridimensional de un campo escalar matemático, en este caso,
+	el valor de una cierta función es conocido en todo el espacio, pero es representada como
 	vértices de una malla tridimensional.
 \end{itemize}
 
-Adopta la misma idea que hay detrás de Marching Squares, pero llevando los conceptos a 
-tres dimensiones, en este caso, el dominio es un espacio tridimensional, en el cual existe un 
-cuerpo al que se desea extraer su superficie. Luego, el espacio es dividido en regiones uniformes 
+Adopta la misma idea que hay detrás de Marching Squares, pero llevando los conceptos a
+tres dimensiones, en este caso, el dominio es un espacio tridimensional, en el cual existe un
+cuerpo al que se desea extraer su superficie. Luego, el espacio es dividido en regiones uniformes
 (cubos), por los cuales la superficie del objeto corta las aristas de estos cubos.
 
 \subsection{Consideraciones Geométricas}
 \label{subsec:marchingCubes:consideracionesGeometricas}
 
-Un cubo tiene seis caras, ocho vértices y doce aristas, las cuales, para efectos de esta 
+Un cubo tiene seis caras, ocho vértices y doce aristas, las cuales, para efectos de esta
 investigación serán numeradas como se muestra en la figura \ref{f:estadoDelArte:convention}
 
 %TODO: al parecer quiza sea necesario usar una convencion equitativa, pero rotada
@@ -183,20 +183,20 @@ investigación serán numeradas como se muestra en la figura \ref{f:estadoDelArt
 \label{f:estadoDelArte:convention}
 \end{figure}
 
-De la misma manera que el caso de dos dimensiones, debido a que cada uno de los ocho 
-vértices puede tener dos estados: vértice marcado como interno o externo (dentro o fuera de la 
+De la misma manera que el caso de dos dimensiones, debido a que cada uno de los ocho
+vértices puede tener dos estados: vértice marcado como interno o externo (dentro o fuera de la
 superficie del cuerpo), se tienen 256 combinaciones posibles, es decir, una superficie puede
-atravesar a un cubo de 256 maneras posibles. Sin embargo, al igual que en su homólogo en dos 
-dimensiones, que tiene dieciséis formas posibles, estas pueden ser reducidas a un numero inferior 
+atravesar a un cubo de 256 maneras posibles. Sin embargo, al igual que en su homólogo en dos
+dimensiones, que tiene dieciséis formas posibles, estas pueden ser reducidas a un numero inferior
 de patrones, ya que entre ellos existen diferencias solamente de rotación y reflexión.
 
-En el caso de tres dimensiones, los 256 patrones pueden ser reducidos de la misma 
-manera. Dos de esos casos son triviales, ya que tienen todos sus vértices marcados como internos 
+En el caso de tres dimensiones, los 256 patrones pueden ser reducidos de la misma
+manera. Dos de esos casos son triviales, ya que tienen todos sus vértices marcados como internos
 o externos, por lo tanto, ambos casos no contribuyen a la superficie que se quiere extraer.
 
-Si se consideran las simetrías, hay solamente catorce posibles configuraciones únicas en 
-los restantes 254 casos. Por ejemplo, aquellos casos que solamente tienen un vértice marcado 
-como interno, sólo representan un triángulo que atraviesa las aristas que convergen a ése vértice y 
+Si se consideran las simetrías, hay solamente catorce posibles configuraciones únicas en
+los restantes 254 casos. Por ejemplo, aquellos casos que solamente tienen un vértice marcado
+como interno, sólo representan un triángulo que atraviesa las aristas que convergen a ése vértice y
 existen ocho casos como éste, uno por cada vértice del cubo.
 
 Finalmente las quince familias de posibles casos son los que se describen en la figura \ref{f:estadoDelArte:MarchingCubes}
@@ -213,9 +213,9 @@ Finalmente las quince familias de posibles casos son los que se describen en la 
 \subsection{Procedimiento}
 \label{subsec:marchingCubes:procedimiento}
 
-El procedimiento es similar al explicado a Marching Squares, en primer lugar se divide el 
-espacio en un arreglo uniforme de regiones cúbicas, luego, se evalúa cada vértice para etiquetarlo 
-como un vértice interno o externo, luego, calcular a cuál de los 15 casos pertenece cada división, 
+El procedimiento es similar al explicado a Marching Squares, en primer lugar se divide el
+espacio en un arreglo uniforme de regiones cúbicas, luego, se evalúa cada vértice para etiquetarlo
+como un vértice interno o externo, luego, calcular a cuál de los 15 casos pertenece cada división,
 y generar los triángulos, para que finalmente, extraer así la superficie.
 En resumen, el procedimiento reducido a un solo cubo, ocurre según lo siguiente:
 
@@ -230,8 +230,8 @@ En un comienzo se tiene un cubo, como el descrito en la figura \ref{f:estadoDelA
 \label{f:estadoDelArte:cube_01}
 \end{figure}
 
-Suponiendo que este cubo tiene solamente un vértice que quedó dentro del cuerpo, éste 
-vértice queda marcado como un vértice interno (en rojo), los siete restantes quedan marcados 
+Suponiendo que este cubo tiene solamente un vértice que quedó dentro del cuerpo, éste
+vértice queda marcado como un vértice interno (en rojo), los siete restantes quedan marcados
 como vértices externos (en negro), descrito por le figura \ref{f:estadoDelArte:cube_02}
 
 \begin{figure}[hbp]
@@ -243,9 +243,9 @@ como vértices externos (en negro), descrito por le figura \ref{f:estadoDelArte:
 \label{f:estadoDelArte:cube_02}
 \end{figure}
 
-Luego se crea un triángulo cuyos vértices se apoyan en los puntos medios de las aristas 
-que comparten el vértice marcado como interno, de esta manera, se tiene un cubo que es 
-atravesado por una superficie que precisamente deja un sólo vértice dentro (o fuera, dependiendo 
+Luego se crea un triángulo cuyos vértices se apoyan en los puntos medios de las aristas
+que comparten el vértice marcado como interno, de esta manera, se tiene un cubo que es
+atravesado por una superficie que precisamente deja un sólo vértice dentro (o fuera, dependiendo
 de la reflexión del caso), resultando un triangulo como el de la figura \ref{f:estadoDelArte:cube_03}
 
 \begin{figure}[ht]
@@ -260,9 +260,9 @@ de la reflexión del caso), resultando un triangulo como el de la figura \ref{f:
 \subsection{Consecuencias}
 \label{subsec:marchingCubes:consecuencias}
 
-Nuevamente, al igual que su versión en dos dimensiones, presenta las mismas falencias, 
-por ejemplo, sin ninguna interpolación, y dependiendo de la resolución de la división, la 
-superficie extraída puede presentar un efecto de escalonamiento (\jcq{aliasing}) como el que se 
+Nuevamente, al igual que su versión en dos dimensiones, presenta las mismas falencias,
+por ejemplo, sin ninguna interpolación, y dependiendo de la resolución de la división, la
+superficie extraída puede presentar un efecto de escalonamiento (\jcq{aliasing}) como el que se
 muestra en la figura \ref{f:estadoDelArte;superficies_resultantes_variando_divisiones}
 
 \begin{figure}
@@ -299,8 +299,8 @@ muestra en la figura \ref{f:estadoDelArte;superficies_resultantes_variando_divis
 	\label{f:estadoDelArte;superficies_resultantes_variando_divisiones}
 \end{figure}
 
-Se puede apreciar que al aumentar la resolución, la calidad aumenta, pero 
-computacionalmente requiere mas cómputo y memoria, ya que aumentan la cantidad de caras que 
+Se puede apreciar que al aumentar la resolución, la calidad aumenta, pero
+computacionalmente requiere mas cómputo y memoria, ya que aumentan la cantidad de caras que
 describen la superficie extraída, como se ve en la figura \ref{f:estadoDelArte:polygonise3}
 
 \begin{figure}[hbp]
@@ -312,14 +312,14 @@ describen la superficie extraída, como se ve en la figura \ref{f:estadoDelArte:
 \label{f:estadoDelArte:polygonise3}
 \end{figure}
 
-Otro problema importante son los posibles problemas topológicos que tiene este 
-algoritmo, debido a los casos ambiguos que se explican de la misma manera que en su versión en 
-dos dimensiones, y algunos casos donde se forman agujeros dependiendo de que ciertos casos 
+Otro problema importante son los posibles problemas topológicos que tiene este
+algoritmo, debido a los casos ambiguos que se explican de la misma manera que en su versión en
+dos dimensiones, y algunos casos donde se forman agujeros dependiendo de que ciertos casos
 queden adyacentes.
 
-Por ejemplo, si se juntan un caso especial de dos vértices opuestos marcados como 
-internos que comparten la misma cara y otro caso especial en el que cinco vértices están 
-marcados como internos, pueden generar agujeros en el modelo final en tres dimensiones, como 
+Por ejemplo, si se juntan un caso especial de dos vértices opuestos marcados como
+internos que comparten la misma cara y otro caso especial en el que cinco vértices están
+marcados como internos, pueden generar agujeros en el modelo final en tres dimensiones, como
 se gráfica en la figura \ref{f:estadoDelArte:MCAmbEx}
 
 \begin{figure}[htbp]
@@ -343,11 +343,11 @@ la figura \ref{f:estadoDelArte:MCAmb}
 \label{f:estadoDelArte:MCAmb}
 \end{figure}
 
-En el ejemplo anterior, en vez de usar el patrón etiquetado como 6e, debería usarse el 6c 
+En el ejemplo anterior, en vez de usar el patrón etiquetado como 6e, debería usarse el 6c
 de la figura anterior, solucionando así el potencial error topológico.
-Otra posible solución, es usar pirámides o tetraedros (Marching Tetrahedrons), los cuales 
-son más sencillas de utilizar ya que sólo existen 16 posibles combinaciones totales (al igual que 
-Marching Squares, ya que en ambos casos, los elementos tienen cuatro vértices), los cuales 
+Otra posible solución, es usar pirámides o tetraedros (Marching Tetrahedrons), los cuales
+son más sencillas de utilizar ya que sólo existen 16 posibles combinaciones totales (al igual que
+Marching Squares, ya que en ambos casos, los elementos tienen cuatro vértices), los cuales
 pueden ser reducidos a sólo cuatro. La poligonización tetraédrica se muestra en la figura \ref{f:estadoDelArte:image_004}
 
 \begin{figure}[htb]
@@ -359,7 +359,7 @@ pueden ser reducidos a sólo cuatro. La poligonización tetraédrica se muestra 
 \label{f:estadoDelArte:image_004}
 \end{figure}
 
-De hecho, en el caso de Marching Cubes, cada cubo puede al final, descomponerse en 
+De hecho, en el caso de Marching Cubes, cada cubo puede al final, descomponerse en
 cinco pirámides o tetraedros como se muestra en la figura \ref{f:estadoDelArte:image_006}
 
 \begin{figure}[htb]

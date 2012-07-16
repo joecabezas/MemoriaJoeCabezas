@@ -4,7 +4,7 @@
 \section{Estructura}
 \label{ch:implementacion:sec:estructura}
 
-Para realizar la implementacion del algoritmo se debe primero proponer una convención para enumerar los vertices y aristas de un cubo, para esta implementacion se usara la convencion señalada anteriormente en la figura \ref{f:estadoDelArte:convention}, luego de definida la enumeración de cada vértice y arista, es necesario poder representar cada uno de los 256 casos con un identificador único denominado \emph{cubeIndex}, luego hay que determinar que aristas con cortadas por la superficie que atraviesa cada caso en particular, para ello se necesita de una tabla que asocie un \emph{cubeIndex} con las aristas que seran atravesadas, esta tabla se denomina \emph{edgeTable}, una vez que se conocen aquellas aristas que son atravesadas, el siguiente paso es crear una malla de triángulos que formen esta superficie, la tabla \emph{triTable} asocia cada caso con una lista de triángulos, en orden, que generan la superficie buscada, todas estas estructuras de datos seran explicadas a continuación.
+Para realizar la implementacion del algoritmo se debe primero proponer una convención para enumerar los vertices y aristas de un cubo, para esta implementacion se usara la convencion señalada anteriormente en la figura \ref{f:estadoDelArte:convention}, luego de definida la enumeración de cada vértice y arista, es necesario poder representar cada uno de los 256 casos con un identificador único denominado \emph{cubeIndex}, luego hay que determinar que aristas son cortadas por la superficie que atraviesa cada caso en particular, para ello se necesita de una tabla que asocie un \emph{cubeIndex} con las aristas que seran atravesadas, esta tabla se denomina \emph{edgeTable}, una vez que se conocen aquellas aristas que son atravesadas, el siguiente paso es crear una malla de triángulos que formen esta superficie, la tabla \emph{triTable} asocia cada caso con una lista de triángulos ordenados, que generan la superficie buscada. Todas estas estructuras de datos serán explicadas a continuación.
 
 \section{Estructuras de datos}
 \label{ch:implementacion:sec:estructurasDeDatos}
@@ -110,6 +110,9 @@ Esto indica que para ambos casos, no se crea ningún trianglo, ya que cuando no 
 \section{Datos de entrada}
 \label{ch:implementacion:sec:datosDeEntrada}
 
+\subsection{Requerimientos}
+\label{ch:implementacion:sec:datosDeEntrada:subsec:requerimientos}
+
 Para poder utilizar el algoritmo de \emph{MarchingCubes}, se necesita que cada punto de un espacio tridimensional tenga asociado un valor dentro de un rango definido de manera que cada punto pueda describirse como un vector de cuatro dimensiones compuestas por sus coordenadas y un valor escalar, como muestra la ecuacion \ref{ch:implementacion:sec:datosDeEntrada:vector}.
 
 \begin{equation}
@@ -119,7 +122,7 @@ Para poder utilizar el algoritmo de \emph{MarchingCubes}, se necesita que cada p
 
 Por ejemplo, en una habitación se tiene un foco de luz en el centro emitiendo luz en todas direcciones, con esto, cada punto de la habitación percibe distintas instensidades de luz que depende de la distancia al foco, mientras mas cerca del foco, mayor intensidad, mientras mas alejado del foco, menor intensidad. Si de alguna manera pudiesen marcase todos aquellos puntos que tengan una intensidad especifica se tendria una esfera formada por puntos equidistantes al foco, ya que todo ellos comparten la misma intensidad, por lo que se dice que esa es la superficie que encierra a todos los puntos con una cierta intensidad o mayor.
 
-Ciertamente, el algoritmo tambien sirve para generar visualizar graficos en tres dimensiones, usando el mismo principio, cada punto del espacio tiene un valor asociado el cual es calculado por la ecuacion, para poder dibujar la susperficie se puede transformar la ecuacion en una inecuacion y luego marcar todos aquellos puntos que sean menores que el valor entregado por la ecuacion, por ejemplo se tiene en la ecuación \ref{ch:implementacion:sec:datosDeEntrada:ec1}:
+Ciertamente, el algoritmo tambien sirve para visualizar graficos en tres dimensiones, usando el mismo principio, cada punto del espacio tiene un valor asociado el cual es calculado por la ecuacion, para poder dibujar la susperficie se puede transformar la ecuacion en una inecuacion y luego marcar todos aquellos puntos que sean menores que el valor entregado por la ecuacion, por ejemplo se tiene en la ecuación \ref{ch:implementacion:sec:datosDeEntrada:ec1}:
 
 \begin{equation}
 \label{ch:implementacion:sec:datosDeEntrada:ec1}
@@ -135,6 +138,9 @@ Para poder graficar esta ecuacion usando \emph{MarchingCubes} se debe transforma
 
 Dependiendo de la resolución escogida, es posible que algunos cubos tengan algunos de sus vértices con coordenadas $(x,y)$ que satisfacen a la inecuación, por lo tanto quedan marcados como vértices internos, luego el proceso es ir iterando en todos esos cubos y reemplazando los cubos por los triangulos que correspondan a los quince casos mostrados en la figura \ref{f:estadoDelArte:MarchingCubes}.
 
+\subsection{Datos como cortes de nivel}
+\label{ch:implementacion:sec:datosDeEntrada:subsec:datoscomocurvasdenivel}
+
 Otra forma de entregar datos de entrada es teniendo cortes de nivel de un cuerpo tridimensional, un ejemplo de esto son las imágenes obtenidas de los exámenes de resonancia magnética. Cada imagen representa un corte transversal del cuerpo estudiado, como el que se muestra en la figura \ref{f:ch:implementacion:sec:datosdeentrada:img:ejemplodernm}:
 
 \begin{figure}[hbt]
@@ -143,10 +149,120 @@ Otra forma de entregar datos de entrada es teniendo cortes de nivel de un cuerpo
 	\label{f:ch:implementacion:sec:datosdeentrada:img:ejemplodernm}
 \end{figure}
 
-Éstas imágenes, en conjunto, describen un cuerpo en tres dimensiones, mostrando con detalle sus componentes internos. Cada imágen está compuesta por una matriz de pixeles en una escala de grises, dependiendo de la profundidad de color, pueden ser de 256 valores (8 bits) o de 65536 valores (16 bits) diferentes, con estas imágenes se puede construir un espacio que puede servir como entrada para el algoritmo de \emph{MarchingCubes}, una posible manera es usando las coordenadas en 2 dimensiones del pixel en una imagen, y el valor z que representa la imagen dentro del cuerpo, luego el valor de este punto esta determinado por la intensidad de color del pixel, como se muestra en la ecuacion \ref{ch:implementacion:sec:datosDeEntrada:ec3}:
+Éstas imágenes, en conjunto, describen un cuerpo en tres dimensiones, mostrando con detalle sus componentes internos. Cada imágen está compuesta por una matriz de pixeles en una escala de grises, dependiendo de la profundidad de color, pueden ser de 256 valores (8 bits) o de 65536 valores (16 bits) diferentes, con estas imágenes se puede construir un espacio que puede servir como entrada para el algoritmo de \emph{MarchingCubes}, una un de hacerlo es usando las coordenadas en 2 dimensiones del pixel en una imagen y usando como valor $z$, el número que representa la imagen dentro del cuerpo, una vez identificado el pixel en un espacio tridimensional, el valor de éste pixel está determinado por la intensidad de color del pixel, como se muestra en la ecuación \ref{ch:implementacion:sec:datosDeEntrada:ec3}:
 
 \begin{equation}
 \label{ch:implementacion:sec:datosDeEntrada:ec3}
 	(x,y,z,color)
 \end{equation}
 
+Para ejemplificar, considere dos imágenes de $2x2$ pixeles, esto crea 8 pixeles en total, suficientes para que cada pixel represente un vértice de un cubo, luego cada pixel determina el valor del vértice usando la tonalidad gris del pixel asociado. En la figura \ref{f:implementacion:images_minimal}, se muestra éste caso, usando 2 imágenes cuyos pixeles tienen una tonalidad de gris de 97, en una escala de 0 a 255 (8 bits), excepto el pixel (0,0) de la primera imagen (imagen \#0).
+
+\begin{figure}[!hbt]
+	\centering
+	\includegraphics[width=0.6\textwidth]{images/misc/images_minimal.pdf}
+	\caption{Dos imágenes de $2x2$ pixeles cada una, cada pixel está etiquetado con su respectivo vector de 4 dimensiones.}
+	\label{f:implementacion:images_minimal}
+\end{figure}
+
+Si se aplica \emph{Marching Cubes} en este caso usando un valor mínimo de $100$, casi todos los vértices cumplirian la condición ya que casi todos los vértices tienen un valor de $97$, excepto el vértice correspondiente al pixel $(0,0,0)$ (primer pixel de la imagen \#0), por esto, es el único vértice no marcado, quedando asi un cubo que solo necesita de un sólo triángulo que separa a este vértice de los demás, como se muestra en la figura \ref{f:implementacion:images_minimal_cube}.
+
+\begin{figure}[!hbt]
+	\centering
+	\includegraphics[width=0.3\textwidth]{images/misc/images_minimal_cube.pdf}
+	\caption{El resultado de aplicar \emph{Marching Cubes}, solo se obtiene un triángulo que separa al vertice blanco, de los demás.}
+	\label{f:implementacion:images_minimal_cube}
+\end{figure}
+
+\pagebreak
+En esta implementación, se usó este último método para obtener una nube de puntos para poder extraer una superficie utilizando \emph{Marching Cubes}.
+
+%TODO: poner link al glosario, en 'dataset'
+Las imágenes de la figura \ref{f:implementacion:dataset:ImSphRad100} muestran algunas de las imágenes de un \emph{dataset} que describe una esfera mediante cortes transversales.
+
+\begin{figure}
+\centering
+
+	\begin{subfigure}{0.30\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/datasets/ImSphRad100/Sphere001.png}
+		\caption{Imagen \#001}
+		\label{f:implementacion:ImSphRad100:001}
+	\end{subfigure}
+	%~
+	\begin{subfigure}{0.30\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/datasets/ImSphRad100/Sphere051.png}
+		\caption{Imagen \#051}
+		\label{f:implementacion:ImSphRad100:051}
+	\end{subfigure}
+	%~
+	\begin{subfigure}{0.30\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/datasets/ImSphRad100/Sphere070.png}
+		\caption{Imagen \#070}
+		\label{f:implementacion:ImSphRad100:070}
+	\end{subfigure}
+
+	\begin{subfigure}{0.30\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/datasets/ImSphRad100/Sphere102.png}
+		\caption{Imagen \#102}
+		\label{f:implementacion:ImSphRad100:102}
+	\end{subfigure}
+	%~
+	\begin{subfigure}{0.30\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/datasets/ImSphRad100/Sphere166.png}
+		\caption{Imagen \#166}
+		\label{f:implementacion:ImSphRad100:166}
+	\end{subfigure}
+	%~
+	\begin{subfigure}{0.30\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/datasets/ImSphRad100/Sphere218.png}
+		\caption{Imagen \#218}
+		\label{f:implementacion:ImSphRad100:218}
+	\end{subfigure}
+
+	\begin{subfigure}{0.30\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/datasets/ImSphRad100/Sphere241.png}
+		\caption{Imagen \#241}
+		\label{f:implementacion:ImSphRad100:241}
+	\end{subfigure}
+	%~
+	\begin{subfigure}{0.30\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/datasets/ImSphRad100/Sphere249.png}
+		\caption{Imagen \#249}
+		\label{f:implementacion:ImSphRad100:249}
+	\end{subfigure}
+	%~
+	\begin{subfigure}{0.30\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/datasets/ImSphRad100/Sphere300.png}
+		\caption{Imagen \#300}
+		\label{f:implementacion:ImSphRad100:300}
+	\end{subfigure}
+
+	\caption{Imágenes que describen una esfera}
+	\label{f:implementacion:dataset:ImSphRad100}
+\end{figure}
+
+Éste dataset consta de 300 imágenes de $300 x 300$ pixeles con una profundidad de grises de 8 bits. Como se puede observar en la imagen \ref{f:implementacion:ImSphRad100:001} todos sus pixeles son negros, y considerando una profundidad de grises de 8 bits, es que todos sus pixeles valen $0$ (cero), sin embargo, la imagen \label{f:implementacion:ImSphRad100:051} muestra un pequeño círculo en su centro, por lo que aquellos pixeles que estan dentro del círculo, tienen un valor de $FF_{16} = 00_{2}$. A medida que nos acercamos a la imagen numero 300, este cŕculo va creciendo hasta alcanzar un radio máximo, luego, su radio comienza a disminuir, hasta volver a un valor de cero. Describiendo de esta manera una esfera, en un espacio discreto de puntos de tamaño $300 x 300 x 300$
+
+Ya que cada pixel, tiene asociado un par de coordenadas en 2 dimensiones, un número de imágen, y además un valor para especificar una tonalidad de gris, se puede describir cada pixel, como un vector de 4 dimensiones como se explicó en la seccion \ref{ch:implementacion:sec:datosDeEntrada:subsec:requerimientos}. Satisfaciendo los requerimientos que necesitan los datos de entrada para poder usar \emph{Marching Cubes}.
+
+El resultado de aplicar \emph{Marching Cubes} a este \emph{dataset} se muestra en la figura \ref{f:implementacion:ImSphRad100:screenshot_40}
+
+\begin{figure}[hbt]
+	\centering
+	\includegraphics[width=0.95\textwidth]
+	{images/results/ImSphRad100/screenshot_40.png}
+	\caption{La superficie extraida usando \emph{Marching Cubes} sobre un dataset que describe una esfera.}
+	\label{f:implementacion:ImSphRad100:screenshot_40}
+\end{figure}
+
+\subsection{Formato de las imágenes de entrada}
+\label{ch:implementacion:sec:datosDeEntrada:subsec:formatodelasimagenesdeentrada}
