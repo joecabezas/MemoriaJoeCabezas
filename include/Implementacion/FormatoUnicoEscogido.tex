@@ -1,0 +1,79 @@
+\section{Formato único escogido}
+\label{ch:implementacion:sec:formatounicoescogido}
+
+%TODO: citas
+% http://netpbm.sourceforge.net/history.html
+El formato de imagen escogido es el formato PGM (\emph{Portable GreyMap}), el cual derivado del formato PBM (\emph{Portable BitMap}) inventado por Jef Poskanzer en los años 1980, cuyo proposito era crear un formato libre de problemas, resistente a los cambios de codificación a través de correo electrónico, para mapas de bits (\emph{bitmaps}) en blanco y negro. Fue diseñado para ser lo suficientemente simple para que una imagen pudiese ser transmitida por correo electrónico sin nigún método de encapsulamiento especial y sobrevivir a cualquier traducción y ser facilmente extraible en el correo destino.
+
+\subsection{Historia}
+\label{ch:implementacion:sec:formatounicoescogido:subsec:historia}
+
+En el año 1988, Jef distribuyó herramientas para trabajar con las imágenes PBM, en un proyecto conocido como \emph{Pbmplus}, éstas fueron las herramientas principales para convertir entre imágenes PBM y otras existentes.
+
+A finales de 1988, Jef agregó los formatos PGM y PPM y muchas mas herramientas al proyecto \emph{Pbmplus}, finalmente, aunque Jef jamás renunció de manera formal a dar soporte al proyecto, el 10 de diciembre de 1991 fue su última actualización, y el proyecto quedo abandonado.
+
+En el año 1993, el proyecto \emph{Netbpm} fue desarrollado para reemplazar a \emph{Pbmplus}, este nuevo proyecto no era nada más que un cambio de nombre, llamado así por el hecho de que la gente al rededor del mundo pudiera mantener este paquete hasta el dia de hoy.
+
+\subsection{Formato PGM}
+\label{ch:implementacion:sec:formatounicoescogido:subsec:formatopgm}
+
+La especificación de los archivos PGM es simple:
+
+\begin{enumerate}
+	\item Un \jcq{número mágico} para identificar el tipo de archivo. En numero mágico de un archivo PGM son dos caracteres: \jcq{P2}, para pixeles escritos como caracteres ASCII, o \jcq{P5}, si los pixeles estan escritos de manera binaria usando 1 o 2 \emph{bytes}
+	\item Un caracter de espacio.
+	\item Un valor ANCHO, formateado como un caracter ASCII en decimal.
+	\item Un caracter de espacio.
+	\item Una valor ALTURA, nuevamente como un caracter ASCII en decimal.
+	\item Un caracter de espacio.
+	\item El valor MÁXIMO para la escala de grises (que representara el color blanco), nuevamente en ASCII decimal, debe ser menor que 65536 (para no superar una profundidad de color de 16 bits), y mayor que cero.
+	\item Un caracter de espacio (usualmente una nueva línea).
+	\item Una trama de ALTURA filas, ordenadas de arriba hacia abajo, cada fila consiste en una cantidad definida por el valor ANCHO de valores grises, de izquierda a derecha, cada valor de gris es un número entre cero y el definido como MÁXIMO, siendo $0$ el valor que representa al negro, y MÁXIMO el que representa el color blanco, cada valor es representado como un valor binario puro de 1 o 2 bytes, si el valor MÁXIMO es menor a 255, entonces es 1 \emph{byte}, de lo contrario, son 2 bytes. El byte más significativo es el primero.
+	Una fila de una imagen es horizontal, y una columna vertical, los pixeles son cuadrados y son contiguos.
+\end{enumerate}
+
+Dependiendo del \jcq{Numero Mágico} (\emph{Magic Number}), existen 6 formatos de archivos diferentes, cada formato difiere solamente en la escala de colores que es capaz de representar, como indica la tabla \ref{ch:implementacion:tabla:tiposdearchivospbm}.
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Magic Number	&	Type				&	Encoding\\ \hline
+		P1				&	Portable bitmap		&	ASCII \\ \hline
+		P2				&	Portable graymap	&	ASCII \\ \hline
+		P3				&	Portable pixmap		&	ASCII \\ \hline
+		P4				&	Portable bitmap		&	Binary \\ \hline
+		P5				&	Portable graymap	&	Binary \\ \hline
+		P6				&	Portable pixmap		&	Binary \\ \hline
+	\end{tabular}
+	\caption{Tipos de imágenes PBM}
+	\label{ch:implementacion:tabla:tiposdearchivospbm}
+\end{table}
+
+Un ejemplo de una imagen PGM con codificacion ASCII (con un \emph{Magic Number} \jcq{P2}), se presenta en el siguiente archivo PGM:
+
+\begin{verbatim}
+P2
+#Este ejemplo muestra la palabra "JOE"
+18 7
+15
+0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+0  3  3  3  3  0  0  7  7  7  7  0  0 11 11 11 11  0
+0  0  0  3  0  0  0  7  0  0  7  0  0 11  0  0  0  0
+0  0  0  3  0  0  0  7  0  0  7  0  0 11 11 11  0  0
+0  3  0  3  0  0  0  7  0  0  7  0  0 11  0  0  0  0
+0  3  3  3  0  0  0  7  7  7  7  0  0 11 11 11 11  0
+0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+\end{verbatim}
+
+La imagen obtenida de este archivo PGM se muestra en la figura \ref{f:implementacion:sec:formatos:pgm_example_1}
+
+\begin{figure}[hbt]
+	\centering
+	\includegraphics[width=0.95\textwidth]
+	{images/misc/pgm_example_1.png}
+	\caption{Imagen PGM obtenida usando el codigo del ejemplo (Imagen ampliada, tamaño original es de $18x7$ pixeles)}
+	\label{f:implementacion:sec:formatos:pgm_example_1}
+\end{figure}
+
+Para efectos de este estudio, se usarán imágenes en escala de grises, por lo que se usarán los archivos PGM con codificación binaria para una lectura mas simple, es decir, con un \jcq{Número Mágico} de \jcq{P5}
