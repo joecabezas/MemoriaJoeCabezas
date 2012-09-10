@@ -6,7 +6,7 @@ Como se indicó en la sección \ref{ch:implementacion:sec:datosDeEntrada:subsec:
 %TODO: cita a http://www.imagemagick.org/
 Este proceso no es trivial, ya que existen muchos formatos disponibles y muchas especificaciones distintas, por lo que dar soporte a todas es algo que escapa del objetivo de esta investigación, es por ello que se utilizó una herramienta de codigo abierto (\emph{opensource}) llamada \emph{ImageMagick}
 
-Esta herramienta hace que el primer paso sea muy simple, y generalizado para cualquier tipo de archivo del cual se pueda extraer informacion de sus metadatos (tamaño, profundidad de color, etc), si no fuere éste el caso, por ejemplo, imagenes RAW sin informacion de metadatos, es necesario una agregar información extra en tiempo de ejecución.
+Esta herramienta hace que el primer paso sea muy simple, y generalizado para cualquier tipo de archivo del cual se pueda extraer información de sus metadatos (tamaño, profundidad de color, etc), si no fuere éste el caso, por ejemplo, imagenes RAW sin informacion de metadatos, es necesario una agregar la información faltante en tiempo de ejecución.
 
 La sintáxis del comando a usar es la siguiente:
 
@@ -41,6 +41,7 @@ Para poder convertir un dataset completo, existen varios caminos, el usado en es
 
 El codigo fuente es simple, y pretende facilitar el ingreso de datos y otras opciones al comando \emph{convert}:
 
+\begin{scriptsize}
 \begin{verbatim}
 #!/bin/bash
 
@@ -55,37 +56,37 @@ PGM, y las guarda en un subdirectorio llamado pgm/ dentro de la carpeta
 mencionada.
 
 OPCIONES:
-	-h	Imprime este mensaje de ayuda de uso
-	-d	Carpeta donde estan las imagenes a transformar
-	-t	Carpeta destino de imagenes transformadas (default: pgm)
-	-r	Argumento -resize usado por ImageMagick (default: 100%)
-	-a	Modo sin compresion ASCII de imagemagick (-compress none)
+    -h  Imprime este mensaje de ayuda de uso
+    -d  Carpeta donde estan las imagenes a transformar
+    -t  Carpeta destino de imagenes transformadas (default: pgm)
+    -r  Argumento -resize usado por ImageMagick (default: 100%)
+    -a  Modo sin compresion ASCII de imagemagick (-compress none)
 EOF
 }
 
 #if [ $# -eq 0 ]; then
-#	usage
-#	exit
+#   usage
+#   exit
 #fi
 
 while getopts "hd:e:t:r:a" opt; do
-	case $opt in
-		h)
-			usage
-			;;
-		d)
-			BASE_DIR=$OPTARG
-			;;
-		t)
-			TARGET_DIR=$OPTARG
-			;;
-		r)
-			RESIZE=$OPTARG
-			;;
-		a)
-			COMPRESS="-compress none"
-			;;
-	esac
+    case $opt in
+        h)
+            usage
+            ;;
+        d)
+            BASE_DIR=$OPTARG
+            ;;
+        t)
+            TARGET_DIR=$OPTARG
+            ;;
+        r)
+            RESIZE=$OPTARG
+            ;;
+        a)
+            COMPRESS="-compress none"
+            ;;
+    esac
 done
 
 #VALORES POR DEFECTO
@@ -104,13 +105,14 @@ cd "$BASE_DIR"
 
 #make target dir
 if [ ! -d "$TARGET_DIR" ]; then
-	mkdir "$TARGET_DIR"
-fi 
+    mkdir "$TARGET_DIR"
+fi
 
 for f in *; do
-	convert "$f" $ARGUMENTS "$TARGET_DIR/$f.pgm"
+    convert "$f" $ARGUMENTS "$TARGET_DIR/$f.pgm"
 done
 \end{verbatim}
+\end{scriptsize}
 
 Este \emph{bash script} permite especificar un directorio donde estan las imágenes del dataset, para poder convertirlas, incluso acepta un parámetro \emph{-r} que escala las imágenes porcentualmente o de manera fija, por ejemplo:
 
@@ -118,4 +120,4 @@ Este \emph{bash script} permite especificar un directorio donde estan las imáge
 ./convert -d directorio_dataset/ -r 50%
 \end{verbatim}
 
-El cual toma todas las imágenes dentro del directorio \emph{directorio\_dataset\slash} y las transforma a PGM, luego de reducir su tamaño en un 50\% a
+El cual toma todas las imágenes dentro del directorio \emph{directorio\_dataset\slash} y las transforma a PGM, luego de reducir su tamaño en un 50\%
