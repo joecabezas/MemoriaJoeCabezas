@@ -3,8 +3,8 @@
 
 \section{Mallas Geométricas}
 \label{sec:mallasGeometricas}
-Las mallas geométricas son una herramienta fundamental en la ciencia e ingeniería, son
-un conjunto de polígonos (triángulos, cuadriláteros, tetraedros), que definen una superficie en un
+Las mallas de superficie son una herramienta fundamental en la ciencia e ingeniería, son
+un conjunto de polígonos (triángulos, cuadriláteros, etc.), que conforman una superficie en un
 espacio definido, en el que la intersección de dos elementos de una malla, puede ser el conjunto
 vacío, un vértice, una arista o una cara en común. Las mallas tienen asociadas un conjunto de
 elementos topológicos tales como: vértices, aristas, y caras poligonales.
@@ -20,9 +20,9 @@ discretizar un elemento de geometría irregular, la solución no es tan trivial,
 método de generación de mallas más elaborado.
 
 Sin embargo, para muchos problemas de ingeniería, las mallas generadas por la
-triangulación de Delaunay, no son suficientes para resolver un problema o su análisis numérico,
-es posible en algunos casos que sea necesario agregar nuevos puntos con el fin de mejorar la
-calidad de la malla. A este proceso de mejoramiento, se le conoce como Refinamiento.
+triangulación de Delaunay, no son suficientes para resolver un problema o su análisis numérico. En algunos casos es posible que sea necesario agregar nuevos puntos con el fin de mejorar la
+calidad de la malla, a este proceso de mejoramiento, se le conoce como Refinamiento.
+
 En tres dimensiones, en particular, las mallas geométricas son una representación de un
 objeto físico, y para efectos de su visualización, los elementos internos de una malla pueden ser
 omitidos, y con ello, sólo se utilizan mallas que describan la superficie del objeto.
@@ -43,8 +43,8 @@ específica dentro de un sistema de referencia continuo, es decir, que no existe
 mínima para el desplazamiento.
 
 Por ejemplo, usando un acercamiento a la definición de límites: si un objeto en un espacio
-continuo se desplaza una distancia  d  positiva  (d >0 ) , siempre existirá una partícula que
-pueda desplazarse una distancia menor, sin importar lo pequeña que sea  d .
+continuo se desplaza una distancia  d  positiva  ($d > 0$) , siempre existirá una partícula que
+pueda desplazarse una distancia menor, sin importar lo pequeño que sea el valor de $d$.
 
 Es esta continuidad del espacio del mundo real, lo que dificulta la tarea de representar
 cualquier objeto en una simulación virtual.
@@ -88,7 +88,7 @@ una colección de puntos en un espacio, genera una malla geométrica formada por
 sean lo más equiláteros posible.
 
 Para extraer la información de la forma de un cuerpo, existen tecnologías capaces de
-extraer la superficie de éstos, tales como “software” capaces de generar un modelo en tres
+extraer la superficie de éstos, tales como \emph{software} capaces de generar un modelo en tres
 dimensiones a partir de un arreglo de fotografías que rodean al objeto, también existe la
 tecnología de usar un arreglo de cámaras que capturan, en tiempo real, una nube de puntos
 infrarrojos que son emitidos desde el aparato, y con ello, crear un modelo en tres dimensiones. En
@@ -100,8 +100,6 @@ través de un \emph{software} que genera la malla geométrica del área de inter
 
 \section{Objetivos}
 \label{sec:objetivos}
-En esta investigación, se estudiarán las distintas técnicas que se exponen en el estado del arte, %TODO: poner cita al estado del arte
-se comprobarán los problemas topológicos que traen y se estudiarán las mejoras que actualmente se
-han implementado durante la existencia de estos algoritmos, para que finalmente, se pueda proponer
-un flujo de trabajo que permita, a partir de una nube de puntos, poder extraer una superficie del
-volumen de alta calidad.
+En esta investigación, se propondrá un flujo de trabajo que permita la extracción de una superficie dada una colección de puntos en un espacio de tres dimensiones. Se hará enfasis en los primeros pasos del flujo propuesto, para ello se estudiará e implmentará el algoritmo de \emph{Marching Cubes} para hacer la extracción de una malla de superficie que deberá ser refinada en los pasos posteriores del flujo propuesto.
+
+Además, se construirá una herramienta de visualización y navegación que ayudará a la correcta elección del valor mínimo para poder extraer una superficie con un nivel de detalle controlable por el investigador.

@@ -187,7 +187,7 @@ De la misma manera que el caso de dos dimensiones, debido a que cada uno de los 
 vértices puede tener dos estados: vértice marcado como interno o externo (dentro o fuera de la
 superficie del cuerpo), se tienen 256 combinaciones posibles, es decir, una superficie puede
 atravesar a un cubo de 256 maneras posibles. Sin embargo, al igual que en su homólogo en dos
-dimensiones, que tiene dieciséis formas posibles, estas pueden ser reducidas a un numero inferior
+dimensiones, que tiene dieciséis formas posibles, estas pueden ser reducidas a un número inferior
 de patrones, ya que entre ellos existen diferencias solamente de rotación y reflexión.
 
 En el caso de tres dimensiones, los 256 patrones pueden ser reducidos de la misma
@@ -214,9 +214,7 @@ Finalmente las quince familias de posibles casos son los que se describen en la 
 \label{subsec:marchingCubes:procedimiento}
 
 El procedimiento es similar al explicado a Marching Squares, en primer lugar se divide el
-espacio en un arreglo uniforme de regiones cúbicas, luego, se evalúa cada vértice para etiquetarlo
-como un vértice interno o externo, luego, calcular a cuál de los 15 casos pertenece cada división,
-y generar los triángulos, para que finalmente, extraer así la superficie.
+espacio en un arreglo uniforme de regiones cúbicas, luego, se evalúa cada vértice para etiquetarlo como un vértice interno o externo, luego, calcular a cuál de los 15 casos pertenece cada división y generar los triángulos, para finalmente extraer así la superficie.
 En resumen, el procedimiento reducido a un solo cubo, ocurre según lo siguiente:
 
 En un comienzo se tiene un cubo, como el descrito en la figura \ref{f:estadoDelArte:cube_01}
@@ -245,8 +243,8 @@ como vértices externos (en negro), descrito por le figura \ref{f:estadoDelArte:
 
 Luego se crea un triángulo cuyos vértices se apoyan en los puntos medios de las aristas
 que comparten el vértice marcado como interno, de esta manera, se tiene un cubo que es
-atravesado por una superficie que precisamente deja un sólo vértice dentro (o fuera, dependiendo
-de la reflexión del caso), resultando un triangulo como el de la figura \ref{f:estadoDelArte:cube_03}
+atravesado por una superficie que precisamente deja un solo vértice dentro (o fuera, dependiendo
+de la reflexión del caso), resultando un triángulo como el de la figura \ref{f:estadoDelArte:cube_03}
 
 \begin{figure}[ht]
 \centering
@@ -260,9 +258,9 @@ de la reflexión del caso), resultando un triangulo como el de la figura \ref{f:
 \subsection{Consecuencias}
 \label{subsec:marchingCubes:consecuencias}
 
-Nuevamente, al igual que su versión en dos dimensiones, presenta las mismas falencias,
-por ejemplo, sin ninguna interpolación, y dependiendo de la resolución de la división, la
-superficie extraída puede presentar un efecto de escalonamiento (\jcq{aliasing}) como el que se
+Nuevamente, al igual que su versión en dos dimensiones, presenta las mismas falencias.
+Por ejemplo, sin ninguna interpolación y dependiendo de la resolución de la división, la
+superficie extraída puede presentar un efecto de escalonamiento (\jcq{aliasing}) como se
 muestra en la figura \ref{f:estadoDelArte;superficies_resultantes_variando_divisiones}
 
 \begin{figure}
@@ -283,16 +281,16 @@ muestra en la figura \ref{f:estadoDelArte;superficies_resultantes_variando_divis
 
 	\begin{subfigure}{0.45\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{images/marchingcubes/mc_blobs_50.png}
-		\caption{Marching Cubes con 50 divisiones}
-		\label{f:estadoDelArte:mc_blobs_50}
+		\includegraphics[width=\textwidth]{images/marchingcubes/mc_blobs_20.png}
+		\caption{Marching Cubes con 20 divisiones}
+		\label{f:estadoDelArte:mc_blobs_20}
 	\end{subfigure}
 	~
 	\begin{subfigure}{0.45\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{images/marchingcubes/mc_blobs_20.png}
-		\caption{Marching Cubes con 20 divisiones}
-		\label{f:estadoDelArte:mc_blobs_20}
+		\includegraphics[width=\textwidth]{images/marchingcubes/mc_blobs_50.png}
+		\caption{Marching Cubes con 50 divisiones}
+		\label{f:estadoDelArte:mc_blobs_50}
 	\end{subfigure}
 
 	\caption{Superficies resultantes variando la cantidad de divisiones}
@@ -300,8 +298,8 @@ muestra en la figura \ref{f:estadoDelArte;superficies_resultantes_variando_divis
 \end{figure}
 
 Se puede apreciar que al aumentar la resolución, la calidad aumenta, pero
-computacionalmente requiere mas cómputo y memoria, ya que aumentan la cantidad de caras que
-describen la superficie extraída, como se ve en la figura \ref{f:estadoDelArte:polygonise3}
+computacionalmente requiere mas cómputo y memoria ya que aumenta la cantidad de caras que
+describen la superficie extraída como se ve en la figura \ref{f:estadoDelArte:polygonise3}
 
 \begin{figure}[hbp]
 \centering
@@ -313,14 +311,14 @@ describen la superficie extraída, como se ve en la figura \ref{f:estadoDelArte:
 \end{figure}
 
 Otro problema importante son los posibles problemas topológicos que tiene este
-algoritmo, debido a los casos ambiguos que se explican de la misma manera que en su versión en
-dos dimensiones, y algunos casos donde se forman agujeros dependiendo de que ciertos casos
-queden adyacentes.
+algoritmo debido a los casos ambiguos que se explican de la misma manera que en su versión en
+dos dimensiones, y algunos casos donde se forman agujeros cuando ciertos patrones especiales 
+quedan adyacentes.
 
 Por ejemplo, si se juntan un caso especial de dos vértices opuestos marcados como
 internos que comparten la misma cara y otro caso especial en el que cinco vértices están
 marcados como internos, pueden generar agujeros en el modelo final en tres dimensiones, como
-se gráfica en la figura \ref{f:estadoDelArte:MCAmbEx}
+se grafica en la figura \ref{f:estadoDelArte:MCAmbEx}
 
 \begin{figure}[htbp]
 \centering
