@@ -1,0 +1,47 @@
+ejemplos de marchin diamons y el otro
+
+introduccion
+	mallas de volumen
+		no hablar
+		escapa en el alcance de la memoria
+
+1.1
+	hable de delanuay, pero no cite
+		siempre hay que citar
+
+¿que es lo nuevo aca?
+	la propuesta del workflow, usando mc
+	invente una herramienta que permite mejorar el punto de partida para iniciar el workflow (aporte)
+
+objetivos
+	en esta memoria, a partir de un dataset (explicar que es), generar una malla de superficies (como?)...
+		teniendo esto claro, tiene que decir, las distintas técnicas que se exponen en le estado del arte.. (DE QUE?)
+		falta un "en vista de todo lo anterior explicado..."
+		hablar del workflow!
+		* posible cambio de enfoque
+			generar una herramienta que permita en un primer paso escoger que malla usar para el refinamiento opcional mediante el visualizador
+
+2.1
+	"obtener el contorno"...
+		este es el objetivo!
+
+3.3.1
+	si no es una ecuacion, no decir que es una
+
+resultados
+	basta con mostrar el workflow de uno solamente
+
+imagenes
+	muy grandes en MSquares, podria usarse subfigures
+
+si estas leyendo un paper y te encuentras que una figura..... esta en una pagina muy lejos, es incomodo, hay que hacer que sea comodo de leer.
+
+incluir el programa!
+	tambien es buena idea un duagrama de clases
+
+citar las imagenes!
+	basta con una nota al pie, y poner en tre parentesis la ultima fecha de visita:
+		fuente: www.pagina.com/imagen.jpg (2 nov 2011)
+
+recomendaciones:
+	leer de nuevo la memoria
