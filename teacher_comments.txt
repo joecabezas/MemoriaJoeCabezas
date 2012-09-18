@@ -45,3 +45,13 @@ citar las imagenes!
 
 recomendaciones:
 	leer de nuevo la memoria
+
+
+//NOTAS PROPIAS
+2.2.4
+	no queda claro que paso con el caso de error topologico, ademas, menciono un caso 6e que "aparece en la imagen", pero al parecer todas son "c"
+
+glosario
+	agregar
+		isosuperficie
+		topologia

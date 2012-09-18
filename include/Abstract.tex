@@ -4,7 +4,7 @@
 En el caso de las imágenes obtenidas por resonancia magnética, lo que se obtiene son un
 arreglo de imágenes de distintos niveles en un mismo eje geométrico de un cuerpo. Luego, para
 generar una malla geométrica del cuerpo existen diversas técnicas, muchas de ellas basadas en
-\jcq{voxels} como por ejemplo, Marching Cubes, Marching Tetrahedrons y Marching Diamonds.
+\jcq{voxels} como por ejemplo, Marching Cubes\cite{Lorensen87marchingcubes}, Marching Tetrahedrons\cite{Shirley90apolygonal} y Marching Diamonds.
 En esta investigación se dará especial énfasis en el algoritmo de Marching Cubes, se
 explicará su funcionamiento, resultados y problemas que actualmente presenta.
 Para entender mejor cómo funciona Marching Cubes, es de utilidad primero ver el caso
@@ -143,7 +143,7 @@ compartido.
 \label{subsec:marchingCubes:idea}
 
 Marching Cubes es un algoritmo de extracción de una superficie poligonal de un cuerpo
-en un espacio escalar en tres dimensiones. Existen muchas aplicaciones para este tipo de técnicas,
+en un espacio escalar en tres dimensiones \cite{Lorensen87marchingcubes}. Existen muchas aplicaciones para este tipo de técnicas,
 dos de las más comunes son:
 
 \begin{itemize}
@@ -199,15 +199,15 @@ los restantes 254 casos. Por ejemplo, aquellos casos que solamente tienen un vé
 como interno, sólo representan un triángulo que atraviesa las aristas que convergen a ése vértice y
 existen ocho casos como éste, uno por cada vértice del cubo.
 
-Finalmente las quince familias de posibles casos son los que se describen en la figura \ref{f:estadoDelArte:MarchingCubes}
+Finalmente las quince familias de posibles casos son los que se describen en la figura \ref{f:estadoDelArte:Shu95adaptivemarching_1}
 
 \begin{figure}[hbp]
 \centering
 	\fbox{
-		\includegraphics[width=0.9\textwidth]{images/marchingcubes/MarchingCubes.pdf}
+		\includegraphics[width=0.9\textwidth]{images/marchingcubes/Shu95adaptivemarching_1.png}
 	}
-\caption{Los quince casos de Marching Cubes}
-\label{f:estadoDelArte:MarchingCubes}
+\caption{Los quince casos de Marching Cubes \cite{Shu95adaptivemarching}}
+\label{f:estadoDelArte:Shu95adaptivemarching_1}
 \end{figure}
 
 \subsection{Procedimiento}
@@ -301,7 +301,7 @@ Se puede apreciar que al aumentar la resolución, la calidad aumenta, pero
 computacionalmente requiere mas cómputo y memoria ya que aumenta la cantidad de caras que
 describen la superficie extraída como se ve en la figura \ref{f:estadoDelArte:polygonise3}
 
-\begin{figure}[hbp]
+\begin{figure}[!ht]
 \centering
 	\fbox{
 		\includegraphics[width=0.9\textwidth]{images/marchingcubes/polygonise3.png}
@@ -310,43 +310,73 @@ describen la superficie extraída como se ve en la figura \ref{f:estadoDelArte:p
 \label{f:estadoDelArte:polygonise3}
 \end{figure}
 
-Otro problema importante son los posibles problemas topológicos que tiene este
-algoritmo debido a los casos ambiguos que se explican de la misma manera que en su versión en
-dos dimensiones, y algunos casos donde se forman agujeros cuando ciertos patrones especiales 
-quedan adyacentes.
+El principal problema de \emph{Marching Cubes} es que existe la posibilidad de que aparezcan agujeros como el resultado de la discrepancia en la conexión de los vértices en una cara en común de dos cubos adyacentes \cite{Chernyaev95marchingcubes}
 
-Por ejemplo, si se juntan un caso especial de dos vértices opuestos marcados como
-internos que comparten la misma cara y otro caso especial en el que cinco vértices están
-marcados como internos, pueden generar agujeros en el modelo final en tres dimensiones, como
-se grafica en la figura \ref{f:estadoDelArte:MCAmbEx}
+Como se muestra en la figura \ref{f:estadoDelArte:Bloomenthal88polygonizationof_1}, la poligonización puede producir casos ambigüos cuando en una cara de un cubo quedan marcados dos vértices opuestos (que no comparten ninguna arista), ya que no es posible decidir si la superficie corta en multiples partes el cubo o un cilindro atraviesa las dos esquinas opuestas.
 
-\begin{figure}[htbp]
+\begin{figure}[t]
 \centering
 	\fbox{
-		\includegraphics[width=0.9\textwidth]{images/marchingcubes/MCAmbEx.png}
+		\includegraphics[width=0.7\textwidth]{images/marchingcubes/Bloomenthal88polygonizationof_1.png}
 	}
 \caption{Casos en los que se generan errores topológicos}
-\label{f:estadoDelArte:MCAmbEx}
+\label{f:estadoDelArte:Bloomenthal88polygonizationof_1}
 \end{figure}
 
-Para poder evitar estos errores, se introducen seis nuevas familias de casos, que están descritas en
-la figura \ref{f:estadoDelArte:MCAmb}
+Es por esto que si se forma una configuración en la que dos cubos comparten una cara las cuales tienen solo dos vértices opuestos marcados, pueden generar agujeros en el modelo final en tres dimensiones, como se grafica en la figura \ref{f:estadoDelArte:Chernyaev95marchingcubes_1}
 
-\begin{figure}[htb]
+\begin{figure}[!htb]
 \centering
 	\fbox{
-		\includegraphics[width=0.8\textwidth]{images/marchingcubes/MCAmb.png}
+		\includegraphics[width=0.5\textwidth]{images/marchingcubes/Chernyaev95marchingcubes_1.png}
 	}
-\caption{Nuevos patrones que solucionan los errores topológicos}
-\label{f:estadoDelArte:MCAmb}
+\caption{Un agujero causado por una cara con ambigüedad compartida por dos cubos \cite{Chernyaev95marchingcubes}}
+\label{f:estadoDelArte:Chernyaev95marchingcubes_1}
 \end{figure}
 
-En el ejemplo anterior, en vez de usar el patrón etiquetado como 6e, debería usarse el 6c
-de la figura anterior, solucionando así el potencial error topológico.
-Otra posible solución, es usar pirámides o tetraedros (Marching Tetrahedrons), los cuales
-son más sencillas de utilizar ya que sólo existen 16 posibles combinaciones totales (al igual que
-Marching Squares, ya que en ambos casos, los elementos tienen cuatro vértices), los cuales
-pueden ser reducidos a sólo cuatro. La poligonización tetraédrica se muestra en la figura \ref{f:estadoDelArte:image_004}
+Otro problema puede incluso aparecer cuando no hay discrepancias visibles, \emph{Marching Cubes} puede producir \emph{isosuperficies} con una topología diferente a la generada por otros métodos en el mismo caso \cite{Chernyaev95marchingcubes}. La figura \ref{f:estadoDelArte:Chernyaev95marchingcubes_2} muestra las \emph{isosuperficies} generadas para el mismo cubo usando dos metodos distintos, el primer método se realizó usando \emph{Marching Cubes} y el otro usando \emph{Dividing Cubes Method} \cite{Cline88twoalgorithms}, el cual subdivide el cubo en regiones cúbicas mas pequeñas. La superficie generada por \emph{Marching Cubes} consiste en dos triángulos separados, mientras que la superficie generada por \emph{Dividing Cubes Method} parece mas un \jcq{tubo}
+
+\begin{figure}[!htb]
+\centering
+	\fbox{
+		\includegraphics[width=0.5\textwidth]{images/marchingcubes/Chernyaev95marchingcubes_2.png}
+	}
+\caption{\emph{isosuperficies} generadas por dos métodos diferentes \cite{Chernyaev95marchingcubes}}
+\label{f:estadoDelArte:Chernyaev95marchingcubes_2}
+\end{figure}
+
+Resolviendo las ambigüedades, se pueden evitar los agujeros, de todas maneras, esto no garantiza una topología correcta \cite{Lewiner03efficientimplementation}, tambien es necesario resolver las ambigüedades internas, causadas por aquellos casos que tienen vértices marcados y diagonalmente opuestos. Por ejemplo, para un mismo caso, pueden existir dos posibles poligonizaciones que resuelven el caso y son topológicamente distintas como se muestra en la figura \ref{f:estadoDelArte:Lewiner03efficientimplementation_2}
+
+\begin{figure}[!htb]
+\centering
+	\fbox{
+		\includegraphics[width=0.5\textwidth]{images/marchingcubes/Lewiner03efficientimplementation_2.png}
+	}
+\caption{Dos posibles poligonizaciones para el mismo caso, ambas resuelven los dos posibles casos de ambigüedad \cite{Lewiner03efficientimplementation}}
+\label{f:estadoDelArte:Lewiner03efficientimplementation_2}
+\end{figure}
+
+Estos problemas pueden ser eliminados si se usa una particion del espacio usando \emph{simplexs}\cite{Bloomenthal88polygonizationof}.
+Un \emph{simplex} es la descomposición lineal más simple de un n-espacio. Para tres dimensiones, es el tetraedro. Cualquier par de vértices de un tetraedro esta unido por una arista en común, y por lo tanto, cualquier vértice marcado puede ser separado del resto usando solamente un plano.
+
+% Para poder evitar estos errores, se introducen seis nuevas familias de casos, que están descritas en
+% la figura \ref{f:estadoDelArte:MCAmb}
+
+% \begin{figure}[htb]
+% \centering
+% 	\fbox{
+% 		\includegraphics[width=0.8\textwidth]{images/marchingcubes/MCAmb.png}
+% 	}
+% \caption{Nuevos patrones que solucionan los errores topológicos}
+% \label{f:estadoDelArte:MCAmb}
+% \end{figure}
+
+% En el ejemplo anterior, en vez de usar el patrón etiquetado como 6e, debería usarse el 6c
+% de la figura anterior, solucionando así el potencial error topológico.
+% Otra posible solución, es usar pirámides o tetraedros (Marching Tetrahedrons \cite{Shirley90apolygonal}), los cuales
+% son más sencillas de utilizar ya que sólo existen 16 posibles combinaciones totales (al igual que
+% Marching Squares, ya que en ambos casos, los elementos tienen cuatro vértices), los cuales
+% pueden ser reducidos a sólo cuatro. La poligonización tetraédrica se muestra en la figura \ref{f:estadoDelArte:image_004}
 
 \begin{figure}[htb]
 \centering
