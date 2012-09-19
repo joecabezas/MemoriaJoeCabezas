@@ -261,7 +261,7 @@ de la reflexión del caso), resultando un triángulo como el de la figura \ref{f
 Nuevamente, al igual que su versión en dos dimensiones, presenta las mismas falencias.
 Por ejemplo, sin ninguna interpolación y dependiendo de la resolución de la división, la
 superficie extraída puede presentar un efecto de escalonamiento (\jcq{aliasing}) como se
-muestra en la figura \ref{f:estadoDelArte;superficies_resultantes_variando_divisiones}
+muestra en la figura \ref{f:estadoDelArte:superficies_resultantes_variando_divisiones}
 
 \begin{figure}
 
@@ -294,7 +294,7 @@ muestra en la figura \ref{f:estadoDelArte;superficies_resultantes_variando_divis
 	\end{subfigure}
 
 	\caption{Superficies resultantes variando la cantidad de divisiones}
-	\label{f:estadoDelArte;superficies_resultantes_variando_divisiones}
+	\label{f:estadoDelArte:superficies_resultantes_variando_divisiones}
 \end{figure}
 
 Se puede apreciar que al aumentar la resolución, la calidad aumenta, pero
@@ -356,45 +356,29 @@ Resolviendo las ambigüedades, se pueden evitar los agujeros, de todas maneras, 
 \label{f:estadoDelArte:Lewiner03efficientimplementation_2}
 \end{figure}
 
-Estos problemas pueden ser eliminados si se usa una particion del espacio usando \emph{simplexs}\cite{Bloomenthal88polygonizationof}.
-Un \emph{simplex} es la descomposición lineal más simple de un n-espacio. Para tres dimensiones, es el tetraedro. Cualquier par de vértices de un tetraedro esta unido por una arista en común, y por lo tanto, cualquier vértice marcado puede ser separado del resto usando solamente un plano.
+Estos problemas pueden ser eliminados si se usa una particion del espacio usando \emph{simplexs}.
+Un \emph{simplex} es la descomposición lineal más simple de un n-espacio. Para tres dimensiones, es el tetraedro \cite{Bloomenthal88polygonizationof}. Cualquier par de vértices de un tetraedro esta unido por una arista en común, y por lo tanto, cualquier vértice marcado puede ser separado del resto usando solamente un plano.
 
-% Para poder evitar estos errores, se introducen seis nuevas familias de casos, que están descritas en
-% la figura \ref{f:estadoDelArte:MCAmb}
+Actualmente existen implementaciones que usan tetraedros en lugar de cubos para la poligonización con el fin de evitar este problema de la ambigüedad, y se basan en dividir el cubo en tetraedros, dependiendo la implementación, el cubo puede ser dividido en cinco \cite{BAPayne90surfacemapping}, seis, e incluso doce \cite{Bloomenthal88polygonizationof} tetraedros, como se muestra en la figura \ref{f:estadoDelArte:divisionesTetraedricasDeUnCubo}
 
-% \begin{figure}[htb]
-% \centering
-% 	\fbox{
-% 		\includegraphics[width=0.8\textwidth]{images/marchingcubes/MCAmb.png}
-% 	}
-% \caption{Nuevos patrones que solucionan los errores topológicos}
-% \label{f:estadoDelArte:MCAmb}
-% \end{figure}
+\begin{figure}[h]
 
-% En el ejemplo anterior, en vez de usar el patrón etiquetado como 6e, debería usarse el 6c
-% de la figura anterior, solucionando así el potencial error topológico.
-% Otra posible solución, es usar pirámides o tetraedros (Marching Tetrahedrons \cite{Shirley90apolygonal}), los cuales
-% son más sencillas de utilizar ya que sólo existen 16 posibles combinaciones totales (al igual que
-% Marching Squares, ya que en ambos casos, los elementos tienen cuatro vértices), los cuales
-% pueden ser reducidos a sólo cuatro. La poligonización tetraédrica se muestra en la figura \ref{f:estadoDelArte:image_004}
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/marchingcubes/GueziecHummel95exploitingtriangulated_1.png}
+		\caption{Cinco divisiones tetraédricas}
+		\label{f:estadoDelArte:cincoDivisionesTetraedricas}
+	\end{subfigure}
+	~
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/marchingcubes/Bloomenthal88polygonizationof_2.png}
+		\caption{Doce divisiones tetraédricas}
+		\label{f:estadoDelArte:doceDivisionesTetraedricas}
+	\end{subfigure}
 
-\begin{figure}[htb]
-\centering
-	\fbox{
-		\includegraphics[width=0.9\textwidth]{images/marchingtetrahedrons/image_004.png}
-	}
-\caption{Poligonización tetraédrica}
-\label{f:estadoDelArte:image_004}
+	\caption{Divisiones tetraédricas de un cubo}
+	\label{f:estadoDelArte:divisionesTetraedricasDeUnCubo}
 \end{figure}
 
-De hecho, en el caso de Marching Cubes, cada cubo puede al final, descomponerse en
-cinco pirámides o tetraedros como se muestra en la figura \ref{f:estadoDelArte:image_006}
-
-\begin{figure}[htb]
-\centering
-	\fbox{
-		\includegraphics[width=0.7\textwidth]{images/marchingtetrahedrons/image_006.png}
-	}
-\caption{Descomposición tetraédrica de un cubo}
-\label{f:estadoDelArte:image_006}
-\end{figure}
+Las principales diferencias de cada forma de dividir un cubo en una cierta cantidad de tetraedros, es que al tener menos tetraedros, se generan menos triángulos y viceversa, el problema de usar cinco tetraedros es que es necesario crear una division tetraedrica en forma de \jcq{espejo}, ya que los vértices de un tetraedro no coinciden con el tetraedro del siguiente cubo, por lo que hay que alternar estas dos particiones tetraedricas a modo de \jcq{tablero de ajedrez}, esto se puede evitar haciendo una particion distinta que sea consistente con los cubos vecinos, pero esto implica usar una particion con una cantidad mayor de tetraedros para asegurar esta caracteristica, lo que en la superficie final supone más triángulos. En cualquier caso, los problemas de ambigüedad de \emph{Marching Cubes} se eliminan usando divisiones tetraédricas.

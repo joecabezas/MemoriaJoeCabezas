@@ -54,4 +54,4 @@ recomendaciones:
 glosario
 	agregar
 		isosuperficie
-		topologia
+		topologia (sigo sin entender que es)
