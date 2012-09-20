@@ -23,7 +23,7 @@ ALLIMAGES = $(DIAS2PDF) $(SVGS2PDF) $(GIFS2PDF) $(PGMS2PDF)
 	inkscape --without-gui --export-pdf=$@ $<
 
 %.svg: %.dia
-	dia -t svg $<
+	dia -t svg $< -e $@
 #=================
 
 all: $(ALLIMAGES)
