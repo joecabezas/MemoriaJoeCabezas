@@ -1,0 +1,25 @@
+\section{Flujo de trabajo}
+\label{ch:propuesta:sec:flujoDeTrabajo}
+
+Actualmente existen flujos de trabajo para la extracción de supeficies \cite{Ruprecht94ascheme}\cite{Dietrich_marchingcubes}, los cuales intentan generar superficies sin los principales problemas topológicos explicados en \ref{subsec:marchingCubes:consecuencias}. El flujo de trabajo propuesto en esta investigación se muestra en la fugura \ref{f:estadoDelArte:flujoDeTrabajo}
+
+\begin{figure}[htb]
+\centering
+	\includegraphics[width=0.5\textwidth]{images/misc/workflow.pdf}
+\caption{Flujo de trabajo propuesto}
+\label{f:estadoDelArte:flujoDeTrabajo}
+\end{figure}
+
+Cada uno de estos pasos serán explicados a continuación.
+
+\subsection{Extracción de datos}
+\label{ch:propuesta:sec:extraccionDeDatos}
+
+%incluir que es un MRI
+In medical image analysis one often needs to visualize volumetric data sets, such as the
+measurements coming out of a MRI scanner. MRI images can be thought of as 3D images
+where each pixel (or voxel - volume element) represent a measured quantity in a small
+volume of space at some location (x,y,z). One possible way of visualizing MRI images is
+by isosurface rendering using the marching cubes algorithm. An isosurface is dened as
+the set of points with the same voxel value. Your task would be to implement such an
+isosurface renderer.
