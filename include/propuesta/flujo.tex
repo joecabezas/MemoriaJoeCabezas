@@ -42,3 +42,136 @@ En esta investigación, la totalidad de los dataset usados para la implementaci�
 \subsubsection{Funciones en tres dimensiones}
 \label{ch:propuesta:sec:extraccionDeDatos:subsec:funcionesEnTresDimensiones}
 
+Otra forma de obtener puntos en un espacio es usando una función matemática de tres dimensiones que asocie cualquier punto de un espacio a un valor escalar. El algoritmo de \emph{Marching Cubes} hace uso de una discretización del espacio ya que cada vértice de cada cubo está apoyado en un punto discreto del espacio, debido a la continuidad de una función de tres dimensiones, es posible escoger cualquier tamaño para los cubos, lo que hace posible escoger la resolución que se desee y con ello tener un malla en tres dimensiones mas detallada como se explica en \ref{subsec:marchingCubes:consecuencias}, pero necesariamente con más triángulos lo que puede no ser óptimo.
+
+Si se desea extraer la superficie descrita por una función continua en tres dimensiones, para esta investigación es necesario generar las imágenes de las curvas de nivel que finalmente cumplirán la misma función que las imágenes por resonancia magnética. Un ejemplo de una función continua es la ecuacion \ref{ecuacionContinua}
+
+\begin{equation}
+f(x,y) = \frac{ \sin{(\sqrt{x^2+y^2})} }{ \sqrt{x^2+y^2} }
+\label{ecuacionContinua}
+\end{equation}
+
+y sus respectivos gráficos y curvas de nivel se muestra en la figura \ref{c:flujo:greaficoDeLaEcuacion}
+
+\begin{figure}[h]
+
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/misc/contour_1_using_eps2eps.pdf}
+		\caption{Superficie en tres dimensiones}
+		\label{c:flujo:superficieEnTresDimensiones}
+	\end{subfigure}
+	~~
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/misc/contour_2_using_eps2eps.pdf}
+		\caption{Gráfico de curvas de nivel}
+		\label{c:flujo:graficoDeCurvasDeNivel}
+	\end{subfigure}
+
+	\caption{Gráfico de la ecuación \ref{ecuacionContinua}}
+	\label{c:flujo:greaficoDeLaEcuacion}
+
+\end{figure}
+
+Finalmente, cada una de las lineas de las curvas de nivel mostradas en \ref{c:flujo:graficoDeCurvasDeNivel}, representa una imagen de entrada para el algoritmo.
+
+\subsection{Conversión de imágenes}
+\label{ch:propuesta:sec:conversionDeImagenes}
+
+Como se plantea en la sección anterior (\ref{ch:propuesta:sec:extraccionDeDatos}), existen varias formas de extraer los datos, por lo que, dependiendo la técnica usada es posible que las imágenes de entrada vengan en diversos formatos tambien como se explicará mas adelante en \ref{ch:implementacion:sec:datosDeEntrada:subsec:formatodelasimagenesdeentrada}.
+
+Es por esto que para garantizar una independencia de la implementacion hecha en esta investigación con el formato de las imágenes de entrada que se necesita un paso que unifique las diversas formas de extracción de datos para que puedan ser usadas en esta implementación, los detalles de la implementacion de esto se verá en el capitulo \ref{ch:implementacion}.
+
+Una vez que se asegure que las imágenes de entrada usan el mismo formato, la implementación puede utilizar esta información previa para trabajar haciendo uso de sólamente un formato en común, haciendo la implementación mas simple. El formato escogido es el formato PGM (\emph{Portable GreyMap}), detalles de su utilización se verán en la sección \ref{ch:implementacion:sec:formatounicoescogido}.
+
+\subsection{Selección del isovalor}
+\label{ch:propuesta:sec:seleccionDelIsovalor}
+
+Una vez que se tienen las imágenes de entradas, es momento de escoger una constante que definirá aquellos \emph{pixeles} que estarán dentro o fuera de la superficie que se desea extraer en cada imágen, por lo tanto, la superficie está determinada por este valor llamado \jcq{isovalor}.
+
+Este paso no es trivial, ya que requiere retroalimentación de la superficie extraída, pues en el caso de las imágenes médicas de resonancia magnética, la elección del isovalor puede marcar la diferencia entre ver un cuerpo al nivel del cráneo o al nivel de los huesos internos de éste como se muestra en la figura \ref{c:flujo:superficieDeUnaCalaveraADistintosNivelesDeIsovalor} donde se observa que al aumentar el valor porcentual del isovalor cada vez hay menos puntos en el espacio que sean menores al isovalor, por lo que cada vez la superficie es distinta. La correcta elección del isovalor en las imágenes determina finalmente el nivel de la superficie que se quiere extraer, por ejemplo, si se escoge un valor cero, significa que todas los pixeles quedarán fuera y por lo tanto ningún cubo en el proceso de extracción de superficie tendrá algún vértice marcado como interno, luego, no se generará ningún triángulo y se creará una superficie nula, lo mismo ocurre si se escoge un isovalor que sea igual al máximo valor posible en las imágenes.
+
+
+\begin{figure}[h]
+
+	\begin{subfigure}[b]{0.30\textwidth}
+		\centering
+		\fbox{
+			\includegraphics[width=\textwidth]{images/flujo/isovalue/screenshot_15.png}
+		}
+		\caption{Isovalor de 15\%}
+	\end{subfigure}
+	\quad
+	\begin{subfigure}[b]{0.30\textwidth}
+		\centering
+		\fbox{
+			\includegraphics[width=\textwidth]{images/flujo/isovalue/screenshot_20.png}
+		}
+		\caption{Isovalor de 20\%}
+	\end{subfigure}
+	\quad
+	\begin{subfigure}[b]{0.30\textwidth}
+		\centering
+		\fbox{
+			\includegraphics[width=\textwidth]{images/flujo/isovalue/screenshot_25.png}
+		}
+		\caption{Isovalor de 25\%}
+	\end{subfigure}
+
+
+	\begin{subfigure}[b]{0.30\textwidth}
+		\centering
+		\fbox{
+			\includegraphics[width=\textwidth]{images/flujo/isovalue/screenshot_30.png}
+		}
+		\caption{Isovalor de 30\%}
+	\end{subfigure}
+	\quad
+	\begin{subfigure}[b]{0.30\textwidth}
+		\centering
+		\fbox{
+			\includegraphics[width=\textwidth]{images/flujo/isovalue/screenshot_40.png}
+		}
+		\caption{Isovalor de 40\%}
+	\end{subfigure}
+	\quad
+	\begin{subfigure}[b]{0.30\textwidth}
+		\centering
+		\fbox{
+			\includegraphics[width=\textwidth]{images/flujo/isovalue/screenshot_45.png}
+		}
+		\caption{Isovalor de 45\%}
+	\end{subfigure}
+
+
+	% \begin{subfigure}[b]{0.30\textwidth}
+	% 	\centering
+	% 	\fbox{
+	% 		\includegraphics[width=\textwidth]{images/flujo/isovalue/screenshot_50.png}
+	% 	}
+	% 	\caption{Isovalor de 50\%}
+	% \end{subfigure}
+	% \quad
+	% \begin{subfigure}[b]{0.30\textwidth}
+	% 	\centering
+	% 	\fbox{
+	% 		\includegraphics[width=\textwidth]{images/flujo/isovalue/screenshot_60.png}
+	% 	}
+	% 	\caption{Isovalor de 60\%}
+	% \end{subfigure}
+	% \quad
+	% \begin{subfigure}[b]{0.30\textwidth}
+	% 	\centering
+	% 	\fbox{
+	% 		\includegraphics[width=\textwidth]{images/flujo/isovalue/screenshot_65.png}
+	% 	}
+	% 	\caption{Isovalor de 65\%}
+	% \end{subfigure}
+
+	\caption{Superficie de una calavera a distintos niveles de isovalor}
+	\label{c:flujo:superficieDeUnaCalaveraADistintosNivelesDeIsovalor}
+
+\end{figure}
+
+En esta implementación, con el fin de garantizar una independencia de las imágenes de entrada con la manipulación del iso valor, es que el valor del isovalor se escoge porcentualmente, es decir, $0\%$ siginifica que el isovalor vale cero, y una elección de $100\%$ significa que el isovalor vale el máximo valor posible. Esto es porque dependiendo del nivel de profundidad de color de las imágenes, estas pueden ser expresadas entre 0--255 valores (8 bits) y 0--65536 valores (16 bits).
