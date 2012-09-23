@@ -175,3 +175,164 @@ Este paso no es trivial, ya que requiere retroalimentación de la superficie ext
 \end{figure}
 
 En esta implementación, con el fin de garantizar una independencia de las imágenes de entrada con la manipulación del iso valor, es que el valor del isovalor se escoge porcentualmente, es decir, $0\%$ siginifica que el isovalor vale cero, y una elección de $100\%$ significa que el isovalor vale el máximo valor posible. Esto es porque dependiendo del nivel de profundidad de color de las imágenes, estas pueden ser expresadas entre 0--255 valores (8 bits) y 0--65536 valores (16 bits).
+
+\subsection{Extracción de la superficie}
+\label{ch:propuesta:sec:extraccionDeLaSuperficie}
+
+Luego de escoger el isovalor adecuado, el siguiente paso es extraer la superficie usando el isovalor, por esto se le llama \jcq{isosuperficie}.
+
+Esta investigación tiene su mayor enfoque en este punto ya que es en este paso donde se utiliza el algoritmo de \emph{Marching Cubes} para la extracción. Se desarrolló un \emph{software} que genera la superficie usando un isovalor porcentual ajustable por el usuario, y permite visualizar y navegar en tres dimensiones el modelo generado, una imagen del programa desarrollado se muestra en la figura \ref{f:flujoDeTrabajo:visualizer_1}. La principal característica de este visualizador es que es posible editar el isovalor y ver el cambio de la isosuperficie en tiempo real, permitiendo de esta manera corregir el isovalor usado para obtener el nivel de isovalor apropiado.
+
+\begin{figure}[h]
+\centering
+	\includegraphics[width=1.0\textwidth]{images/visualizer/visualizer_1.png}
+\caption{Programa visualizador de superficies generadas usando \emph{Marching Cubes}}
+\label{f:flujoDeTrabajo:visualizer_1}
+\end{figure}
+
+\subsubsection{Interfaz}
+\label{ch:propuesta:sec:extraccionDeLaSuperficie:subsec:interfaz}
+
+La interfaz es simple, el programa muestra en su completitud una ventana OpenGL\footnote{http://www.opengl.org/} y en la esquina superior izquierda un panel de estado que indica el isovalor actual (porcentual) y la cantidad de triángulos de la superficie, como se muestra en la figura \ref{f:flujoDeTrabajo:interface}
+
+\begin{figure}[h]
+\centering
+	\includegraphics[width=0.5\textwidth]{images/visualizer/interface.png}
+\caption{Panel de estado, con un isovalor del 40\%, se crea una superficie que esta formada por $172416$ triángulos.}
+\label{f:flujoDeTrabajo:interface}
+\end{figure}
+
+\subsubsection{Modo de uso}
+\label{ch:propuesta:sec:extraccionDeLaSuperficie:subsec:modoDeUso}
+
+Es posible usar el programa tanto con teclado como con un control de Xbox360\textsuperscript{\textregistered}\footnote{http://www.microsoft.com/hardware/en-us/p/xbox-360-controller-for-windows (20 sept. 2012)}.
+
+El programa además puede capturar imágenes en formato \emph{PNG} (Portable Network \mbox{Graphics}\footnote{http://www.libpng.org/pub/png/}), generando imágenes con nombre cuyo formato es:
+
+\begin{quote}
+	screenshot\_\textbf{\textless isovalor porcentual\textgreater}.png
+\end{quote}
+
+También es posible exportar la superficie que se esta visualuzando a un archivo de modelo 3D (archivo \emph{OFF}), para así poder ser importado en otro programa que acepte este formato como geomview\footnote{http://www.geomview.org/}, como se muestra en la figura \ref{f:flujoDeTrabajo:geomview}
+
+\begin{figure}[!htb]
+\centering
+	\includegraphics[width=0.7\textwidth]{images/visualizer/geomview.png}
+\caption{Superficie generada en el visualizador, importada como archivo OFF en \mbox{geomview}}
+\label{f:flujoDeTrabajo:geomview}
+\end{figure}
+
+\newpage
+A continuación se muestra una tabla con las teclas de control\footnote{Imágenes obtenidas desde https://github.com/sgraham/gamepad.js/ (20 sept. 2012)}\footnote{Xbox 360 Icon Pack por Jeff Jenkins, @sinnix, http://sinnix.net/downloads/?did=1 (20 sept. 2012)}:
+
+\begin{longtable}[c]{
+	|>{\centering}m{3.0cm}<{\centering}|
+	m{3cm}||
+	l|
+}
+\hline
+Teclado & Control Xbox360 & Acción \\ \hline
+	\huge{\keystroke{\large{W}}} &
+	\includegraphics[scale=0.4]{images/visualizer/xbox360/leftStick.png} (arriba) &
+	Avanzar
+	\\ \hline
+
+	\huge{\keystroke{\large{A}}} &
+	\includegraphics[scale=0.4]{images/visualizer/xbox360/leftStick.png} (izquierda) &
+	Desplazarse hacia la izquierda
+	\\ \hline
+
+	\huge{\keystroke{\large{S}}} &
+	\includegraphics[scale=0.4]{images/visualizer/xbox360/leftStick.png} (derecha) &
+	Retroceder
+	\\ \hline
+
+	\huge{\keystroke{\large{D}}} &
+	\includegraphics[scale=0.4]{images/visualizer/xbox360/leftStick.png} (abajo) &
+	Desplazarse hacia la derecha
+	\\ \hline
+
+	\huge{\keystroke{\large{$\downarrow$}}} &
+	\centering \includegraphics[scale=0.4]{images/visualizer/xbox360/leftShoulder1.png} &
+	Descender
+	\\ \hline
+
+	\huge{\keystroke{\large{$\uparrow$}}} &
+	\centering \includegraphics[scale=0.4]{images/visualizer/xbox360/rightShoulder1.png} &
+	Ascender
+	\\ \hline
+
+	\huge{\keystroke{\large{$\leftarrow$}}} &
+	\includegraphics[scale=0.4]{images/visualizer/xbox360/rightStick.png} (izquierda) &
+	Girar hacia la izquierda
+	\\ \hline
+
+	\huge{\keystroke{\large{$\rightarrow$}}} &
+	\includegraphics[scale=0.4]{images/visualizer/xbox360/rightStick.png} (derecha) &
+	Girar hacia la derecha
+	\\ \hline
+
+	\huge{\keystroke{\large{F1}}} \normalsize{ó} \huge{\keystroke{\large{-}}} &
+	\centering \includegraphics[scale=0.6]{images/visualizer/xbox360/leftShoulder0.png} &
+	Disminuir el isovalor
+	\\ \hline
+
+	\huge{\keystroke{\large{F2}}} \normalsize{ó} \huge{\keystroke{\large{+}}} &
+	\centering \includegraphics[scale=0.6]{images/visualizer/xbox360/rightShoulder0.png} &
+	Aumentar el isovalor
+	\\ \hline
+
+	\huge{\keystroke{\large{Enter}}} &
+	\centering \includegraphics[scale=0.6]{images/visualizer/xbox360/start.png} &
+	Generar isosuperficie (\emph{Marching Cubes})
+	\\ \hline
+
+	\huge{\keystroke{\large{Backspace}}} &
+	\centering \includegraphics[scale=0.6]{images/visualizer/xbox360/select.png} &
+	Destruye isosuperficie
+	\\ \hline
+
+	\huge{\keystroke{\large{R}}} &
+	\centering \includegraphics[scale=0.6]{images/visualizer/xbox360/dpadLeft.png} &
+	Rotar superficie en eje X (horario)
+	\\ \hline
+
+	\huge{\keystroke{\large{F}}} &
+	\centering \includegraphics[scale=0.6]{images/visualizer/xbox360/dpadRight.png} &
+	Rotar superficie en eje X (antihorario)
+	\\ \hline
+
+	\huge{\keystroke{\large{T}}} &
+	\centering \includegraphics[scale=0.6]{images/visualizer/xbox360/dpadUp.png} &
+	Rotar superficie en eje Y (horario)
+	\\ \hline
+
+	\huge{\keystroke{\large{G}}} &
+	\centering \includegraphics[scale=0.6]{images/visualizer/xbox360/dpadDown.png} &
+	Rotar superficie en eje Y (antihorario)
+	\\ \hline
+
+	\huge{\keystroke{\large{P}}} &
+	\centering \includegraphics[scale=0.6]{images/visualizer/xbox360/faceButton0.png} &
+	Capturar imagen (\emph{screenshot})
+	\\ \hline
+
+	\huge{\keystroke{\large{O}}} &
+	\centering \includegraphics[scale=0.6]{images/visualizer/xbox360/faceButton1.png} &
+	Exportar modelo 3D (archivo \emph{OFF})
+	\\ \hline
+
+	\huge{\keystroke{\large{F11}}} &
+	\centering \includegraphics[scale=0.6]{images/visualizer/xbox360/faceButton2.png} &
+	Alternar modo pantalla completa
+	\\ \hline
+
+	\huge{\keystroke{\large{Esc}}} &
+	\centering \includegraphics[scale=0.6]{images/visualizer/xbox360/faceButton3.png} &
+	Salir
+	\\ \hline
+
+\end{longtable}
+
+% \subsection{Refinamiento}
+% \label{ch:propuesta:sec:refinamiento}
