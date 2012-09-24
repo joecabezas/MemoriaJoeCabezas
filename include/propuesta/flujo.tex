@@ -428,5 +428,55 @@ Es posible ocupar el visualizador ocupando toda la pantalla simplemente alternan
 
 \end{figure}
 
-% \subsection{Refinamiento}
-% \label{ch:propuesta:sec:refinamiento}
+\subsection{Refinamiento}
+\label{ch:propuesta:sec:refinamiento}
+
+Luego de extraer la superficie usando un isovalor adecuado es momento de refinar la superficie generada con el fin de mejorar su calidad, hacerla mas liviana disminuyendo la cantidad de triángulos y reparando los problemas causados por el algoritmo de \emph{Marching Cubes} que se explicaron en la seccion \ref{subsec:marchingCubes:consecuencias}.
+
+Para esto se ocupará una herramienta externa llamada \emph{CGAL}\footnote{http://www.cgal.org/ (20 sept 2012)} (\emph{The Computational Geometry Algorithms Library}). \emph{CGAL} es una librería en \emph{C++} que provee un acceso fácil, eficiente y eficaz a una colección de algoritmos geométricos. La librería \emph{CGAL} es usada en diversas áreas de la computación geométrica como diseño asistido por computadora, gráficos de computadora, visualización científica (como en este caso), modelamiento, sistemas geográficos, biología molecular, etc.
+
+Esta librería ofrece estructuras de datos y algoritmos como triangulaciones, polígonos, poliedros, generación de mallas, procesamiento geométrico (que es lo que se pretende hacer en este paso del flujo), etc.
+
+\subsection{Reconstrucción de superficie}
+\label{ch:propuesta:sec:refinamiento:reconstruccionDeSuperficie}
+
+\emph{CGAL} provee un método de reconstrucción de superficies que toma como entrada una colección de puntos en el espacio con sus respectivas normales orientadas y calcula una funcipon implícita\footnote{http://www.cgal.org/Manual/latest/doc\_html/cgal\_manual/Surface\_reconstruction\_points\_3/Chapter\_main.html (20 sept. 2012)}. \emph{CGAL} asume que los puntos de entrada no contienen puntos atípicos y vienen con algo de ruido.
+
+La superficie generada se calcula extrayendo una isosuperficie de esta función calculada anteriormente usando un generador de mallas de superficies \cite{Rineau2007100} o potencialmente con cualquier otro algoritmo de extracción de superficies. La función calculada es un función aproximada del sólido inferido (\emph{Poisson Surface Reconstruction}). \emph{Poisson} es un proceso de dos pasos, primero necesita resolver la ecuación implícita, y luego evaluar esta función.
+
+\subsection{Poisson}
+\label{ch:propuesta:sec:refinamiento:poisson}
+
+Dado un set de puntos en tres dimensiones con normales orientadas, en primer lugar, el método \emph{Poisson Surface Reconstruction} \cite{Kazhdan2006PoissonSurfaceReconstruction} resuelve una función aproximada del sólido que mejor se adapte a las gradientes de las normales de los puntos de entrada, luego a esa función se le extrae una isosuperficie usando una versión adaptativa de \emph{Marching Cubes} llamada \emph{Adaptative Marching Cubes} \cite{Shu95adaptivemarching}
+
+% \subsection{Ejemplo}
+% \label{ch:propuesta:sec:refinamiento:ejemplos}
+
+Un ejemplo que muestra la nube de puntos de entrada y la superficie generada en \emph{CGAL} usando el método \emph{Poisson Surface Reconstruction}, se muestra en la figura \ref{c:flujo:poissonSurfaceReconstruction}
+
+\begin{figure}[h]
+
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+			\includegraphics[width=\textwidth]{images/flujo/refinamiento_1_0.jpg}
+			\caption{$17000$ puntos de entrada con normales orientadas}
+			\label{f:flujoDeTrabajo:refinamiento_1_0}
+	\end{subfigure}
+	~
+	\begin{subfigure}[b]{0.45\textwidth}
+		\includegraphics[width=\textwidth]{images/flujo/refinamiento_1_1.jpg}
+		\caption{La superficie reconstruida usando el algoritmo}
+		\label{f:flujoDeTrabajo:refinamiento_1_1}
+	\end{subfigure}
+
+	\caption{\emph{Poisson Surface Reconstruction}}
+	\label{c:flujo:poissonSurfaceReconstruction}
+
+\end{figure}
+
+% Además es posible hacer ajustes previos a la reconstrucción que modifican la superficie obtenida bajo parámetros como el ángulo mínimo de los triángulos, radio máximo de los triángulos (determina el tamaño de éstos), ajustes...
+
+\subsection{Exportación}
+\label{ch:propuesta:sec:exportacion}
+
+Finalmente, en este paso, ya se tiene la malla de superficie deseada gracias al proceso de selección (\ref{ch:propuesta:sec:seleccionDelIsovalor}) y extracción de la superficie (\ref{ch:propuesta:sec:extraccionDeLaSuperficie}) y refinada gracias al paso de refinamiento (\ref{ch:propuesta:sec:refinamiento}). El último paso ahora es exportar el modelo en tres dimensiones a un formato útil para el proposito que fue extraído, que puede ser para modelamiento, visualizacion y otros propósitos ya mencionados en la sección \ref{sec:usosDeLasMallasGeometricas}
