@@ -32,13 +32,7 @@ Dependiendo de la resolución escogida, es posible que algunos cubos tengan algu
 \subsection{Datos como cortes de nivel}
 \label{ch:implementacion:sec:datosDeEntrada:subsec:datoscomocurvasdenivel}
 
-Otra forma de entregar datos de entrada es teniendo cortes de nivel de un cuerpo tridimensional, un ejemplo de esto son las imágenes obtenidas de los exámenes de resonancia magnética. Cada imagen representa un corte transversal del cuerpo estudiado, como el que se muestra en la figura \ref{f:ch:implementacion:sec:datosdeentrada:img:ejemplodernm}:
-
-\begin{figure}[hbt]
-	\makebox[\textwidth]{\framebox[0.5\textwidth]{\rule{0pt}{0.5\textwidth}}}
-	\caption{Imágenes una resonancia magnética de abdomen completo}
-	\label{f:ch:implementacion:sec:datosdeentrada:img:ejemplodernm}
-\end{figure}
+Otra forma de entregar datos de entrada es teniendo cortes de nivel de un cuerpo tridimensional, un ejemplo de esto son las imágenes obtenidas de los exámenes de resonancia magnética. Cada imagen representa un corte transversal del cuerpo estudiado, como el que se muestra en la figura \ref{f:flujoDeTrabajo:mri_joe}.
 
 Éstas imágenes, en conjunto, describen un cuerpo en tres dimensiones, mostrando con detalle sus componentes internos. Cada imágen está compuesta por una matriz de pixeles en una escala de grises, dependiendo de la profundidad de color, pueden ser de 256 valores (8 bits) o de 65536 valores (16 bits) diferentes, con estas imágenes se puede construir un espacio que puede servir como entrada para el algoritmo de \emph{MarchingCubes}, una forma de hacerlo es usando las coordenadas en 2 dimensiones del pixel en una imagen y usando como valor $z$, el número que representa la imagen dentro del cuerpo, una vez identificado el pixel en un espacio tridimensional, el valor de éste pixel está determinado por la intensidad de color del pixel, como se muestra en la ecuación \ref{ch:implementacion:sec:datosDeEntrada:ec3}:
 
