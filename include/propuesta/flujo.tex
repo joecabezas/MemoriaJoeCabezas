@@ -94,7 +94,6 @@ Una vez que se tienen las imágenes de entradas, es momento de escoger una const
 Este paso no es trivial, ya que requiere retroalimentación de la superficie extraída, pues en el caso de las imágenes médicas de resonancia magnética, la elección del isovalor puede marcar la diferencia entre ver un cuerpo al nivel del cráneo o al nivel de los huesos internos de éste como se muestra en la figura \ref{c:flujo:superficieDeUnaCalaveraADistintosNivelesDeIsovalor} donde se observa que al aumentar el valor porcentual del isovalor, hay cada vez menos puntos en el espacio que sean menores al isovalor, entregando cada vez una superficie es distinta. La correcta elección del isovalor en las imágenes determina finalmente el nivel de la superficie que se quiere extraer, por ejemplo, si se escoge un valor cero, significa que todos los pixeles quedarán fuera y por lo tanto ningún cubo en el proceso de extracción de superficie tendrá algún vértice marcado como interno, luego, no se generará ningún triángulo y se creará una superficie nula.
 Lo mismo ocurre si se escoge un isovalor que sea igual al máximo valor posible en las imágenes.
 
-
 \begin{figure}[h]
 
 	\begin{subfigure}[b]{0.30\textwidth}

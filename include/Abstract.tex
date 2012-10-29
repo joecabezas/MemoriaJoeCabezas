@@ -19,18 +19,28 @@ patrón específico del caso que encierra esa división, finalmente todas las di
 dibujadas un patrón específico o un espacio vacío, obteniendo así el contorno de la imagen
 tratada. El siguiente caso, ejemplifica el proceso completo.
 
-Se supone la imagen de la figura \ref{f:estadoDelArte:original} para tratar obtener su contorno.
+\newpage
+\begin{figure}[h]
 
-\begin{figure}
-	\centering
-		\fbox{
-			\includegraphics[width=0.7\textwidth]{images/marchingsquare/original.jpg}
-		}
-	\caption{Figura original de estudio, a la que se desea extraer su contorno}
-	\label{f:estadoDelArte:original}
+	\begin{subfigure}[h]{0.46\textwidth}
+		\centering
+			\includegraphics[width=\textwidth]{images/marchingsquare/marchingsquares_1.pdf}
+		\caption{Figura original de estudio, a la que se desea extraer su contorno}
+		\label{f:estadoDelArte:original}
+	\end{subfigure}
+	\quad
+	\begin{subfigure}[h]{0.46\textwidth}
+		\centering
+			\includegraphics[width=\textwidth]{images/marchingsquare/marchingsquares_2.pdf}
+		\caption{Figura original dividida en un arreglo uniforme de celdas}
+		\label{f:estadoDelArte:division}
+	\end{subfigure}
+
+	\caption{Primeros pasos del proceso de extracción del contorno.}
+
 \end{figure}
 
-Luego se divide el espacio en un arreglo uniforme de cuadriláteros, en este caso una
+Se supone la imagen de la figura \ref{f:estadoDelArte:original} para tratar obtener su contorno. Luego se divide el espacio en un arreglo uniforme de cuadriláteros, en este caso una
 matriz de 7x8 celdas como muestra la figura \ref{f:estadoDelArte:division}
 
 Para poder obtener el patrón a dibujar en cada celda, se hace un proceso de
@@ -40,31 +50,35 @@ dependen intrínsecamente del problema, para este caso, basta con detectar si el
 un pixel blanco o no, en otros casos, puede depender de si el valor del pixel en escala de
 grises supera (o es inferior) a un valor fijo determinado por el usuario.
 
-\begin{figure}
-	\centering
-		\includegraphics[width=0.7\textwidth]{images/marchingsquare/division.jpg}
-	\caption{Figura original dividida en un arreglo uniforme de celdas}
-	\label{f:estadoDelArte:division}
-\end{figure}
-
 A continuación, se muestra como quedan etiquetados los vértices, dependiendo si están
 dentro de la figura (en rojo), o si están fuera de la figura (en azul), como muestra la figura \ref{f:estadoDelArte:labeledobj}
 
-\begin{figure}
-	\centering
-		\includegraphics[width=0.7\textwidth]{images/marchingsquare/labeledobj.jpg}
-	\caption{Etiquetado de vértices según su condición relativa a la figura}
-	\label{f:estadoDelArte:labeledobj}
+\newpage
+\begin{figure}[h]
+
+	\begin{subfigure}[h]{0.46\textwidth}
+		\centering
+			\includegraphics[width=\textwidth]{images/marchingsquare/marchingsquares_3.pdf}
+		\caption{Etiquetado de vértices según su condición relativa a la figura}
+		\label{f:estadoDelArte:labeledobj}
+	\end{subfigure}
+	\quad
+	\begin{subfigure}[h]{0.46\textwidth}
+		\centering
+			\includegraphics[width=\textwidth]{images/marchingsquare/marchingsquares_4.pdf}
+		\caption{Aristas marcadas por las cuales cortará el contorno calculado}
+		\label{f:estadoDelArte:purpledobj}
+	\end{subfigure}
+
+	\caption{Detección de vértices internos y marcado de aristas.}
+
 \end{figure}
 
-Si ahora se analiza celda a celda, se ve que existen dieciséis combinaciones distintas de
-vértices etiquetados como dentro o fuera de la región en una misma celda, como muestra la figura
-\ref{f:estadoDelArte:cases}
-
-\begin{figure}
+\begin{figure}[h]
 \centering
-	\fbox{
-		\includegraphics[width=\textwidth]{images/marchingsquare/cases.jpg}
+	\fbox
+	{
+		\includegraphics[width=0.8\textwidth]{images/marchingsquare/cases.jpg}
 	}
 \caption{Los dieciséis casos posibles en Marching Squares}
 \label{f:estadoDelArte:cases}
@@ -75,36 +89,39 @@ vértice marcado como dentro y otro fuera, significa que por esa arista corta el
 y por lo tanto, esa arista la dejamos marcada como una arista de contorno detectada, que en este
 ejemplo se marca de color morado, como muestra la figura \ref{f:estadoDelArte:purpledobj}
 
-\begin{figure}
-\centering
-	\includegraphics[width=0.7\textwidth]{images/marchingsquare/purpledobj.jpg}
-\caption{Aristas marcadas por las cuales cortará el contorno calculado}
-\label{f:estadoDelArte:purpledobj}
-\end{figure}
+Si se hace un análisis celda a celda, se puede ver que existen dieciséis combinaciones distintas de
+vértices etiquetados como dentro o fuera de la región en una misma celda, como muestra la figura
+\ref{f:estadoDelArte:cases}
 
 Luego, por cada celda, se unen los puntos morados formados en el paso anterior, creando
 así uno de los dieciséis patrones posibles, lo cual se puede entender como una de las dieciséis
 formas en que un cuadrilátero puede ser atravesado por una línea, formando así el contorno
 buscado, como muestra la figura \ref{f:estadoDelArte:connectedobj}
 
-\begin{figure}
-\centering
-	\includegraphics[width=0.7\textwidth]{images/marchingsquare/connectedobj.jpg}
-\caption{Contorno calculado usando las aristas marcadas en el paso anterior}
-\label{f:estadoDelArte:connectedobj}
+\begin{figure}[t]
+
+	\begin{subfigure}[t]{0.46\textwidth}
+	\centering
+		\includegraphics[width=\textwidth]{images/marchingsquare/marchingsquares_5.pdf}
+	\caption{Contorno calculado usando las aristas marcadas en el paso anterior}
+	\label{f:estadoDelArte:connectedobj}
+	\end{subfigure}
+	\quad
+	\begin{subfigure}[t]{0.46\textwidth}
+	\centering
+		\includegraphics[width=\textwidth]{images/marchingsquare/marchingsquares_6.pdf}
+	\caption{Mejorando la calidad del contorno usando interpolación lineal}
+	\label{f:estadoDelArte:2Dintersected}
+	\end{subfigure}
+
+	\caption{Extracción del contorno y posterior mejoramiento.}
+
 \end{figure}
 
 Posteriormente, dependiendo de los requerimientos de la investigación, se puede mejorar
 la aproximación haciendo una interpolación lineal de los valores de los vértices para calcular en
 que punto aproximadamente la figura (a la que se quiere extraer su contorno), corta con la arista,
 un ejemplo del resultado de esta aproximación se muestra en la figura \ref{f:estadoDelArte:2Dintersected}
-
-\begin{figure}
-\centering
-	\includegraphics[width=0.7\textwidth]{images/marchingsquare/2Dintersected.jpg}
-\caption{Mejorando la calidad del contorno usando interpolación lineal}
-\label{f:estadoDelArte:2Dintersected}
-\end{figure}
 
 \subsection{Consecuencias}
 \label{subsec:marchingSquares:consecuencias}
