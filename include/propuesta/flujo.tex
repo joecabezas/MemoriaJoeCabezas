@@ -16,14 +16,14 @@ Cada uno de estos pasos serán explicados a continuación.
 \subsection{Extracción de datos}
 \label{ch:propuesta:sec:extraccionDeDatos}
 
-En primera instancia, para extraer una superficie desde una nube de puntos, es necesario recolectar estos puntos, para eso existen diversas técnicas y propósitos. Para el propósito de esta investigación, el formato de los datos debe ser un \emph{dataset} de imágenes coaxiales que individualmente muestran una seccion planar de la superficie que se quiere extraer, y en conjunto describen la superficie completa.
+En primera instancia, para extraer una superficie desde una nube de puntos, es necesario recolectar estos puntos, para eso existen diversas técnicas y propósitos. Para el propósito de esta investigación, el formato de los datos debe ser un \emph{dataset} de imágenes coaxiales que individualmente muestran una sección planar de la superficie que se quiere extraer, y en conjunto describen la superficie completa.
 
 \subsubsection{Imágenes por resonancia magnética}
 \label{ch:propuesta:sec:extraccionDeDatos:subsec:imagenesPorResonanciaMagnetica}
 
 En el análisis de imágenes médicas, en ocaciones se necesita visualizar \emph{datasets} volumétricos, cortes en tres dimensiones de los órganos que se quieren estudiar, como las imágenes obtenidas por resonancia magnética (\emph{MRI}, de sus siglas en inglés \emph{Magnetic resonance imaging}).
 
-Las imágenes por resonancia magnética son una técnica de imagenología usada principalmente en el área médica para producir imágenes de alta calidad del interior del cuerpo humano. Estas imágenes son basadas en el principio de la resonancia nuclear magnética, una técnica espectroscópica usada por científicos para obtener información física y química acerca de las moléculas. Ya en el año 2003 existían aproximadamente mas de diez mil unidades de resonancia magnética y aproximadamente setenta y cinco millones de exámenes realizados por año \footnote{Joseph P. Hornak, Ph.D. \textit{The Basics of MRI}, http://www.cis.rit.edu/htbooks/mri/ (19 sept. 2012).}
+Las imágenes por resonancia magnética son una técnica de imagenología usada principalmente en el área médica para producir imágenes de alta calidad del interior del cuerpo humano. Estas imágenes son basadas en el principio de la resonancia nuclear magnética, una técnica espectroscópica usada por científicos para obtener información física y química acerca de las moléculas. Ya en el año 2003 existían aproximadamente más de diez mil unidades de resonancia magnética y aproximadamente setenta y cinco millones de exámenes realizados por año \footnote{Joseph P. Hornak, Ph.D. \textit{The Basics of MRI}, http://www.cis.rit.edu/htbooks/mri/ (19 sept. 2012).}
 
 Las imágenes obtenidas de estos exámenes pueden ser pensadas como imágenes en tres dimensiones donde cada \emph{pixel} (o \emph{voxel}, elemento de volúmen) representa una cantidad medible de volumen en alguna posición $(x, y, z)$ del espacio. Un ejemplo de estas imágenes se muestra en la figura \ref{f:flujoDeTrabajo:mri_joe} \footnote{MRI, CPO Abdomen Total, paciente Joe Cabezas Campos, estudio 040501000, Integramedica, Av. Libertador Bernardo O'Higgins 1620, 26 junio 2012 19:35}
 
@@ -42,9 +42,9 @@ En esta investigación, la totalidad de los dataset usados para la implementaci�
 \subsubsection{Funciones en tres dimensiones}
 \label{ch:propuesta:sec:extraccionDeDatos:subsec:funcionesEnTresDimensiones}
 
-Otra forma de obtener puntos en un espacio es usando una función matemática de tres dimensiones que asocie cualquier punto de un espacio a un valor escalar. El algoritmo de \emph{Marching Cubes} hace uso de una discretización del espacio ya que cada vértice de cada cubo está apoyado en un punto discreto del espacio, debido a la continuidad de una función de tres dimensiones, es posible escoger cualquier tamaño para los cubos, lo que hace posible escoger la resolución que se desee y con ello tener un malla en tres dimensiones mas detallada como se explica en \ref{subsec:marchingCubes:consecuencias}, pero necesariamente con más triángulos lo que puede no ser óptimo.
+Otra forma de obtener puntos en un espacio es usando una función matemática de tres dimensiones que asocie cualquier punto de un espacio a un valor escalar. El algoritmo de \emph{Marching Cubes} hace uso de una discretización del espacio ya que cada vértice de cada cubo está apoyado en un punto discreto del espacio, debido a la continuidad de una función de tres dimensiones, es posible escoger cualquier tamaño para los cubos, lo que hace posible escoger la resolución que se desee y con ello tener un malla en tres dimensiones más detallada como se explica en \ref{subsec:marchingCubes:consecuencias}, pero necesariamente con más triángulos lo que puede no ser óptimo.
 
-Si se desea extraer la superficie descrita por una función continua en tres dimensiones, para esta investigación es necesario generar las imágenes de las curvas de nivel que finalmente cumplirán la misma función que las imágenes por resonancia magnética. Un ejemplo de una función continua es la ecuacion \ref{ecuacionContinua}
+Si se desea extraer la superficie descrita por una función continua en tres dimensiones, para esta investigación es necesario generar las imágenes de las curvas de nivel que finalmente cumplirán la misma función que las imágenes por resonancia magnética. Un ejemplo de una función continua es la ecuación\ref{ecuacionContinua}
 
 \begin{equation}
 f(x,y) = \frac{ \sin{(\sqrt{x^2+y^2})} }{ \sqrt{x^2+y^2} }
@@ -79,18 +79,20 @@ Finalmente, cada una de las lineas de las curvas de nivel mostradas en \ref{c:fl
 \subsection{Conversión de imágenes}
 \label{ch:propuesta:sec:conversionDeImagenes}
 
-Como se plantea en la sección anterior (\ref{ch:propuesta:sec:extraccionDeDatos}), existen varias formas de extraer los datos, por lo que, dependiendo la técnica usada es posible que las imágenes de entrada vengan en diversos formatos tambien como se explicará mas adelante en \ref{ch:implementacion:sec:datosDeEntrada:subsec:formatodelasimagenesdeentrada}.
+Como se plantea en la sección anterior (\ref{ch:propuesta:sec:extraccionDeDatos}), existen varias formas de extraer los datos, por lo que, dependiendo la técnica usada es posible que las imágenes de entrada vengan en diversos formatos también, como se explicará más adelante en \ref{ch:implementacion:sec:datosDeEntrada:subsec:formatodelasimagenesdeentrada}.
 
-Es por esto que para garantizar una independencia de la implementacion hecha en esta investigación con el formato de las imágenes de entrada que se necesita un paso que unifique las diversas formas de extracción de datos para que puedan ser usadas en esta implementación, los detalles de la implementacion de esto se verá en el capitulo \ref{ch:implementacion}.
+Es por esto que, para garantizar una independencia de la implementación hecha en esta investigación con el formato de las imágenes de entrada, se necesita un paso que unifique las diversas formas de extracción de datos para que puedan ser usadas en esta implementación.
+Los detalles de la implementación de esto se verá en el capítulo \ref{ch:implementacion}.
 
-Una vez que se asegure que las imágenes de entrada usan el mismo formato, la implementación puede utilizar esta información previa para trabajar haciendo uso de sólamente un formato en común, haciendo la implementación mas simple. El formato escogido es el formato PGM (\emph{Portable GreyMap}), detalles de su utilización se verán en la sección \ref{ch:implementacion:sec:formatounicoescogido}.
+Una vez que se asegure que las imágenes de entrada usan el mismo formato, la implementación puede utilizar esta información previa para trabajar haciendo uso de solamente un formato en común, haciendo la implementación más simple. El formato escogido es el formato PGM (\emph{Portable GreyMap}), detalles de su utilización se verán en la sección \ref{ch:implementacion:sec:formatounicoescogido}.
 
 \subsection{Selección del isovalor}
 \label{ch:propuesta:sec:seleccionDelIsovalor}
 
 Una vez que se tienen las imágenes de entradas, es momento de escoger una constante que definirá aquellos \emph{pixeles} que estarán dentro o fuera de la superficie que se desea extraer en cada imágen, por lo tanto, la superficie está determinada por este valor llamado \jcq{isovalor}.
 
-Este paso no es trivial, ya que requiere retroalimentación de la superficie extraída, pues en el caso de las imágenes médicas de resonancia magnética, la elección del isovalor puede marcar la diferencia entre ver un cuerpo al nivel del cráneo o al nivel de los huesos internos de éste como se muestra en la figura \ref{c:flujo:superficieDeUnaCalaveraADistintosNivelesDeIsovalor} donde se observa que al aumentar el valor porcentual del isovalor cada vez hay menos puntos en el espacio que sean menores al isovalor, por lo que cada vez la superficie es distinta. La correcta elección del isovalor en las imágenes determina finalmente el nivel de la superficie que se quiere extraer, por ejemplo, si se escoge un valor cero, significa que todas los pixeles quedarán fuera y por lo tanto ningún cubo en el proceso de extracción de superficie tendrá algún vértice marcado como interno, luego, no se generará ningún triángulo y se creará una superficie nula, lo mismo ocurre si se escoge un isovalor que sea igual al máximo valor posible en las imágenes.
+Este paso no es trivial, ya que requiere retroalimentación de la superficie extraída, pues en el caso de las imágenes médicas de resonancia magnética, la elección del isovalor puede marcar la diferencia entre ver un cuerpo al nivel del cráneo o al nivel de los huesos internos de éste como se muestra en la figura \ref{c:flujo:superficieDeUnaCalaveraADistintosNivelesDeIsovalor} donde se observa que al aumentar el valor porcentual del isovalor, hay cada vez menos puntos en el espacio que sean menores al isovalor, entregando cada vez una superficie es distinta. La correcta elección del isovalor en las imágenes determina finalmente el nivel de la superficie que se quiere extraer, por ejemplo, si se escoge un valor cero, significa que todos los pixeles quedarán fuera y por lo tanto ningún cubo en el proceso de extracción de superficie tendrá algún vértice marcado como interno, luego, no se generará ningún triángulo y se creará una superficie nula.
+Lo mismo ocurre si se escoge un isovalor que sea igual al máximo valor posible en las imágenes.
 
 
 \begin{figure}[h]
@@ -174,7 +176,7 @@ Este paso no es trivial, ya que requiere retroalimentación de la superficie ext
 
 \end{figure}
 
-En esta implementación, con el fin de garantizar una independencia de las imágenes de entrada con la manipulación del isovalor, es que el valor del isovalor se escoge porcentualmente, es decir, $0\%$ siginifica que el isovalor vale cero, y una elección de $100\%$ significa que el isovalor vale el máximo valor posible. Esto es porque dependiendo del nivel de profundidad de color de las imágenes, estas pueden ser expresadas entre 0--255 valores (8 bits) y 0--65536 valores (16 bits).
+En esta implementación, con el fin de garantizar una independencia de las imágenes de entrada con la manipulación del isovalor, el valor del isovalor se escoge porcentualmente, es decir, $0\%$ siginifica que el isovalor vale cero, y una elección de $100\%$ significa que el isovalor vale el máximo valor posible. Esto es porque dependiendo del nivel de profundidad de color de las imágenes, estas pueden ser expresadas entre 0--255 valores (8 bits) y 0--65536 valores (16 bits).
 
 \subsection{Extracción de la superficie}
 \label{ch:propuesta:sec:extraccionDeLaSuperficie}
@@ -199,7 +201,7 @@ El programa recibe como parámetros de entrada una lista de las imágenes ordena
 ./MemoriaJoeCabezasCode \textbf{[archivo1.pgm] [archivo2.pgm] [...]}
 \end{quote}
 
-Debido a que los \emph{dataset} normalmente están conformados por cientos de imágenes, se hace uso de la flexibilidad de los programas que vienen en el núcleo de Linux, en primer lugar el comando \textbf{\emph{ls}} lista el contenido de un directorio\footnote{http://manpages.ubuntu.com/manpages/precise/en/man1/ls.1.html (20 sept. 1012)}, y si se agrega la opcion \textbf{\emph{-1}} lista un archivo por linea, por lo que es mas facil revisar si estan en orden los archivos, los cuales deberian venir en orden alfabético.
+Debido a que los \emph{dataset} normalmente están conformados por cientos de imágenes, se hace uso de la flexibilidad de los programas que vienen en el núcleo de Linux, en primer lugar el comando \textbf{\emph{ls}} lista el contenido de un directorio\footnote{http://manpages.ubuntu.com/manpages/precise/en/man1/ls.1.html (20 sept. 1012)}, y si se agrega la opcion \textbf{\emph{-1}} lista un archivo por linea, por lo que es más fácil revisar si están en orden los archivos, los cuales deberían venir en orden alfabético.
 
 Un ejemplo de un listado de archivos es el siguiente:
 
@@ -263,7 +265,7 @@ El programa además puede capturar imágenes en formato \emph{PNG} (Portable Net
 	screenshot\_\textbf{\textless isovalor porcentual\textgreater}.png
 \end{quote}
 
-También es posible exportar la superficie que se esta visualuzando a un archivo de modelo 3D (archivo \emph{OFF}), para así poder ser importado en otro programa que acepte este formato como geomview\footnote{http://www.geomview.org/}, como se muestra en la figura \ref{f:flujoDeTrabajo:geomview}
+También es posible exportar la superficie que se está visualizando a un archivo de modelo 3D (archivo \emph{OFF}), para así poder ser importado en otro programa que acepte este formato como geomview\footnote{http://www.geomview.org/}, como se muestra en la figura \ref{f:flujoDeTrabajo:geomview}
 
 \begin{figure}[!htb]
 \centering
@@ -275,7 +277,7 @@ También es posible exportar la superficie que se esta visualuzando a un archivo
 \newpage
 En un principio, el progama no muestra ninguna superficie, ya que esta debe ser generada presionando \keystroke{ENTER} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/start.png}. Por defecto el isovalor porcentual usado es de un $40\%$, pero puede ser modificado usando la tecla \keystroke{F1} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/leftShoulder0.png} para disminuir el valor del isovalor y la tecla \keystroke{F2} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/rightShoulder0.png} para aumentar el isovalor. El valor del isovalor seleccionado se puede ver en el panel de informacion como se muestra en la figura \ref{f:flujoDeTrabajo:interface}.
 
-Dependiendo de la complejidad, cantidad y resolución de las imágenes de entrada y del isovalor usado para generar la superficie, es posible que la supeficie este compuesta por cientos de miles de triángulos lo que puede ralentizar el sistema y hacer dificil la navegación, es por esto que en cualquier momento, el modelo puede ser eliminado para poder asi vaciar memoria y hacer la navegación mas fácil, esto sólo afecta a la superficie, los ejes y el plano cartesiano guía siempre son visibles. Para poder eliminar la superficie se debe presionar la tecla \keystroke{Backspace} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/select.png}.
+Dependiendo de la complejidad, cantidad y resolución de las imágenes de entrada y del isovalor usado para generar la superficie, es posible que la supeficie esté compuesta por cientos de miles de triángulos lo que puede ralentizar el sistema y hacer difícil la navegación, es por esto que en cualquier momento, el modelo puede ser eliminado para poder así vaciar memoria y hacer la navegación mas fácil, esto sólo afecta a la superficie, los ejes y el plano cartesiano guía siempre son visibles. Para poder eliminar la superficie se debe presionar la tecla \keystroke{Backspace} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/select.png}.
 
 A continuación se muestra una tabla con las teclas de control\footnote{Imágenes obtenidas desde https://github.com/sgraham/gamepad.js/ (20 sept. 2012)}\footnote{Xbox 360 Icon Pack por Jeff Jenkins, @sinnix, http://sinnix.net/downloads/?did=1 (20 sept. 2012)}:
 
@@ -391,9 +393,9 @@ Teclado & Control Xbox360 & Acción \\ \hline
 \subsubsection{Navegación}
 \label{ch:propuesta:sec:extraccionDeLaSuperficie:subsec:navegacion}
 
-En un principio el programa muestra el sistema de coordenadas cartesianas, los ejes $X$, $Y$ y $Z$ son mostrados como lineas de color rojo, verde y azul respectivamente, junto a un plano cartesiano sujeto al plano $X-Z$, en $Y=0$ formado por una grilla de lineas grises. Esto sirve como guía al desplazarse en el espacio para asi no perder de vista el punto de origen.
+En un principio el programa muestra el sistema de coordenadas cartesianas, los ejes $X$, $Y$ y $Z$ son mostrados como lineas de color rojo, verde y azul respectivamente, junto a un plano cartesiano sujeto al plano $X-Z$, en $Y=0$ formado por una grilla de lineas grises. Esto sirve como guía al desplazarse en el espacio para así no perder de vista el punto de origen.
 
-La navegación implementada ocupa un esquema en tercera persona en la cual el desplazamiento con las teclas de movimiento (\keystroke{W}, \keystroke{A}, \keystroke{S} y \keystroke{D} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/leftStick.png}) mueve la cámara en el plano $XZ$, mientras que para girar la cámara se usa lan teclas de giro de cámara (\keystroke{$\leftarrow$} y \keystroke{$\rightarrow$} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/rightStick.png}). Sin embargo, si se una un control de Xbox360\textsuperscript{\textregistered} el mando \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/rightStick.png} además de controlar el giro en el eje $Y$, controla el acimut de la cámara, por lo tanto es posible también mirar hacia arriba y hacia abajo, moviendo el mando hacia arriba y hacia abajo respectivamente.
+La navegación implementada ocupa un esquema en tercera persona en la cual el desplazamiento con las teclas de movimiento (\keystroke{W}, \keystroke{A}, \keystroke{S} y \keystroke{D} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/leftStick.png}) mueve la cámara en el plano $XZ$, mientras que para girar la cámara se usa lan teclas de giro de cámara (\keystroke{$\leftarrow$} y \keystroke{$\rightarrow$} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/rightStick.png}). Sin embargo, si se una un control de Xbox360\textsuperscript{\textregistered} el mando \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/rightStick.png} además de controlar el giro en el eje $Y$, controla el acimut\footnote{Ver glosario.} de la cámara, por lo tanto es posible también mirar hacia arriba y hacia abajo, moviendo el mando hacia arriba y hacia abajo respectivamente.
 
 Para controlar la elevación (posicion en el eje $Y$) se usan las teclas de elevación (\keystroke{$\uparrow$} y \keystroke{$\downarrow$} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/leftShoulder1.png} y \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/rightShoulder1.png}).
 
@@ -440,7 +442,7 @@ Esta librería ofrece estructuras de datos y algoritmos como triangulaciones, po
 \subsection{Reconstrucción de superficie}
 \label{ch:propuesta:sec:refinamiento:reconstruccionDeSuperficie}
 
-\emph{CGAL} provee un método de reconstrucción de superficies que toma como entrada una colección de puntos en el espacio con sus respectivas normales orientadas y calcula una funcipon implícita\footnote{http://www.cgal.org/Manual/latest/doc\_html/cgal\_manual/Surface\_reconstruction\_points\_3/Chapter\_main.html (20 sept. 2012)}. \emph{CGAL} asume que los puntos de entrada no contienen puntos atípicos y vienen con algo de ruido.
+\emph{CGAL} provee un método de reconstrucción de superficies que toma como entrada una colección de puntos en el espacio con sus respectivas normales orientadas y calcula una función implícita\footnote{http://www.cgal.org/Manual/latest/doc\_html/cgal\_manual/Surface\_reconstruction\_points\_3/Chapter\_main.html (20 sept. 2012)}. \emph{CGAL} asume que los puntos de entrada no contienen puntos atípicos y vienen con algo de ruido.
 
 La superficie generada se calcula extrayendo una isosuperficie de esta función calculada anteriormente usando un generador de mallas de superficies \cite{Rineau2007100} o potencialmente con cualquier otro algoritmo de extracción de superficies. La función calculada es un función aproximada del sólido inferido (\emph{Poisson Surface Reconstruction}). \emph{Poisson} es un proceso de dos pasos, primero necesita resolver la ecuación implícita, y luego evaluar esta función.
 
@@ -473,6 +475,9 @@ Un ejemplo que muestra la nube de puntos de entrada y la superficie generada en 
 	\label{c:flujo:poissonSurfaceReconstruction}
 
 \end{figure}
+
+%TODO
+%obtener imagenes de http://www-sop.inria.fr/members/Pierre.Alliez/demos/sm/slides.pdf
 
 % Además es posible hacer ajustes previos a la reconstrucción que modifican la superficie obtenida bajo parámetros como el ángulo mínimo de los triángulos, radio máximo de los triángulos (determina el tamaño de éstos), ajustes...
 

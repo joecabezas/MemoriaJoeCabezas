@@ -6,7 +6,7 @@ Como se indicó en la sección \ref{ch:implementacion:sec:datosDeEntrada:subsec:
 %TODO: cita a http://www.imagemagick.org/
 Este proceso no es trivial, ya que existen muchos formatos disponibles y muchas especificaciones distintas, por lo que dar soporte a todas es algo que escapa del objetivo de esta investigación, es por ello que se utilizó una herramienta de codigo abierto (\emph{opensource}) llamada \emph{ImageMagick}
 
-Esta herramienta hace que el primer paso sea muy simple, y generalizado para cualquier tipo de archivo del cual se pueda extraer información de sus metadatos (tamaño, profundidad de color, etc), si no fuere éste el caso, por ejemplo, imagenes RAW sin informacion de metadatos, es necesario una agregar la información faltante en tiempo de ejecución.
+Esta herramienta hace que el primer paso sea muy simple, y generalizado para cualquier tipo de archivo del cual se pueda extraer información de sus metadatos (tamaño, profundidad de color, etc), si no fuere éste el caso, por ejemplo, imagenes RAW sin información de metadatos, es necesario agregar la información faltante en tiempo de ejecución.
 
 La sintáxis del comando a usar es la siguiente:
 
@@ -37,9 +37,9 @@ De esta manera se obtienen imágenes PGM binarias.
 \subsection{Ejemplos de conversión}
 \label{ch:implementacion:sec:ejemplosdeconversion}
 
-Para poder convertir un dataset completo, existen varios caminos, el usado en esta implementación fue usar un \emph{bash script}.
+Para poder convertir un dataset completo existen varios caminos y el usado en esta implementación fue un \emph{bash script}.
 
-El codigo fuente es simple, y pretende facilitar el ingreso de datos y otras opciones al comando \emph{convert}:
+El código fuente es simple, y pretende facilitar el ingreso de datos y otras opciones al comando \emph{convert}:
 
 \begin{scriptsize}
 \begin{verbatim}

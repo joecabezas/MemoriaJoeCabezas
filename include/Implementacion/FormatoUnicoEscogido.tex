@@ -10,7 +10,7 @@ El formato de imagen escogido es el formato PGM (\emph{Portable GreyMap}), el cu
 
 En el año 1988, Jef distribuyó herramientas para trabajar con las imágenes PBM, en un proyecto conocido como \emph{Pbmplus}, éstas fueron las herramientas principales para convertir entre imágenes PBM y otras existentes.
 
-A finales de 1988, Jef agregó los formatos PGM y PPM y muchas mas herramientas al proyecto \emph{Pbmplus}, finalmente, aunque Jef jamás renunció de manera formal a dar soporte al proyecto, el 10 de diciembre de 1991 fue su última actualización, y el proyecto quedo abandonado.
+A finales de 1988, Jef agregó los formatos PGM y PPM y muchas más herramientas al proyecto \emph{Pbmplus}, finalmente, aunque Jef jamás renunció de manera formal a dar soporte al proyecto, el 10 de diciembre de 1991 fue su última actualización, y el proyecto quedó abandonado.
 
 En el año 1993, el proyecto \emph{Netbpm} fue desarrollado para reemplazar a \emph{Pbmplus}, este nuevo proyecto no era nada más que un cambio de nombre, llamado así por el hecho de que la gente al rededor del mundo pudiera mantener este paquete hasta el dia de hoy.
 
@@ -20,7 +20,7 @@ En el año 1993, el proyecto \emph{Netbpm} fue desarrollado para reemplazar a \e
 La especificación de los archivos PGM es simple:
 
 \begin{enumerate}
-	\item Un \jcq{número mágico} para identificar el tipo de archivo. En numero mágico de un archivo PGM son dos caracteres: \jcq{P2}, para pixeles escritos como caracteres ASCII, o \jcq{P5}, si los pixeles estan escritos de manera binaria usando 1 o 2 \emph{bytes}
+	\item Un \jcq{número mágico} para identificar el tipo de archivo. El número mágico de un archivo PGM son dos caracteres: \jcq{P2}, para pixeles escritos como caracteres ASCII, o \jcq{P5}, si los pixeles están escritos de manera binaria usando 1 o 2 \emph{bytes}
 	\item Un caracter de espacio.
 	\item Un valor ANCHO, formateado como un caracter ASCII en decimal.
 	\item Un caracter de espacio.
@@ -32,7 +32,7 @@ La especificación de los archivos PGM es simple:
 	Una fila de una imagen es horizontal, y una columna vertical, los pixeles son cuadrados y son contiguos.
 \end{enumerate}
 
-Dependiendo del \jcq{Numero Mágico} (\emph{Magic Number}), existen 6 formatos de archivos diferentes, cada formato difiere solamente en la escala de colores que es capaz de representar, como indica la tabla \ref{ch:implementacion:tabla:tiposdearchivospbm}.
+Dependiendo del \jcq{Número Mágico} (\emph{Magic Number}), existen 6 formatos de archivos diferentes, cada formato difiere solamente en la escala de colores que es capaz de representar, como indica la tabla \ref{ch:implementacion:tabla:tiposdearchivospbm}.
 
 \begin{table}[h]
 	\centering
@@ -76,4 +76,4 @@ La imagen obtenida de este archivo PGM se muestra en la figura \ref{f:implementa
 	\label{f:implementacion:sec:formatos:pgm_example_1}
 \end{figure}
 
-Para efectos de este estudio, se usarán imágenes en escala de grises, por lo que se usarán los archivos PGM con codificación binaria para una lectura mas simple, es decir, con un \jcq{Número Mágico} de \jcq{P5}
+Para efectos de este estudio, se usarán imágenes en escala de grises, por lo que se usarán los archivos PGM con codificación binaria para una lectura más simple, es decir, con un \jcq{Número Mágico} de \jcq{P5}

@@ -37,8 +37,8 @@ Para poder obtener el patrón a dibujar en cada celda, se hace un proceso de
 reconocimiento. En un principio es necesario etiquetar cada vértice de cada celda dependiendo si
 están dentro o fuera de la región de interés. Esto puede ser calculado de distintas formas que
 dependen intrínsecamente del problema, para este caso, basta con detectar si el vértice está sobre
-un pixel blanco o no, en otros casos, puede depender de que si el valor del pixel en escala de
-grises supera (o es inferior) a un valor fijo determinado por el científico.
+un pixel blanco o no, en otros casos, puede depender de si el valor del pixel en escala de
+grises supera (o es inferior) a un valor fijo determinado por el usuario.
 
 \begin{figure}
 	\centering
@@ -84,7 +84,7 @@ ejemplo se marca de color morado, como muestra la figura \ref{f:estadoDelArte:pu
 
 Luego, por cada celda, se unen los puntos morados formados en el paso anterior, creando
 así uno de los dieciséis patrones posibles, lo cual se puede entender como una de las dieciséis
-formas en que un cuadrilátero puede ser atravesado por una linea, formando así el contorno
+formas en que un cuadrilátero puede ser atravesado por una línea, formando así el contorno
 buscado, como muestra la figura \ref{f:estadoDelArte:connectedobj}
 
 \begin{figure}
@@ -346,7 +346,7 @@ Otro problema puede incluso aparecer cuando no hay discrepancias visibles, \emph
 \label{f:estadoDelArte:Chernyaev95marchingcubes_2}
 \end{figure}
 
-Resolviendo las ambigüedades, se pueden evitar los agujeros, de todas maneras, esto no garantiza una topología correcta \cite{Lewiner03efficientimplementation}, tambien es necesario resolver las ambigüedades internas, causadas por aquellos casos que tienen vértices marcados y diagonalmente opuestos. Por ejemplo, para un mismo caso, pueden existir dos posibles poligonizaciones que resuelven el caso y son topológicamente distintas como se muestra en la figura \ref{f:estadoDelArte:Lewiner03efficientimplementation_2}
+Resolviendo las ambigüedades, se pueden evitar los agujeros, de todas maneras, esto no garantiza una topología correcta \cite{Lewiner03efficientimplementation}, también es necesario resolver las ambigüedades internas, causadas por aquellos casos que tienen vértices marcados y diagonalmente opuestos. Por ejemplo, para un mismo caso, pueden existir dos posibles poligonizaciones que resuelven el caso y son topológicamente distintas como se muestra en la figura \ref{f:estadoDelArte:Lewiner03efficientimplementation_2}
 
 \begin{figure}[!htb]
 \centering
@@ -357,7 +357,7 @@ Resolviendo las ambigüedades, se pueden evitar los agujeros, de todas maneras, 
 \label{f:estadoDelArte:Lewiner03efficientimplementation_2}
 \end{figure}
 
-Estos problemas pueden ser eliminados si se usa una particion del espacio usando \emph{simplexs}.
+Estos problemas pueden ser eliminados si se usa una partición del espacio usando \emph{simplexs}.
 Un \emph{simplex} es la descomposición lineal más simple de un n-espacio. Para tres dimensiones, es el tetraedro \cite{Bloomenthal88polygonizationof}. Cualquier par de vértices de un tetraedro esta unido por una arista en común, y por lo tanto, cualquier vértice marcado puede ser separado del resto usando solamente un plano.
 
 Actualmente existen implementaciones que usan tetraedros en lugar de cubos para la poligonización con el fin de evitar este problema de la ambigüedad, y se basan en dividir el cubo en tetraedros, dependiendo la implementación, el cubo puede ser dividido en cinco \cite{BAPayne90surfacemapping}, seis, e incluso doce \cite{Bloomenthal88polygonizationof} tetraedros, como se muestra en la figura \ref{f:estadoDelArte:divisionesTetraedricasDeUnCubo}
@@ -382,4 +382,4 @@ Actualmente existen implementaciones que usan tetraedros en lugar de cubos para 
 	\label{f:estadoDelArte:divisionesTetraedricasDeUnCubo}
 \end{figure}
 
-Las principales diferencias de cada forma de dividir un cubo en una cierta cantidad de tetraedros, es que al tener menos tetraedros, se generan menos triángulos y viceversa, el problema de usar cinco tetraedros es que es necesario crear una division tetraedrica en forma de \jcq{espejo}, ya que los vértices de un tetraedro no coinciden con el tetraedro del siguiente cubo, por lo que hay que alternar estas dos particiones tetraedricas a modo de \jcq{tablero de ajedrez}, esto se puede evitar haciendo una particion distinta que sea consistente con los cubos vecinos, pero esto implica usar una particion con una cantidad mayor de tetraedros para asegurar esta caracteristica, lo que en la superficie final supone más triángulos. En cualquier caso, los problemas de ambigüedad de \emph{Marching Cubes} se eliminan usando divisiones tetraédricas.
+Las principales diferencias de cada forma de dividir un cubo en una cierta cantidad de tetraedros, es que al tener menos tetraedros, se generan menos triángulos y viceversa, el problema de usar cinco tetraedros es que es necesario crear una división tetraédrica en forma de \jcq{espejo}, ya que los vértices de un tetraedro no coinciden con el tetraedro del siguiente cubo, por lo que hay que alternar estas dos particiones tetraédricas a modo de \jcq{tablero de ajedrez}, esto se puede evitar haciendo una partición distinta que sea consistente con los cubos vecinos, pero esto implica usar una partición con una cantidad mayor de tetraedros para asegurar esta característica, lo que en la superficie final supone más triángulos. En cualquier caso, los problemas de ambigüedad de \emph{Marching Cubes} se eliminan usando divisiones tetraédricas.
