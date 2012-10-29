@@ -41,7 +41,7 @@ tratada. El siguiente caso, ejemplifica el proceso completo.
 \end{figure}
 
 Se supone la imagen de la figura \ref{f:estadoDelArte:original} para tratar obtener su contorno. Luego se divide el espacio en un arreglo uniforme de cuadriláteros, en este caso una
-matriz de 7x8 celdas como muestra la figura \ref{f:estadoDelArte:division}
+matriz de 5x5 celdas como muestra la figura \ref{f:estadoDelArte:division}
 
 Para poder obtener el patrón a dibujar en cada celda, se hace un proceso de
 reconocimiento. En un principio es necesario etiquetar cada vértice de cada celda dependiendo si
@@ -51,7 +51,7 @@ un pixel blanco o no, en otros casos, puede depender de si el valor del pixel en
 grises supera (o es inferior) a un valor fijo determinado por el usuario.
 
 A continuación, se muestra como quedan etiquetados los vértices, dependiendo si están
-dentro de la figura (en rojo), o si están fuera de la figura (en azul), como muestra la figura \ref{f:estadoDelArte:labeledobj}
+dentro de la figura (marcados como circulos negros), o si están fuera de la figura (marcados como circulos blanco), como muestra la figura \ref{f:estadoDelArte:labeledobj}
 
 \newpage
 \begin{figure}[h]
@@ -87,16 +87,13 @@ dentro de la figura (en rojo), o si están fuera de la figura (en azul), como mu
 Además se entiende que si uno de los lados de una celda (una arista) esta formada por un
 vértice marcado como dentro y otro fuera, significa que por esa arista corta el borde de la figura,
 y por lo tanto, esa arista la dejamos marcada como una arista de contorno detectada, que en este
-ejemplo se marca de color morado, como muestra la figura \ref{f:estadoDelArte:purpledobj}
+ejemplo se marcan con cuadrados con una cruz dentro, como muestra la figura \ref{f:estadoDelArte:purpledobj}
 
 Si se hace un análisis celda a celda, se puede ver que existen dieciséis combinaciones distintas de
 vértices etiquetados como dentro o fuera de la región en una misma celda, como muestra la figura
 \ref{f:estadoDelArte:cases}
 
-Luego, por cada celda, se unen los puntos morados formados en el paso anterior, creando
-así uno de los dieciséis patrones posibles, lo cual se puede entender como una de las dieciséis
-formas en que un cuadrilátero puede ser atravesado por una línea, formando así el contorno
-buscado, como muestra la figura \ref{f:estadoDelArte:connectedobj}
+Luego, por cada celda, se unen los puntos marcados como cuadrados con una cruz dentro formados en el paso anterior, creando así uno de los dieciséis patrones posibles, lo cual se puede entender como una de las dieciséis formas en que un cuadrilátero puede ser atravesado por una línea, formando así el contorno buscado, como muestra la figura \ref{f:estadoDelArte:connectedobj}, representada como una linea segmentada.
 
 \begin{figure}[t]
 
