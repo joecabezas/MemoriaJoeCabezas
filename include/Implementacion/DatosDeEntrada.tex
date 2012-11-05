@@ -34,7 +34,7 @@ Dependiendo de la resolución escogida, es posible que algunos cubos tengan algu
 
 Otra forma de entregar datos de entrada es teniendo cortes de nivel de un cuerpo tridimensional, un ejemplo de esto son las imágenes obtenidas de los exámenes de resonancia magnética. Cada imagen representa un corte transversal del cuerpo estudiado, como el que se mostró en la figura \ref{f:flujoDeTrabajo:mri_joe}.
 
-Éstas imágenes, en conjunto, describen un cuerpo en tres dimensiones, mostrando con detalle sus componentes internos. Cada imágen está compuesta por una matriz de pixeles en una escala de grises, dependiendo de la profundidad de color, pueden ser de 256 valores (8 bits) o de 65536 valores (16 bits) diferentes, con estas imágenes se puede construir un espacio que puede servir como entrada para el algoritmo de \emph{MarchingCubes}, una forma de hacerlo es usando las coordenadas en 2 dimensiones del pixel en una imagen y usando como valor $z$, el número que representa la imagen dentro del cuerpo. Una vez identificado el pixel en un espacio tridimensional, el valor de éste pixel está determinado por la intensidad de color del pixel, como se muestra en la ecuación \ref{ch:implementacion:sec:datosDeEntrada:ec3}:
+Éstas imágenes, en conjunto, describen un cuerpo en tres dimensiones, mostrando con detalle sus componentes internos. Cada imágen está compuesta por una matriz de pixeles en una escala de grises, dependiendo de la profundidad de color, pueden ser de 256 valores (8 bits) o de 65536 valores (16 bits) diferentes, con estas imágenes se puede construir un espacio que puede servir como entrada para el algoritmo de \emph{MarchingCubes}, una forma de hacerlo es usando las coordenadas en 2 dimensiones del pixel en una imagen y usando como valor $z$, el número que representa la imagen dentro del cuerpo. Una vez identificado el pixel en un espacio tridimensional, el valor de éste pixel está determinado por la intensidad de color del pixel, como se muestra en el vector \ref{ch:implementacion:sec:datosDeEntrada:ec3}:
 
 \begin{equation}
 \label{ch:implementacion:sec:datosDeEntrada:ec3}
@@ -59,7 +59,6 @@ Si se aplica \emph{Marching Cubes} en este caso usando un valor mínimo de $100$
 	\label{f:implementacion:images_minimal_cube}
 \end{figure}
 
-\pagebreak
 En esta implementación, se usó este último método para obtener una nube de puntos para poder extraer una superficie utilizando \emph{Marching Cubes}.
 
 %TODO: poner link al glosario, en 'dataset'
@@ -143,8 +142,11 @@ El resultado de aplicar \emph{Marching Cubes} a este \emph{dataset} se muestra e
 
 \begin{figure}[hbt]
 	\centering
-	\includegraphics[width=0.95\textwidth]
-	{images/results/ImSphRad100/screenshot_40.png}
+		\fbox
+		{
+			\includegraphics[width=0.95\textwidth]
+			{images/results/ImSphRad100/screenshot_40.png}
+		}
 	\caption{La superficie extraida usando \emph{Marching Cubes} sobre un dataset que describe una esfera.}
 	\label{f:implementacion:ImSphRad100:screenshot_40}
 \end{figure}

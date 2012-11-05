@@ -186,7 +186,10 @@ Esta investigación tiene su mayor enfoque en este punto ya que es en este paso 
 
 \begin{figure}[h]
 \centering
-	\includegraphics[width=1.0\textwidth]{images/visualizer/visualizer_1.png}
+	\fbox
+	{
+		\includegraphics[width=1.0\textwidth]{images/visualizer/visualizer_1.png}
+	}
 \caption{Programa visualizador de superficies generadas usando \emph{Marching Cubes}}
 \label{f:flujoDeTrabajo:visualizer_1}
 \end{figure}
@@ -224,6 +227,7 @@ en el ejemplo anterior, se listaron los únicos 10 archivos dentro de un directo
 ./MemoriaJoeCabezasCode $(ls -1 pgm/*)
 \end{verbatim}
 
+\newpage
 Lo que es equivalente a hacer:
 
 \begin{verbatim}
@@ -248,8 +252,8 @@ La interfaz es simple, el programa muestra en su completitud una ventana OpenGL\
 
 \begin{figure}[h]
 \centering
-	\includegraphics[width=0.5\textwidth]{images/visualizer/interface.png}
-\caption{Panel de estado, con un isovalor del 40\%, se crea una superficie que esta formada por $172416$ triángulos.}
+	\includegraphics[width=0.7\textwidth]{images/visualizer/interface.png}
+\caption{Panel de estado, con un isovalor del 40\%, se crea una superficie que esta formada por $21398$ triángulos.}
 \label{f:flujoDeTrabajo:interface}
 \end{figure}
 

@@ -41,7 +41,7 @@ Usando la misma estrategia que con el \emph{cubeindex} existen 4096 $(2^{12})$ c
 
 La \emph{edgeTable} es un \emph{array} (arreglo) diseñado para asociar un \emph{cubeindex} con quellas aristas que son intersectadas. Este \emph{array} consta de 256 números (uno por cada caso o cada \emph{cubeindex}) de 12 bits, un bit para cada una de las 12 aristas del cubo en cuestión por las cuales pasa la superficie.
 
-Para entender mejor, se supone el ejemplo de la figura \ref{f:ch:implementacion:sec:CubeIndex:edgeTable:example}.
+Para entender mejor, se supone el ejemplo de la figura \ref{f:ch:implementacion:sec:CubeIndex:edgeTable:vertex_0}.
 
 \begin{figure}[hbt]
 	\centering
@@ -50,14 +50,14 @@ Para entender mejor, se supone el ejemplo de la figura \ref{f:ch:implementacion:
 		\includegraphics[width=0.3\textwidth]{images/implementacion/vertex_0.pdf}
 	}
 	\caption{Un cubo cuyo vértice $0$ es el único marcado.}
-	\label{f:ch:implementacion:sec:CubeIndex:edgeTable:example}
+	\label{f:ch:implementacion:sec:CubeIndex:edgeTable:vertex_0}
 \end{figure}
 
 En este ejemplo, sólamente el vértice $0$, ha sido marcado como interno, luego, el \emph{cubeIndex} es $1_{10} = 0000 \; 0001_{2}$, dado esto, las aristas $0$, $3$ y $8$ serán eventualmente atravesadas por la superficie, por lo tanto: $edgeTable[1] = 0x109$
 
 Lo cual tiene un valor equivalente a: $109_{16} = 265_{10} = 0001 \; 0000 \; 1001_{2}$, lo que indica, viendo la notacion binaria, que las aristas $0$, $3$ y $8$ son las que serán atravesadas.
 
-Otro ejemplo, se supone el caso de la figura \ref{f:ch:implementacion:sec:CubeIndex:edgeTable:example}
+Otro ejemplo, se supone el caso de la figura \ref{f:ch:implementacion:sec:CubeIndex:edgeTable:vertex_1}
 
 \begin{figure}[hbt]
 	\centering
@@ -66,7 +66,7 @@ Otro ejemplo, se supone el caso de la figura \ref{f:ch:implementacion:sec:CubeIn
 		\includegraphics[width=0.3\textwidth]{images/implementacion/vertex_1.pdf}
 	}
 	\caption{Un cubo cuyos vértices $5$ y $6$ son los únicos marcados.}
-	\label{f:ch:implementacion:sec:CubeIndex:edgeTable:example}
+	\label{f:ch:implementacion:sec:CubeIndex:edgeTable:vertex_1}
 \end{figure}
 
 En este caso, los vértices $5$ y $6$ han sido marcados como internos, luego, el \emph{cubeIndex} debe ser: $96_{10} = 0110 \; 0000_{2}$, por lo tanto la superficie debería atravesar las aristas $4$, $9$, $6$ y $10$, para que asi, una superficie deje a estos vértices separados del resto.
