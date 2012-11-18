@@ -79,7 +79,7 @@ Finalmente, cada una de las lineas de las curvas de nivel mostradas en \ref{c:fl
 \subsection{Conversión de imágenes}
 \label{ch:propuesta:sec:conversionDeImagenes}
 
-Como se plantea en la sección anterior (\ref{ch:propuesta:sec:extraccionDeDatos}), existen varias formas de extraer los datos, por lo que, dependiendo la técnica usada es posible que las imágenes de entrada vengan en diversos formatos también, como se explicará más adelante en \ref{ch:implementacion:sec:datosDeEntrada:subsec:formatodelasimagenesdeentrada}.
+Como se plantea en la sección anterior (\ref{ch:propuesta:sec:extraccionDeDatos}), existen varias formas de extraer los datos, por lo que, dependiendo la técnica usada es posible que las imágenes de entrada estén en diversos formatos también, como se explicará más adelante en \ref{ch:implementacion:sec:datosDeEntrada:subsec:formatodelasimagenesdeentrada}.
 
 Es por esto que, para garantizar una independencia de la implementación hecha en esta investigación con el formato de las imágenes de entrada, se necesita un paso que unifique las diversas formas de extracción de datos para que puedan ser usadas en esta implementación.
 Los detalles de la implementación de esto se verá en el capítulo \ref{ch:implementacion}.
@@ -186,10 +186,7 @@ Esta investigación tiene su mayor enfoque en este punto ya que es en este paso 
 
 \begin{figure}[h]
 \centering
-	\fbox
-	{
-		\includegraphics[width=0.5\textwidth]{images/visualizer/visualizer_1.png}
-	}
+	\includegraphics[width=0.9\textwidth]{images/visualizer/visualizer_1.png}
 \caption{Programa visualizador de superficies generadas usando \emph{Marching Cubes}}
 \label{f:flujoDeTrabajo:visualizer_1}
 \end{figure}
@@ -207,6 +204,7 @@ Debido a que los \emph{dataset} normalmente están conformados por cientos de im
 
 Un ejemplo de un listado de archivos es el siguiente:
 
+\begin{small}
 \begin{verbatim}
 joe@joe-ultrabook:pgm $ ls -1
 out00000.pgm
@@ -220,16 +218,20 @@ out00007.pgm
 out00008.pgm
 out00009.pgm
 \end{verbatim}
+\end{small}
 
 en el ejemplo anterior, se listaron los únicos 10 archivos dentro de un directorio \jcq{pgm/}, luego, esta salida puede usarse como entrada del programa que necesita la lista de archivos, la forma de hacer esto es usando el operador \textbf{\emph{\$()}}, el cual evalúa lo que está dentro del paréntesis y devuelve el resultado, como se muestra a continuación:
 
+\begin{small}
 \begin{verbatim}
 ./MemoriaJoeCabezasCode $(ls -1 pgm/*)
 \end{verbatim}
+\end{small}
 
 \newpage
 Lo que es equivalente a hacer:
 
+\begin{small}
 \begin{verbatim}
 ./MemoriaJoeCabezasCode out00000.pgm \
 out00001.pgm \
@@ -242,6 +244,7 @@ out00007.pgm \
 out00008.pgm \
 out00009.pgm
 \end{verbatim}
+\end{small}
 
 Finalmente el programa es ejecutado con éxito e inmediatamente se presenta la ventana principal como se muestra en la figura \ref{f:flujoDeTrabajo:visualizer_1}
 
@@ -252,7 +255,10 @@ La interfaz es simple, el programa muestra en su completitud una ventana OpenGL\
 
 \begin{figure}[h]
 \centering
-	\includegraphics[width=0.7\textwidth]{images/visualizer/interface.png}
+	\fbox
+	{
+		\includegraphics[width=0.4\textwidth]{images/visualizer/interface.png}
+	}
 \caption{Panel de estado, con un isovalor del 40\%, se crea una superficie que esta formada por $21398$ triángulos.}
 \label{f:flujoDeTrabajo:interface}
 \end{figure}
@@ -442,14 +448,14 @@ Para esto se ocupará una herramienta externa llamada \emph{CGAL}\footnote{http:
 
 Esta librería ofrece estructuras de datos y algoritmos como triangulaciones, polígonos, poliedros, generación de mallas, procesamiento geométrico (que es lo que se pretende hacer en este paso del flujo), etc.
 
-\subsection{Reconstrucción de superficie}
+\subsubsection{Reconstrucción de superficie}
 \label{ch:propuesta:sec:refinamiento:reconstruccionDeSuperficie}
 
 \emph{CGAL} provee un método de reconstrucción de superficies que toma como entrada una colección de puntos en el espacio con sus respectivas normales orientadas y calcula una función implícita\footnote{http://www.cgal.org/Manual/latest/doc\_html/cgal\_manual/Surface\_reconstruction\_points\_3/Chapter\_main.html (20 sept. 2012)}. \emph{CGAL} asume que los puntos de entrada no contienen puntos atípicos y vienen con algo de ruido.
 
 La superficie generada se calcula extrayendo una isosuperficie de esta función calculada anteriormente usando un generador de mallas de superficies \cite{Rineau2007100} o potencialmente con cualquier otro algoritmo de extracción de superficies. La función calculada es un función aproximada del sólido inferido (\emph{Poisson Surface Reconstruction}). \emph{Poisson} es un proceso de dos pasos, primero necesita resolver la ecuación implícita, y luego evaluar esta función.
 
-\subsection{Poisson}
+\subsubsection{Poisson}
 \label{ch:propuesta:sec:refinamiento:poisson}
 
 Dado un set de puntos en tres dimensiones con normales orientadas, en primer lugar, el método \emph{Poisson Surface Reconstruction} \cite{Kazhdan2006PoissonSurfaceReconstruction} resuelve una función aproximada del sólido que mejor se adapte a las gradientes de las normales de los puntos de entrada, luego a esa función se le extrae una isosuperficie usando una versión adaptativa de \emph{Marching Cubes} llamada \emph{Adaptative Marching Cubes} \cite{Shu95adaptivemarching}
