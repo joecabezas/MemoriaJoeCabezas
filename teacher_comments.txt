@@ -57,9 +57,12 @@ glosario
 		topologia (sigo sin entender que es)
 
 trabajo a futuro
-	mencionar que puede mejorarse la eficiencia usando paralelismo
-	usar tecnicas adaptativas para disminuir la cantidad de triangulos usada
+	[DONE] mencionar que puede mejorarse la eficiencia usando paralelismo
+
+	[DONE] usar tecnicas adaptativas para disminuir la cantidad de triangulos usada
 		leer Shu95adaptivemarching
-	generacion de superficies y modelos 3d usando rotacion
-	ver ideas de Cavusoglu03eecs600nakamura
-		http://citeseer.ist.psu.edu/viewdoc/summary?doi=10.1.1.90.3100
+
+	[NO APPLY] generacion de superficies y modelos 3d usando rotacion
+	
+	[DONE] ver ideas de Cavusoglu03eecs600nakamura
+		http://citeseer.ist.psu.edu/viewdoc/summary?doi=10.1.1.90.3100"
