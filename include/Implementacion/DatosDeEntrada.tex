@@ -4,7 +4,7 @@
 \subsection{Requerimientos}
 \label{ch:implementacion:sec:datosDeEntrada:subsec:requerimientos}
 
-Para poder utilizar el algoritmo de \emph{MarchingCubes}, se necesita que cada punto de un espacio tridimensional tenga asociado un valor dentro de un rango definido de manera que cada punto pueda describirse como un vector de cuatro dimensiones compuestas por sus coordenadas y un valor escalar, como muestra el vector \ref{ch:implementacion:sec:datosDeEntrada:vector}.
+Para poder utilizar el algoritmo de \emph{MarchingCubes}, se necesita que cada punto de un espacio tridimensional tenga asociado un valor dentro de un rango definido de manera que cada punto pueda describirse como un vector de cuatro dimensiones compuestos por sus coordenadas y un valor escalar, como muestra el vector \ref{ch:implementacion:sec:datosDeEntrada:vector}.
 
 \begin{equation}
 \label{ch:implementacion:sec:datosDeEntrada:vector}
@@ -27,14 +27,14 @@ Para poder graficar esta ecuación usando \emph{MarchingCubes} se debe transform
 	x^{2} + y^{2} <= 1
 \end{equation}
 
-Dependiendo de la resolución escogida, es posible que algunos cubos tengan algunos de sus vértices con coordenadas $(x,y)$ que satisfacen a la inecuación, por lo tanto quedan marcados como vértices internos, luego el proceso es ir iterando en todos esos cubos y reemplazando los cubos por los triángulos que correspondan a los quince casos mostrados en la figura \ref{f:estadoDelArte:Shu95adaptivemarching_1}.
+Dependiendo de la resolución escogida, es posible que algunos cubos tengan algunos de sus vértices con coordenadas $(x,y)$ que satisfacen la inecuación, por lo tanto quedan marcados como vértices internos, luego el proceso es ir iterando en todos esos cubos y reemplazando los cubos por los triángulos que correspondan a los quince casos mostrados en la figura \ref{f:estadoDelArte:Shu95adaptivemarching_1}.
 
 \subsection{Datos como cortes de nivel}
 \label{ch:implementacion:sec:datosDeEntrada:subsec:datoscomocurvasdenivel}
 
 Otra forma de entregar datos de entrada es teniendo cortes de nivel de un cuerpo tridimensional, un ejemplo de esto son las imágenes obtenidas de los exámenes de resonancia magnética. Cada imagen representa un corte transversal del cuerpo estudiado, como el que se mostró en la figura \ref{f:flujoDeTrabajo:mri_joe}.
 
-Éstas imágenes, en conjunto, describen un cuerpo en tres dimensiones, mostrando con detalle sus componentes internos. Cada imágen está compuesta por una matriz de pixeles en una escala de grises, dependiendo de la profundidad de color, pueden ser de 256 valores (8 bits) o de 65536 valores (16 bits) diferentes, con estas imágenes se puede construir un espacio que puede servir como entrada para el algoritmo de \emph{MarchingCubes}, una forma de hacerlo es usando las coordenadas en 2 dimensiones del pixel en una imagen y usando como valor $z$, el número que representa la imagen dentro del cuerpo. Una vez identificado el pixel en un espacio tridimensional, el valor de éste pixel está determinado por la intensidad de color del pixel, como se muestra en el vector \ref{ch:implementacion:sec:datosDeEntrada:ec3}:
+Éstas imágenes, en conjunto, describen un cuerpo en tres dimensiones, mostrando con detalle sus componentes internos. Cada imagen está compuesta por una matriz de pixeles en una escala de grises, dependiendo de la profundidad de color, pueden ser de 256 valores (8 bits) o de 65536 valores (16 bits) diferentes, con estas imágenes se puede construir un espacio que puede servir como entrada para el algoritmo de \emph{MarchingCubes}, una forma de hacerlo es usando las coordenadas en 2 dimensiones del pixel en una imagen y usando como valor $z$, el número que representa la imagen dentro del cuerpo. Una vez identificado el pixel en un espacio tridimensional, el valor de éste pixel está determinado por la intensidad de color del pixel, como se muestra en el vector \ref{ch:implementacion:sec:datosDeEntrada:ec3}:
 
 \begin{equation}
 \label{ch:implementacion:sec:datosDeEntrada:ec3}
@@ -55,7 +55,7 @@ Si se aplica \emph{Marching Cubes} en este caso usando un valor mínimo de $100$
 \begin{figure}[!hbt]
 	\centering
 	\includegraphics[width=0.3\textwidth]{images/misc/images_minimal_cube.pdf}
-	\caption{El resultado de aplicar \emph{Marching Cubes}, solo se obtiene un triángulo que separa al vertice blanco, de los demás.}
+	\caption[El resultado de aplicar \emph{Marching Cubes}]{El resultado de aplicar \emph{Marching Cubes}: solo se obtiene un triángulo que separa al vertice blanco de los demás.}
 	\label{f:implementacion:images_minimal_cube}
 \end{figure}
 
@@ -134,9 +134,9 @@ Las imágenes de la figura \ref{f:implementacion:dataset:ImSphRad100} muestran a
 	\label{f:implementacion:dataset:ImSphRad100}
 \end{figure}
 
-Éste dataset consta de 300 imágenes de $300 x 300$ pixeles con una profundidad de grises de 8 bits. Como se puede observar en la imagen \ref{f:implementacion:ImSphRad100:001} todos sus pixeles son negros, y considerando una profundidad de grises de 8 bits, es que todos sus pixeles valen $0$ (cero), sin embargo, la imagen \label{f:implementacion:ImSphRad100:051} muestra un pequeño círculo en su centro, por lo que aquellos pixeles que estan dentro del círculo, tienen un valor de $FF_{16} = 00_{2}$. A medida que nos acercamos a la imagen número 300, este cŕculo va creciendo hasta alcanzar un radio máximo, luego, su radio comienza a disminuir, hasta volver a un valor de cero. Describiendo de esta manera una esfera, en un espacio discreto de puntos de tamaño $300 x 300 x 300$
+Éste dataset consta de 300 imágenes de $300 x 300$ pixeles con una profundidad de grises de 8 bits. Como se puede observar en la imagen \ref{f:implementacion:ImSphRad100:001} todos sus pixeles son negros, y considerando una profundidad de grises de 8 bits, es que todos sus pixeles valen $0$ (cero), sin embargo, la imagen \label{f:implementacion:ImSphRad100:051} muestra un pequeño círculo en su centro, por lo que aquellos pixeles que estan dentro del círculo, tienen un valor de $FF_{16} = 00_{2}$. A medida que nos acercamos a la imagen número 300, este círculo va creciendo hasta alcanzar un radio máximo, luego, su radio comienza a disminuir, hasta volver a un valor de cero. Describiendo de esta manera una esfera, en un espacio discreto de puntos de tamaño $300 x 300 x 300$
 
-Ya que cada pixel, tiene asociado un par de coordenadas en 2 dimensiones, un número de imágen, y además un valor para especificar una tonalidad de gris, se puede describir cada pixel, como un vector de 4 dimensiones como se explicó en la seccion \ref{ch:implementacion:sec:datosDeEntrada:subsec:requerimientos}. Satisfaciendo los requerimientos que necesitan los datos de entrada para poder usar \emph{Marching Cubes}.
+Ya que cada pixel, tiene asociado un par de coordenadas en 2 dimensiones, un número de imagen, y además un valor para especificar una tonalidad de gris, se puede describir cada pixel, como un vector de 4 dimensiones como se explicó en la seccion \ref{ch:implementacion:sec:datosDeEntrada:subsec:requerimientos}. Satisfaciendo los requerimientos que necesitan los datos de entrada para poder usar \emph{Marching Cubes}.
 
 El resultado de aplicar \emph{Marching Cubes} a este \emph{dataset} se muestra en la figura \ref{f:implementacion:ImSphRad100:screenshot_40}, se puede apreciar como la esfera está formada por cortes transversales, cada uno describe un circulo cuyo radio va en aumento, y a medida que se acerca al final, disminuye. Además, se puede ver el efecto de escalonamiento (\emph{aliasing}) que presenta la superficie debido al uso de \emph{Marching Cubes}.
 
@@ -147,7 +147,7 @@ El resultado de aplicar \emph{Marching Cubes} a este \emph{dataset} se muestra e
 			\includegraphics[width=0.95\textwidth]
 			{images/results/ImSphRad100/screenshot_40.png}
 		}
-	\caption{La superficie extraida usando \emph{Marching Cubes} sobre un dataset que describe una esfera.}
+	\caption{La superficie extraída usando \emph{Marching Cubes} sobre un dataset que describe una esfera.}
 	\label{f:implementacion:ImSphRad100:screenshot_40}
 \end{figure}
 
@@ -169,7 +169,7 @@ Esto conlleva a que para poder leer un \emph{dataset} de imágenes, sean necesar
 
 \begin{enumerate}
 	\item Convertir las imágenes del \emph{dataset} al formato único admitido.
-	\item Procesar las imágenes convertidas y extraer los puntos y sus valores
+	\item Procesar las imágenes convertidas y extraer los puntos y sus valores.
 \end{enumerate}
 
 Este esquema permite que cualquier \emph{dataset} de imágenes pueda ser utilizado, sin importar el formato de origen, logrando que el formato de entrada sea completamente transparente para el algoritmo que finalmente tomará las nubes de puntos como entrada.

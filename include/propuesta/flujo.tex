@@ -1,7 +1,7 @@
 \section{Flujo de trabajo}
 \label{ch:propuesta:sec:flujoDeTrabajo}
 
-Actualmente existen flujos de trabajo para la extracción de supeficies \cite{Ruprecht94ascheme}\cite{Dietrich_marchingcubes}, los cuales intentan generar superficies sin los principales problemas topológicos explicados en \ref{subsec:marchingCubes:consecuencias}. El flujo de trabajo propuesto en esta investigación se muestra en la fugura \ref{f:flujoDeTrabajo:flujoDeTrabajo}
+Actualmente existen flujos de trabajo para la extracción de supeficies \cite{Ruprecht94ascheme}\cite{Dietrich_marchingcubes}, los cuales intentan generar superficies sin los principales problemas topológicos explicados en \ref{subsec:marchingCubes:consecuencias}. El flujo de trabajo propuesto en esta investigación se muestra en la figura \ref{f:flujoDeTrabajo:flujoDeTrabajo}.
 
 \begin{figure}[htb]
 \centering
@@ -23,9 +23,9 @@ En primera instancia, para extraer una superficie desde una nube de puntos, es n
 
 En el análisis de imágenes médicas, en ocaciones se necesita visualizar \emph{datasets} volumétricos, cortes en tres dimensiones de los órganos que se quieren estudiar, como las imágenes obtenidas por resonancia magnética (\emph{MRI}, de sus siglas en inglés \emph{Magnetic resonance imaging}).
 
-Las imágenes por resonancia magnética son una técnica de imagenología usada principalmente en el área médica para producir imágenes de alta calidad del interior del cuerpo humano. Estas imágenes son basadas en el principio de la resonancia nuclear magnética, una técnica espectroscópica usada por científicos para obtener información física y química acerca de las moléculas. Ya en el año 2003 existían aproximadamente más de diez mil unidades de resonancia magnética y aproximadamente setenta y cinco millones de exámenes realizados por año \footnote{Joseph P. Hornak, Ph.D. \textit{The Basics of MRI}, http://www.cis.rit.edu/htbooks/mri/ (19 sept. 2012).}
+Las imágenes por resonancia magnética son una técnica de imagenología usada principalmente en el área médica para producir imágenes de alta calidad del interior del cuerpo humano. Estas imágenes son basadas en el principio de la resonancia nuclear magnética, una técnica espectroscópica usada por científicos para obtener información física y química acerca de las moléculas. Ya en el año 2003 existían aproximadamente más de diez mil unidades de resonancia magnética y aproximadamente setenta y cinco millones de exámenes realizados por año\footnote{Joseph P. Hornak, Ph.D. \textit{The Basics of MRI}, http://www.cis.rit.edu/htbooks/mri/ (19 sept. 2012).}.
 
-Las imágenes obtenidas de estos exámenes pueden ser pensadas como imágenes en tres dimensiones donde cada \emph{pixel} (o \emph{voxel}, elemento de volúmen) representa una cantidad medible de volumen en alguna posición $(x, y, z)$ del espacio. Un ejemplo de estas imágenes se muestra en la figura \ref{f:flujoDeTrabajo:mri_joe} \footnote{MRI, CPO Abdomen Total, paciente Joe Cabezas Campos, estudio 040501000, Integramedica, Av. Libertador Bernardo O'Higgins 1620, 26 junio 2012 19:35}
+Las imágenes obtenidas de estos exámenes pueden ser pensadas como imágenes en tres dimensiones donde cada \emph{pixel} (o \emph{voxel}, elemento de volúmen) representa una cantidad medible de volumen en alguna posición $(x, y, z)$ del espacio. Un ejemplo de estas imágenes se muestra en la figura\footnote{MRI, CPO Abdomen Total, paciente Joe Cabezas Campos, estudio 040501000, Integramedica, Av. Libertador Bernardo O'Higgins 1620, 26 junio 2012 19:35} \ref{f:flujoDeTrabajo:mri_joe}.
 
 \begin{figure}[p]
 \centering
@@ -36,22 +36,22 @@ Las imágenes obtenidas de estos exámenes pueden ser pensadas como imágenes en
 
 Una forma de visualizar el cuerpo en tres dimensiones es extrayendo una \emph{isosuperficie} usando el algoritmo de \emph{Marching Cubes}.
 
-En esta investigación, la totalidad de los dataset usados para la implementación del algoritmo de \emph{Marching Cubes} son extraidos de imágenes de resonancia magnética.
+En esta investigación, la totalidad de los dataset usados para la implementación del algoritmo de \emph{Marching Cubes} son extraídos de imágenes de resonancia magnética.
 \newpage
 
 \subsubsection{Funciones en tres dimensiones}
 \label{ch:propuesta:sec:extraccionDeDatos:subsec:funcionesEnTresDimensiones}
 
-Otra forma de obtener puntos en un espacio es usando una función matemática de tres dimensiones que asocie cualquier punto de un espacio a un valor escalar. El algoritmo de \emph{Marching Cubes} hace uso de una discretización del espacio ya que cada vértice de cada cubo está apoyado en un punto discreto del espacio, debido a la continuidad de una función de tres dimensiones, es posible escoger cualquier tamaño para los cubos, lo que hace posible escoger la resolución que se desee y con ello tener un malla en tres dimensiones más detallada como se explica en \ref{subsec:marchingCubes:consecuencias}, pero necesariamente con más triángulos lo que puede no ser óptimo.
+Otra forma de obtener puntos en un espacio es usando una función matemática de tres dimensiones que asocie cualquier punto de un espacio a un valor escalar. El algoritmo de \emph{Marching Cubes} hace uso de una discretización del espacio ya que cada vértice de cada cubo está apoyado en un punto discreto del espacio, debido a la continuidad de una función de tres dimensiones, es posible escoger cualquier tamaño para los cubos, lo que hace posible escoger la resolución que se desee y con ello tener un malla en tres dimensiones más detallada como se explica en la sección \ref{subsec:marchingCubes:consecuencias}, pero necesariamente con más triángulos lo que puede no ser óptimo.
 
-Si se desea extraer la superficie descrita por una función continua en tres dimensiones, para esta investigación es necesario generar las imágenes de las curvas de nivel que finalmente cumplirán la misma función que las imágenes por resonancia magnética. Un ejemplo de una función continua es la ecuación\ref{ecuacionContinua}
+Si se desea extraer la superficie descrita por una función continua en tres dimensiones, para esta investigación es necesario generar las imágenes de las curvas de nivel que finalmente cumplirán la misma función que las imágenes por resonancia magnética. Un ejemplo de una función continua es la ecuación \ref{ecuacionContinua}.
 
 \begin{equation}
 f(x,y) = \frac{ \sin{(\sqrt{x^2+y^2})} }{ \sqrt{x^2+y^2} }
 \label{ecuacionContinua}
 \end{equation}
 
-y sus respectivos gráficos y curvas de nivel se muestra en la figura \ref{c:flujo:greaficoDeLaEcuacion}
+y sus respectivos gráficos y curvas de nivel se muestra en la figura \ref{c:flujo:greaficoDeLaEcuacion}.
 
 \begin{figure}[h]
 
@@ -89,7 +89,7 @@ Una vez que se asegure que las imágenes de entrada usan el mismo formato, la im
 \subsection{Selección del isovalor}
 \label{ch:propuesta:sec:seleccionDelIsovalor}
 
-Una vez que se tienen las imágenes de entradas, es momento de escoger una constante que definirá aquellos \emph{pixeles} que estarán dentro o fuera de la superficie que se desea extraer en cada imágen, por lo tanto, la superficie está determinada por este valor llamado \jcq{isovalor}.
+Una vez que se tienen las imágenes de entrada, es momento de escoger una constante que definirá aquellos \emph{pixeles} que estarán dentro o fuera de la superficie que se desea extraer en cada imagen, por lo tanto, la superficie está determinada por este valor llamado \jcq{isovalor}.
 
 Este paso no es trivial, ya que requiere retroalimentación de la superficie extraída, pues en el caso de las imágenes médicas de resonancia magnética, la elección del isovalor puede marcar la diferencia entre ver un cuerpo al nivel del cráneo o al nivel de los huesos internos de éste como se muestra en la figura \ref{c:flujo:superficieDeUnaCalaveraADistintosNivelesDeIsovalor} donde se observa que al aumentar el valor porcentual del isovalor, hay cada vez menos puntos en el espacio que sean menores al isovalor, entregando cada vez una superficie es distinta. La correcta elección del isovalor en las imágenes determina finalmente el nivel de la superficie que se quiere extraer, por ejemplo, si se escoge un valor cero, significa que todos los pixeles quedarán fuera y por lo tanto ningún cubo en el proceso de extracción de superficie tendrá algún vértice marcado como interno, luego, no se generará ningún triángulo y se creará una superficie nula.
 Lo mismo ocurre si se escoge un isovalor que sea igual al máximo valor posible en las imágenes.
@@ -246,12 +246,12 @@ out00009.pgm
 \end{verbatim}
 \end{small}
 
-Finalmente el programa es ejecutado con éxito e inmediatamente se presenta la ventana principal como se muestra en la figura \ref{f:flujoDeTrabajo:visualizer_1}
+Finalmente el programa es ejecutado con éxito e inmediatamente se presenta la ventana principal como se muestra en la figura \ref{f:flujoDeTrabajo:visualizer_1}.
 
 \subsubsection{Interfaz}
 \label{ch:propuesta:sec:extraccionDeLaSuperficie:subsec:interfaz}
 
-La interfaz es simple, el programa muestra en su completitud una ventana OpenGL\footnote{http://www.opengl.org/} y en la esquina superior izquierda un panel de estado que indica el isovalor actual (porcentual) y la cantidad de triángulos de la superficie, como se muestra en la figura \ref{f:flujoDeTrabajo:interface}
+La interfaz es simple, el programa muestra en su completitud una ventana OpenGL\footnote{http://www.opengl.org/} y en la esquina superior izquierda un panel de estado que indica el isovalor actual (porcentual) y la cantidad de triángulos de la superficie, como se muestra en la figura \ref{f:flujoDeTrabajo:interface}.
 
 \begin{figure}[h]
 \centering
@@ -259,7 +259,7 @@ La interfaz es simple, el programa muestra en su completitud una ventana OpenGL\
 	{
 		\includegraphics[width=0.4\textwidth]{images/visualizer/interface.png}
 	}
-\caption{Panel de estado, con un isovalor del 40\%, se crea una superficie que esta formada por $21398$ triángulos.}
+\caption[Panel de estado, con un isovalor del 40\%.]{Panel de estado, con un isovalor del 40\%, se crea una superficie que esta formada por $21398$ triángulos.}
 \label{f:flujoDeTrabajo:interface}
 \end{figure}
 
@@ -274,21 +274,24 @@ El programa además puede capturar imágenes en formato \emph{PNG} (Portable Net
 	screenshot\_\textbf{\textless isovalor porcentual\textgreater}.png
 \end{quote}
 
-También es posible exportar la superficie que se está visualizando a un archivo de modelo 3D (archivo \emph{OFF}), para así poder ser importado en otro programa que acepte este formato como geomview\footnote{http://www.geomview.org/}, como se muestra en la figura \ref{f:flujoDeTrabajo:geomview}
+También es posible exportar la superficie que se está visualizando a un archivo de modelo 3D (archivo \emph{OFF}), para así poder ser importado en otro programa que acepte este formato como geomview\footnote{http://www.geomview.org/}, como se muestra en la figura \ref{f:flujoDeTrabajo:geomview}.
 
 \begin{figure}[!htb]
 \centering
 	\includegraphics[width=0.7\textwidth]{images/visualizer/geomview.png}
-\caption{Superficie generada en el visualizador, importada como archivo OFF en \mbox{geomview}}
+\caption{Superficie generada en el visualizador importada como archivo OFF en \mbox{geomview}}
 \label{f:flujoDeTrabajo:geomview}
 \end{figure}
 
 \newpage
-En un principio, el progama no muestra ninguna superficie, ya que esta debe ser generada presionando \keystroke{ENTER} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/start.png}. Por defecto el isovalor porcentual usado es de un $40\%$, pero puede ser modificado usando la tecla \keystroke{F1} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/leftShoulder0.png} para disminuir el valor del isovalor y la tecla \keystroke{F2} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/rightShoulder0.png} para aumentar el isovalor. El valor del isovalor seleccionado se puede ver en el panel de informacion como se muestra en la figura \ref{f:flujoDeTrabajo:interface}.
+En un principio, el progama no muestra ninguna superficie, ya que ésta debe ser generada presionando \keystroke{ENTER} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/start.png}. Por defecto el isovalor porcentual usado es de un $40\%$, pero puede ser modificado usando la tecla \keystroke{F1} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/leftShoulder0.png} para disminuir el valor del isovalor y la tecla \keystroke{F2} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/rightShoulder0.png} para aumentar el isovalor. El valor del isovalor seleccionado se puede ver en el panel de información como se muestra en la figura \ref{f:flujoDeTrabajo:interface}.
 
 Dependiendo de la complejidad, cantidad y resolución de las imágenes de entrada y del isovalor usado para generar la superficie, es posible que la supeficie esté compuesta por cientos de miles de triángulos lo que puede ralentizar el sistema y hacer difícil la navegación, es por esto que en cualquier momento, el modelo puede ser eliminado para poder así vaciar memoria y hacer la navegación mas fácil, esto sólo afecta a la superficie, los ejes y el plano cartesiano guía siempre son visibles. Para poder eliminar la superficie se debe presionar la tecla \keystroke{Backspace} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/select.png}.
 
-A continuación se muestra una tabla con las teclas de control\footnote{Imágenes obtenidas desde https://github.com/sgraham/gamepad.js/ (20 sept. 2012)}\footnote{Xbox 360 Icon Pack por Jeff Jenkins, @sinnix, http://sinnix.net/downloads/?did=1 (20 sept. 2012)}:
+A continuación se muestra una tabla con las teclas de control\footnote{
+Imágenes obtenidas desde https://github.com/sgraham/gamepad.js/ (20 sept. 2012)\\
+\indent \indent Xbox 360 Icon Pack por Jeff Jenkins, @sinnix, http://sinnix.net/downloads/?did=1 (20 sept. 2012)
+}:
 
 \begin{longtable}[c]{
 	|>{\centering}m{3.0cm}<{\centering}|
@@ -404,18 +407,18 @@ Teclado & Control Xbox360 & Acción \\ \hline
 
 En un principio el programa muestra el sistema de coordenadas cartesianas, los ejes $X$, $Y$ y $Z$ son mostrados como lineas de color rojo, verde y azul respectivamente, junto a un plano cartesiano sujeto al plano $X-Z$, en $Y=0$ formado por una grilla de lineas grises. Esto sirve como guía al desplazarse en el espacio para así no perder de vista el punto de origen.
 
-La navegación implementada ocupa un esquema en tercera persona en la cual el desplazamiento con las teclas de movimiento (\keystroke{W}, \keystroke{A}, \keystroke{S} y \keystroke{D} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/leftStick.png}) mueve la cámara en el plano $XZ$, mientras que para girar la cámara se usa lan teclas de giro de cámara (\keystroke{$\leftarrow$} y \keystroke{$\rightarrow$} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/rightStick.png}). Sin embargo, si se una un control de Xbox360\textsuperscript{\textregistered} el mando \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/rightStick.png} además de controlar el giro en el eje $Y$, controla el acimut\footnote{Ver glosario.} de la cámara, por lo tanto es posible también mirar hacia arriba y hacia abajo, moviendo el mando hacia arriba y hacia abajo respectivamente.
+La navegación implementada ocupa un esquema en tercera persona en la cual el desplazamiento con las teclas de movimiento (\keystroke{W}, \keystroke{A}, \keystroke{S} y \keystroke{D} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/leftStick.png}) mueve la cámara en el plano $XZ$, mientras que para girar la cámara se usan las teclas de giro de cámara (\keystroke{$\leftarrow$} y \keystroke{$\rightarrow$} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/rightStick.png}). Sin embargo, si se usa un control de Xbox360\textsuperscript{\textregistered} el mando \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/rightStick.png} además de controlar el giro en el eje $Y$, controla el acimut\footnote{Ver glosario.} de la cámara, por lo tanto es posible también mirar hacia arriba y hacia abajo, moviendo el mando hacia arriba y hacia abajo respectivamente.
 
 Para controlar la elevación (posicion en el eje $Y$) se usan las teclas de elevación (\keystroke{$\uparrow$} y \keystroke{$\downarrow$} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/leftShoulder1.png} y \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/rightShoulder1.png}).
 
-Finalmente, con este esquema es posible navegar de una forma homóloga a como lo haría una persona paseando en un museo y con la capacidad de elevarse del suelo, lo cual permite volar al rededor de un objeto sin dejar de mirarlo, por ejemplo, para rodear un objeto girando en en forma radial en sentido horario en una circunferencia en el plano $XY$ se debe presionar \keystroke{A} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/leftStick.png} (hacia la izquierda) para desplazarse hacia la izquierda mientras se presiona \keystroke{$\rightarrow$} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/rightStick.png} (hacia la derecha). De la misma forma, se puede girar en sentido anti-horario presionando \keystroke{D} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/leftStick.png} (hacia la derecha) para desplazarse hacia la derecha mientras se presiona \keystroke{$\leftarrow$} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/rightStick.png} (hacia la izquierda).
+Finalmente, con este esquema es posible navegar de una forma homóloga a como lo haría una persona paseando en un museo y con la capacidad de elevarse del suelo, lo cual permite volar al rededor de un objeto sin dejar de mirarlo, por ejemplo, para rodear un objeto girando en forma radial en sentido horario en una circunferencia en el plano $XY$ se debe presionar \keystroke{A} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/leftStick.png} (hacia la izquierda) para desplazarse hacia la izquierda mientras se presiona \keystroke{$\rightarrow$} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/rightStick.png} (hacia la derecha). De la misma forma, se puede girar en sentido anti-horario presionando \keystroke{D} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/leftStick.png} (hacia la derecha) para desplazarse hacia la derecha mientras se presiona \keystroke{$\leftarrow$} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/rightStick.png} (hacia la izquierda).
 
 \subsubsection{Características especiales}
 \label{ch:propuesta:sec:extraccionDeLaSuperficie:subsec:caracteristicasEspeciales}
 
-El programa visualizador además permite capturar imágenes (conocidas como \emph{screenshots}) y exportar la superficie generada con el isovalor seleccionado como un modelo de tres dimensiones en un archivo \emph{OFF} como se explico en la seccion \ref{ch:propuesta:sec:extraccionDeLaSuperficie:subsec:modoDeUso}, para capturar una imagen se debe presionar la tecla \keystroke{P} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/faceButton0.png} y para guardar la superficie como un archivo \emph{OFF} se debe presionar la tecla \keystroke{O} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/faceButton1.png}.
+El programa visualizador además permite capturar imágenes (conocidas como \emph{screenshots}) y exportar la superficie generada con el isovalor seleccionado como un modelo de tres dimensiones en un archivo \emph{OFF} como se explicó en la seccion \ref{ch:propuesta:sec:extraccionDeLaSuperficie:subsec:modoDeUso}, para capturar una imagen se debe presionar la tecla \keystroke{P} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/faceButton0.png} y para guardar la superficie como un archivo \emph{OFF} se debe presionar la tecla \keystroke{O} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/faceButton1.png}.
 
-Es posible ocupar el visualizador ocupando toda la pantalla simplemente alternando el \jcq{Modo pantalla completa}, el que por defecto esta desactivado en un comienzo, para alternar al modo pantalla completa se debe presionar la tecla \keystroke{F11} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/faceButton2.png}, el efecto de esto se muestra en la figura \ref{c:flujo:alternandoModoPantallaCompleta}.
+Es posible utilizar el visualizador ocupando toda la pantalla simplemente alternando el \jcq{Modo pantalla completa}, el que por defecto esta desactivado en un comienzo, para alternar al modo pantalla completa se debe presionar la tecla \keystroke{F11} o \includegraphics[scale=0.4, trim= 0 20 0 0]{images/visualizer/xbox360/faceButton2.png}, el efecto de esto se muestra en la figura \ref{c:flujo:alternandoModoPantallaCompleta}.
 
 \begin{figure}[htbp]
 
@@ -458,12 +461,12 @@ La superficie generada se calcula extrayendo una isosuperficie de esta función 
 \subsubsection{Poisson}
 \label{ch:propuesta:sec:refinamiento:poisson}
 
-Dado un set de puntos en tres dimensiones con normales orientadas, en primer lugar, el método \emph{Poisson Surface Reconstruction} \cite{Kazhdan2006PoissonSurfaceReconstruction} resuelve una función aproximada del sólido que mejor se adapte a las gradientes de las normales de los puntos de entrada, luego a esa función se le extrae una isosuperficie usando una versión adaptativa de \emph{Marching Cubes} llamada \emph{Adaptative Marching Cubes} \cite{Shu95adaptivemarching}
+Dado un set de puntos en tres dimensiones con normales orientadas, en primer lugar, el método \emph{Poisson Surface Reconstruction} \cite{Kazhdan2006PoissonSurfaceReconstruction} resuelve una función aproximada del sólido que mejor se adapte a las gradientes de las normales de los puntos de entrada, luego a esa función se le extrae una isosuperficie usando una versión adaptativa de \emph{Marching Cubes} llamada \emph{Adaptative Marching Cubes} \cite{Shu95adaptivemarching}.
 
 % \subsection{Ejemplo}
 % \label{ch:propuesta:sec:refinamiento:ejemplos}
 
-Un ejemplo que muestra la nube de puntos de entrada y la superficie generada en \emph{CGAL} usando el método \emph{Poisson Surface Reconstruction}, se muestra en la figura \ref{c:flujo:poissonSurfaceReconstruction}
+Un ejemplo que muestra la nube de puntos de entrada y la superficie generada en \emph{CGAL} usando el método \emph{Poisson Surface Reconstruction}, se muestra en la figura \ref{c:flujo:poissonSurfaceReconstruction}.
 
 \begin{figure}[h]
 
@@ -493,4 +496,4 @@ Un ejemplo que muestra la nube de puntos de entrada y la superficie generada en 
 \subsection{Exportación}
 \label{ch:propuesta:sec:exportacion}
 
-Finalmente, en este paso, ya se tiene la malla de superficie deseada gracias al proceso de selección (\ref{ch:propuesta:sec:seleccionDelIsovalor}) y extracción de la superficie (\ref{ch:propuesta:sec:extraccionDeLaSuperficie}) y refinada gracias al paso de refinamiento (\ref{ch:propuesta:sec:refinamiento}). El último paso ahora es exportar el modelo en tres dimensiones a un formato útil para el proposito que fue extraído, que puede ser para modelamiento, visualizacion y otros propósitos ya mencionados en la sección \ref{sec:usosDeLasMallasGeometricas}
+Finalmente, en este paso, ya se tiene la malla de superficie deseada gracias al proceso de selección (\ref{ch:propuesta:sec:seleccionDelIsovalor}) y extracción de la superficie (\ref{ch:propuesta:sec:extraccionDeLaSuperficie}) y refinada gracias al paso de refinamiento (\ref{ch:propuesta:sec:refinamiento}). El último paso ahora es exportar el modelo en tres dimensiones a un formato útil para el propósito que fue extraído, que puede ser para modelamiento, visualización y otros propósitos ya mencionados en la sección \ref{sec:usosDeLasMallasGeometricas}

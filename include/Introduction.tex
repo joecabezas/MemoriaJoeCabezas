@@ -1,9 +1,9 @@
-\chapter{Introduction}
+\chapter{Introducción}
 \label{ch:introduction}
 
 \section{Mallas Geométricas}
 \label{sec:mallasGeometricas}
-Las mallas de superficie son una herramienta fundamental en la ciencia e ingeniería, son
+Las mallas de superficie son una herramienta fundamental en ciencia e ingeniería, son
 un conjunto de polígonos (triángulos, cuadriláteros, etc.), que conforman una superficie en un
 espacio definido, en el que la intersección de dos elementos de una malla, puede ser el conjunto
 vacío, un vértice, una arista o una cara en común. Las mallas tienen asociadas un conjunto de
@@ -11,7 +11,7 @@ elementos topológicos tales como: vértices, aristas, y caras poligonales.
 Regularmente, las mallas geométricas se usan para describir, dependiendo su dimensión,
 una región en un plano, o un volumen en un espacio. Realizar esta discretización consiste en
 aproximar el dominio a simular dividiéndolo en elementos geométricos mas sencillos,
-comúnmente triángulos, de tal manera que la intersección de dos elementos, sean un vértice, una
+comúnmente triángulos, de tal manera que la intersección de dos elementos, sea un vértice, una
 arista, o el conjunto vacío.
 
 Existen casos triviales como la discretización de un dominio rectangular, cuya solución es
@@ -27,18 +27,18 @@ En tres dimensiones, en particular, las mallas geométricas son una representaci
 objeto físico, y para efectos de su visualización, los elementos internos de una malla pueden ser
 omitidos, y con ello, sólo se utilizan mallas que describan la superficie del objeto.
 
-\section{Usos de las Mallas Geométricas}
+\section{Uso de Mallas Geométricas}
 \label{sec:usosDeLasMallasGeometricas}
 Las mallas geométricas tienen diferentes usos en la práctica, desde simulaciones físicas
 tales como, estudio de fuerzas, interacción de objetos, simulación de fluidos, etc. También tienen
-usos gráficos, como para hacer visualizaciones de cuerpos en tres dimensiones, visualización de
+usos gráficos, como visualización de cuerpos en tres dimensiones, visualización de
 funciones matemáticas, e incluso usos artísticos como gráficos realistas, películas, etc.
 
 
 \section{Consideraciones Físicas}
 \label{sec:consideracionesFisicas}
 En la realidad, vivimos inmersos en un mundo que podemos describirlo en tres
-dimensiones, y con ello, cualquier partícula (objetos, personas, etc.) tienen una posición
+dimensiones, y con ello, cualquier partícula (objetos, personas, etc.) tiene una posición
 específica dentro de un sistema de referencia continuo, es decir, que no existe una distancia
 mínima para el desplazamiento.
 
@@ -49,12 +49,12 @@ pueda desplazarse una distancia menor, sin importar lo pequeño que sea el valor
 Es esta continuidad del espacio del mundo real, lo que dificulta la tarea de representar
 cualquier objeto en una simulación virtual.
 En un espacio en tres dimensiones simulado computacionalmente, debido principalmente
-a los límites de memoria de los sistemas actuales, no pueden simular un espacio continuo, sino
+a los límites de memoria de los sistemas actuales, no es posible simular un espacio continuo, sino
 que todo elemento dentro de un espacio virtual debe estar inmerso en un espacio discreto, es
-decir, que existe una cantidad mínima para el desplazamiento.
+decir, existe una distancia mínima para el desplazamiento.
 
 Los objetos en el mundo real están compuestos de materia, la que está compuesta por
-átomos, la unión de ellos, crean objetos sólidos, con un nivel de detalle tan fino como atómico,
+átomos, la unión de ellos, crea objetos sólidos, con un nivel de detalle tan fino como atómico,
 debido a la continuidad del espacio real.
 
 Los objetos en un mundo virtual, no están (ni pueden aún), ser descritos por unidades
@@ -62,8 +62,7 @@ atómicas, ya que supondría una cantidad enorme y muy costosa de memoria para a
 átomo, y por ello, los objetos son representados por una cantidad discreta de triángulos que en
 conjunto forman una superficie la cual describe la forma visible del objeto representado.
 
-Debido a la carencia de continuidad del espacio virtual, es que los objetos representados
-ahí, no son más que simples discretizaciones de los objetos reales, y en consecuencia, sin las
+Debido a la carencia de continuidad del espacio virtual, es que los objetos en él representados, no son más que simples discretizaciones de los objetos reales, y en consecuencia, no poseen las
 propiedades físicas que presentan los objetos reales, como la densidad, roce, etc.
 Por ejemplo, en el mundo real, podemos pulir una superficie de manera que sea
 perfectamente lisa y no presente roce, pero por muy lisa que parezca, debido a la continuidad,
@@ -83,12 +82,12 @@ dos o tres dimensiones.
 
 Uno de los primeros algoritmos de generación de mallas, fue el propuesto por el
 matemático Ruso Boris Nikolaevich Delanuay\cite{Delaunay1934}. En honor a su autor, este algoritmo de
-triangulación se denomina como el \jcq{Algoritmo de Triangulación de Delanuay}, el cual a partir de
+triangulación se denomina el \jcq{Algoritmo de Triangulación de Delanuay}. Este, a partir de
 una colección de puntos en un espacio, genera una malla geométrica formada por triángulos que
 sean lo más equiláteros posible.
 
 Para extraer la información de la forma de un cuerpo, existen tecnologías capaces de
-extraer la superficie de éstos, tales como \emph{software} capaces de generar un modelo en tres
+extraer la superficie de éstos, como programas capaces de generar un modelo en tres
 dimensiones a partir de un arreglo de fotografías que rodean al objeto, también existe la
 tecnología de usar un arreglo de cámaras que capturan, en tiempo real, una nube de puntos
 infrarrojos que son emitidos desde el aparato, y con ello, crear un modelo en tres dimensiones. En
@@ -96,7 +95,7 @@ el ámbito médico, también existe tecnología para poder extraer información 
 cuerpo humano, usando equipos de imagenología de resonancia magnética, la cual es una técnica
 no invasiva que utiliza el fenómeno de la resonancia magnética para obtener información de la
 estructura y composición del cuerpo a analizar, luego, la información obtenida es procesada a
-través de un \emph{software} que genera la malla geométrica del área de interés por el científico.
+través de un programa que genera la malla geométrica del área de interés científico.
 
 \section{Objetivos}
 \label{sec:objetivos}

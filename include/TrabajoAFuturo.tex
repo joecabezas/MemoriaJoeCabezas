@@ -1,7 +1,7 @@
 \chapter{Trabajo A Futuro}
 \label{ch:trabajoafuturo}
 
-En esta investigación se presentó un flujo de trabajo en la sección \label{ch:propuesta:sec:flujoDeTrabajo}, y se hizo especial énfasis en el paso de extracción de la superficie explicado en la sección \label{ch:propuesta:sec:extraccionDeLaSuperficie}. Este proceso puede ser mejorado considerando los siguientes puntos.
+En esta investigación se presentó un flujo de trabajo en la sección \ref{ch:propuesta:sec:flujoDeTrabajo}, y se hizo especial énfasis en el paso de extracción de la superficie explicado en la sección \ref{ch:propuesta:sec:extraccionDeLaSuperficie}. Este proceso puede ser mejorado considerando los siguientes puntos.
 
 \begin{itemize}
 	\item La posición de los vértices obtenidos en la malla de superficie generada por el algoritmo, es calculada usando interpolación lineal, la cual no necesariamente es parecida al valor real de la superficie estudiada.
@@ -12,5 +12,5 @@ En esta investigación se presentó un flujo de trabajo en la sección \label{ch
 
 	\item El algoritmo usa una resolución fija para dividir el espacio, y está determinado por la resolución y cantidad de imágenes del \emph{dataset}, lo cual puede generar más triángulos de los necesarios, por ejemplo para representar una superficie plana, esto puede mejorarse usando técnicas adaptativas\cite{Shu95adaptivemarching} que reduzcan la cantidad de triángulos que representan la superficie adaptando el tamaño de los triángulos según la forma de la superficie.
 
-	\item La implementación ocupa el algoritmo expuesto por Lorensen y Cline\cite{Lorensen87marchingcubes}, el cual tiene ciertos problemas asociados a la topología de las superficies obtenidas explicadas en la sección\label{subsec:marchingCubes:consecuencias}, es posible usar una versión alternativa del algoritmo que disminuya estos problemas\cite{Bloomenthal88polygonizationof}\cite{Chernyaev95marchingcubes}\cite{BAPayne90surfacemapping}\cite{Shu95adaptivemarching}.
+	\item La implementación ocupa el algoritmo expuesto por Lorensen y Cline\cite{Lorensen87marchingcubes}, el cual tiene ciertos problemas asociados a la topología de las superficies obtenidas explicadas en la sección \ref{subsec:marchingCubes:consecuencias}, es posible usar una versión alternativa del algoritmo que disminuya estos problemas\cite{Bloomenthal88polygonizationof}\cite{Chernyaev95marchingcubes}\cite{BAPayne90surfacemapping}\cite{Shu95adaptivemarching}.
 \end{itemize}

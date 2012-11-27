@@ -3,7 +3,7 @@
 
 %TODO: citas
 % http://netpbm.sourceforge.net/history.html
-El formato de imagen escogido es el formato PGM (\emph{Portable GreyMap}), el cual derivado del formato PBM (\emph{Portable BitMap}) inventado por Jef Poskanzer en los años 1980, cuyo propósito era crear un formato libre de problemas, resistente a los cambios de codificación a través de correo electrónico, para mapas de bits (\emph{bitmaps}) en blanco y negro. Fue diseñado para ser lo suficientemente simple para que una imagen pudiese ser transmitida por correo electrónico sin nigún método de encapsulamiento especial y sobrevivir a cualquier traducción y ser fácilmente extraible en el correo destino.
+El formato de imagen escogido es el formato PGM (\emph{Portable GreyMap}), el cual derivado del formato PBM (\emph{Portable BitMap}) inventado por Jef Poskanzer en los años 1980, cuyo propósito era crear un formato libre de problemas, resistente a los cambios de codificación a través de correo electrónico, para mapas de bits (\emph{bitmaps}) en blanco y negro. Fue diseñado para ser lo suficientemente simple para que una imagen pudiese ser transmitida por correo electrónico sin nigún método de encapsulamiento especial, y sobrevivir a cualquier traducción y ser fácilmente extraíble en el correo destino.
 
 \subsection{Historia}
 \label{ch:implementacion:sec:formatounicoescogido:subsec:historia}
@@ -29,7 +29,7 @@ La especificación de los archivos PGM es simple:
 	\item El valor MÁXIMO para la escala de grises (que representara el color blanco), nuevamente en ASCII decimal, debe ser menor que 65536 (para no superar una profundidad de color de 16 bits), y mayor que cero.
 	\item Un caracter de espacio (usualmente una nueva línea).
 	\item Una trama de ALTURA filas, ordenadas de arriba hacia abajo, cada fila consiste en una cantidad definida por el valor ANCHO de valores grises, de izquierda a derecha, cada valor de gris es un número entre cero y el definido como MÁXIMO, siendo $0$ el valor que representa al negro, y MÁXIMO el que representa el color blanco, cada valor es representado como un valor binario puro de 1 o 2 bytes, si el valor MÁXIMO es menor a 255, entonces es 1 \emph{byte}, de lo contrario, son 2 bytes. El byte más significativo es el primero.
-	Una fila de una imagen es horizontal, y una columna vertical, los pixeles son cuadrados y son contiguos.
+	Una fila de una imagen es horizontal, y una columna vertical, los pixeles son cuadrados y contiguos.
 \end{enumerate}
 
 Dependiendo del \jcq{Número Mágico} (\emph{Magic Number}), existen 6 formatos de archivos diferentes, cada formato difiere solamente en la escala de colores que es capaz de representar, como indica la tabla \ref{ch:implementacion:tabla:tiposdearchivospbm}.
@@ -72,7 +72,7 @@ La imagen obtenida de este archivo PGM se muestra en la figura \ref{f:implementa
 	\centering
 	\includegraphics[width=0.95\textwidth]
 	{images/misc/pgm_example_1.png}
-	\caption{Imagen PGM obtenida usando el codigo del ejemplo (Imagen ampliada, tamaño original es de $18x7$ pixeles)}
+	\caption{Imagen PGM obtenida usando el código del ejemplo (Imagen ampliada, tamaño original es de $18x7$ pixeles)}
 	\label{f:implementacion:sec:formatos:pgm_example_1}
 \end{figure}
 

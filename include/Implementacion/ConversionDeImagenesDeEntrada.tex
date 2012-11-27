@@ -4,7 +4,7 @@
 Como se indicó en la sección \ref{ch:implementacion:sec:datosDeEntrada:subsec:formatodelasimagenesdeentrada}, el primer paso para extraer una nube de puntos tridimensionales de cualquier \emph{dataset}, es necesario convertir todas las imágenes de éste.
 
 %TODO: cita a http://www.imagemagick.org/
-Este proceso no es trivial, ya que existen muchos formatos disponibles y muchas especificaciones distintas, por lo que dar soporte a todas es algo que escapa del objetivo de esta investigación, es por ello que se utilizó una herramienta de codigo abierto (\emph{opensource}) llamada \emph{ImageMagick}
+Este proceso no es trivial, ya que existen muchos formatos disponibles y muchas especificaciones distintas, por lo que dar soporte a todas es algo que escapa del objetivo de esta investigación, es por ello que se utilizó una herramienta de código abierto (\emph{opensource}) llamada \emph{ImageMagick}.
 
 Esta herramienta hace que el primer paso sea muy simple, y generalizado para cualquier tipo de archivo del cual se pueda extraer información de sus metadatos (tamaño, profundidad de color, etc), si no fuere éste el caso, por ejemplo, imagenes RAW sin información de metadatos, es necesario agregar la información faltante en tiempo de ejecución.
 
@@ -14,19 +14,19 @@ La sintáxis del comando a usar es la siguiente:
 convert <archivo origen> <archivo destino>
 \end{verbatim}
 
-ImageMagick se hace cargo de intentar comprender en que formato está el archivo de origen, y mediante la extensión escrita en el archivo destino, De esta manera, para convertir una imagen PNG a JPG se puede hacer:
+ImageMagick se hace cargo de intentar comprender en qué formato está el archivo de origen mediante la extensión escrita en el archivo destino o dentro de las cabeceras, De esta manera, para convertir una imagen PNG a JPG se puede hacer:
 
 \begin{verbatim}
 convert imagen.png imagen.jpg
 \end{verbatim}
 
-Usando esta estrategia, es posible obtener una imagen PGM tan solo haciendo el siguiente comando:
+Usando esta estrategia, es posible obtener una imagen PGM tan sólo ejecutando el siguiente comando:
 
 \begin{verbatim}
 convert imagen.png imagen.pgm
 \end{verbatim}
 
-Esto crea una imagen PGM del tipo \jcq{P2}, es decir los pixeles estan escritos dentro del archivo como caracteres ASCII, para generar una imagen PGM del tipo \jcq{P5}, es decir con sus pixeles representados como bytes binarios, es necesario agregar un argumento extra:
+Esto crea una imagen PGM del tipo \jcq{P2}, es decir los pixeles estan escritos dentro del archivo como caracteres ASCII, para generar una imagen PGM del tipo \jcq{P5}, es decir, con sus pixeles representados como bytes binarios, es necesario agregar un argumento extra:
 
 \begin{verbatim}
 convert imagen.png -compress none imagen.pgm
@@ -37,7 +37,7 @@ De esta manera se obtienen imágenes PGM binarias.
 \subsection{Ejemplos de conversión}
 \label{ch:implementacion:sec:ejemplosdeconversion}
 
-Para poder convertir un dataset completo existen varios caminos y el usado en esta implementación fue un \emph{bash script}.
+Para poder convertir un dataset completo existen varios caminos y el usado en esta implementación fue un \emph{script bash}.
 
 El código fuente es simple, y pretende facilitar el ingreso de datos y otras opciones al comando \emph{convert}:
 
@@ -114,7 +114,7 @@ done
 \end{verbatim}
 \end{scriptsize}
 
-Este \emph{bash script} permite especificar un directorio donde estan las imágenes del dataset, para poder convertirlas, incluso acepta un parámetro \emph{-r} que escala las imágenes porcentualmente o de manera fija, por ejemplo:
+Este \emph{script bash} permite especificar un directorio donde estan las imágenes del dataset, para poder convertirlas, incluso acepta un parámetro \emph{-r} que escala las imágenes porcentualmente o de manera fija, por ejemplo:
 
 \begin{verbatim}
 ./convert -d directorio_dataset/ -r 50%
