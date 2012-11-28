@@ -4,6 +4,12 @@
 \usepackage{listings}
 \usepackage[noend]{algorithmic}
 
+%subfigures
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{wrapfig}
+
 \useoutertheme[subsection=false,footline=authortitle]{miniframes}
 \useinnertheme[shadow]{rounded}
 \usecolortheme{orchid}
@@ -138,6 +144,7 @@ aproximar el dominio a simular dividiéndolo en elementos geométricos mas senci
 				\item No existe una distancia mínima para el desplazamiento.
 			\end{itemize}
 		\item La continuidad representa un problema en el mundo virtual.
+		\item \emph{Continuous Collision Detection}.
 		\item Los objetos estan compuestos de materia.
 			\begin{itemize}
 				\item Los objetos en el mundo vitual no están (ni pueden aún) ser
@@ -248,122 +255,663 @@ aproximar el dominio a simular dividiéndolo en elementos geométricos mas senci
 		}
 \end{frame}
 
-\subsection[Design]{Solution Design}
+%\subsubsection{Discusión}
+
 \begin{frame}
-\begin{varblock}[0.9\textwidth]{How is it done?}
-%\begin{center}
-%\includegraphics[height=0.68\textwidth]{design}
-%\end{center}
-\end{varblock}
+	\frametitle{Discusión}
+	\begin{columns}[onlytextwidth]
+
+		\begin{column}{0.45\textwidth}<2->
+
+			\includegraphics[width=\textwidth]{../images/marchingsquare/marchingsquares_6.pdf}
+
+		\end{column}
+
+		\begin{column}{0.45\textwidth}<2->
+
+			\begin{varblock}[\textwidth]{}
+				\begin{enumerate}
+					\item<3-> Contorno obtenido no es preciso
+					\item<4-> Solución directa
+						\begin{enumerate}
+							\item<5-> Aumentar divisiones
+						\end{enumerate}
+					\item<6-> Otras Técnicas
+						\begin{enumerate}
+							\item<7-> Técnicas Adaptativas
+						\end{enumerate}
+				\end{enumerate}
+			\end{varblock}
+
+		\end{column}
+
+	\end{columns}
 \end{frame}
 
-\begin{frame}[fragile]
-\begin{varblock}[0.9\textwidth]{Template}
-\begin{verbatim}
-«IMPORT uml»
-«EXTENSION templates::util»
-
-«DEFINE Root FOR uml::Model»
-«FILE 'idl/'+this.name+"Common.idl"»
-#ifndef «this.name»_IDL
-#define «this.name»_IDL
-#pragma prefix "alma"
-
-module «this.name»
-{
-«FOREACH allOwnedElements().
-			typeSelect(uml::Enumeration) AS element»
-				«EXPAND ENUM FOR element»
-«ENDFOREACH-»
-\end{verbatim}
-\end{varblock}
-\end{frame}
-\begin{frame}[fragile]
-\begin{varblock}[0.9\textwidth]{Template}
-\begin{verbatim}
-«DEFINE ENUM FOR uml::Enumeration»
-		enum «this.name» {
-		«FOREACH  this.eAllContents.
-					typeSelect(uml::EnumerationLiteral)
-									 AS element SEPARATOR ', '»
-							 «element.name»
-				«ENDFOREACH»
-		};
-«ENDDEFINE»
-\end{verbatim}
-\end{varblock}
-\end{frame}
-\subsection[Separation]{Isolating the complexity}
 \begin{frame}
-\begin{varblock}[0.9\textwidth]{Code Separation}
-%\begin{center}
-%\includegraphics[width=0.85\textwidth]{separation}
-%\end{center}
-\only<2>{
-\centering
-\textbf{Keep generated code clear from hand crafted code.}
-}
-\end{varblock}
+	\frametitle{Discusión}
+	\begin{columns}[onlytextwidth]
+
+		\begin{column}{0.45\textwidth}<2->
+
+			\includegraphics[width=\textwidth]{../images/marchingsquare/marchingSAmbEx.png}
+
+		\end{column}
+
+		\begin{column}{0.45\textwidth}<2->
+
+			\begin{varblock}[\textwidth]{}
+				\begin{enumerate}
+					\item<3-> Ambigüedad
+						\begin{enumerate}
+							\item<4-> Vertices diagonales marcados
+						\end{enumerate}
+				\end{enumerate}
+			\end{varblock}
+
+		\end{column}
+
+	\end{columns}
 \end{frame}
 
+\subsection{Marching Cubes}
 
-\section[Future]{Future Work}
 \begin{frame}
-\vspace{2cm}
-\begin{block}{Author's Comment}
-The biggest contribution of this work
-is the possibilities and future work it has created.
-\end{block}
+	\frametitle{Marching Cubes}
+
+	\uncover<2->
+	{
+		\begin{varblock}[\textwidth]{¿Que és?}
+			\begin{enumerate}
+				\item<3-> Marching Cubes es un algoritmo de extracción de una superficie poligonal de un cuerpo en un espacio escalar en tres dimensiones.
+				\item<4-> Idea.
+					\begin{enumerate}
+						\item<5-> Forma $\rightarrow$ Cuerpo.
+						\item<6-> Cuadrados $\rightarrow$ Cubos.
+					\end{enumerate}
+			\end{enumerate}
+		\end{varblock}
+	}
+	\uncover<7->
+	{
+		\begin{varblock}[\textwidth]{Aplicaciones}
+			\begin{enumerate}
+				\item<8-> Reconstrucción de superficies de un dataset de imágenes medicas.
+				\item<9-> Contorno tridimensional de una función matemática.
+			\end{enumerate}
+		\end{varblock}
+	}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Marching Cubes}
+
+	\begin{varblock}[\textwidth]{¿Cuántos casos tiene Marching Cubes?}
+		\begin{enumerate}
+			\item<2-> Un Cubo tiene 6 caras, 8 vértices y 12 aristas.
+			\item<3-> Cada vértice puede tener 2 estados.
+			\item<4-> 256 combinaciones posibles.
+			\item<5-> Pueden ser reducidos.
+				\begin{enumerate}
+					\item<6-> 2 casos triviales.
+					\item<7-> Caso de 1 sólo vértice, hay 8 iguales.
+					\item<8-> Simetria\uncover<9->{: 14 casos en los restantes 254.}
+				\end{enumerate}
+		\end{enumerate}
+	\end{varblock}
 
 \end{frame}
-\subsection[Basic]{Basic Extension}
+
 \begin{frame}
-	 \frametitle{Future Work}
-\begin{block}{Inmediate Extensions}
-\begin{itemize}
-	 \item Support for \texttt{C++} and \texttt{Python}.
-	 \item Flexible package definition.
-	 \item Inheritance support between genereted and non generated code.
-	 \item Model checking usign OAW Check facility.
-	 \item Implement exceptions definition support.
-	 \item integrate the generation process with the ACS build process.
-\end{itemize}
-\end{block}
+	\frametitle{Marching Cubes}
+
+	Finalmente\uncover<2->{, las quince familias de casos de Marching Cubes:}
+
+	\uncover<3->
+	{
+		\begin{figure}[h]
+			\centering
+				\includegraphics[width=0.8\textwidth]{../images/marchingcubes/Shu95adaptivemarching_1.png}
+		\end{figure}
+	}
 \end{frame}
-\subsection[Advanced]{Advanced Extension}
+
 \begin{frame}
-	 \frametitle{Future Work}
-\begin{block}{Advanced Extensions}
-\begin{itemize}
-	 \item Integrate with the ACS state machine generator.
-	 \item Merge work done in the ACS genertaor and bdsGenerator.
-	 \item Enable static resource definition.
-	 \item Provide a full type profile to avoid stereotypes.
-	 \item Identify common coding patterns in the implemented code
-				 and move the to the templates.
-\end{itemize}
-\end{block}
+	\frametitle{Procedimiento}
+
+	\only<1>{El procedimiento es el mismo que en Marching Squares, el espacio se divide en un arreglo de regiones cúbicas.}
+
+	\only<2>
+	{
+		\begin{figure}[h]
+			\centering
+				\includegraphics[width=0.7\textwidth]{../images/marchingcubes/cube_01.png}
+		\end{figure}
+	}
+	\only<3>
+	{
+		\begin{figure}[h]
+			\centering
+				\includegraphics[width=0.7\textwidth]{../images/marchingcubes/cube_02.png}
+		\end{figure}
+	}
+	\only<4>
+	{
+		\begin{figure}[h]
+			\centering
+				\includegraphics[width=0.7\textwidth]{../images/marchingcubes/cube_03.png}
+		\end{figure}
+	}
 \end{frame}
-\section[Appendix]{Appendix}
+
 \begin{frame}
-	 \frametitle{Published Papers}
-	 \begin{itemize}
-			\item \textit{{ALMA} {Common} {Software} {(ACS)}, Status and Development},
-			\mbox{G. Chiozzi} et al.,
-			\textbf{Proceedings of ICALEPS}, October 2009.
-			\item A second publication in the making,
-			to be presented on the call for papers of the \textbf{SPIE}, 2010.
-	 \end{itemize}
+	\frametitle{Discusión}
+	\begin{columns}[onlytextwidth]
+
+		\begin{column}{0.45\textwidth}<2->
+
+			\begin{varblock}[\textwidth]{}
+				\begin{enumerate}
+					\item<3-> Mismas falencias
+						\begin{enumerate}
+							\item<4-> Sin interpolación y dependiendo de la resolución.
+						\end{enumerate}
+					\item<6-> Pero al aumentar la resolución...
+						\begin{enumerate}
+							\item<10-> Requiere más cómputo.
+						\end{enumerate}
+				\end{enumerate}
+			\end{varblock}
+
+		\end{column}
+
+		\begin{column}{0.45\textwidth}<2->
+
+			\only<5-6>
+			{
+				\includegraphics[width=\textwidth]{../images/marchingcubes/mc_blobs.png}
+			}
+			\only<7>
+			{
+				\includegraphics[width=\textwidth]{../images/marchingcubes/mc_blobs_12.png}
+			}
+			\only<8>
+			{
+				\includegraphics[width=\textwidth]{../images/marchingcubes/mc_blobs_20.png}
+			}
+			\only<9-10>
+			{
+				\includegraphics[width=\textwidth]{../images/marchingcubes/mc_blobs_50.png}
+			}
+
+		\end{column}
+
+	\end{columns}
 \end{frame}
-%\subsection[]{}
-%\subsection[]{}
+
+\begin{frame}
+	\frametitle{Discusión}
+
+	\begin{varblock}[\textwidth]{El principal problema}
+		\begin{enumerate}
+			\item<2-> Ambigüedad.
+				\begin{enumerate}
+					\item<4-> Ambigüedades externas.
+					\item<5-> Ambigüedades internas.
+					\item<6-> 2 poligonizaciones distintas para el mismo caso diagonal.
+				\end{enumerate}
+		\end{enumerate}
+	\end{varblock}
+
+	\only<3>
+	{
+		\centering
+			\includegraphics[width=0.7\textwidth]{../images/marchingcubes/Bloomenthal88polygonizationof_1.png}
+	}
+	\only<4>
+	{
+		\centering
+			\includegraphics[width=0.7\textwidth]{../images/marchingcubes/Chernyaev95marchingcubes_1.png}
+	}
+	\only<5>
+	{
+		\centering
+			\includegraphics[width=0.7\textwidth]{../images/marchingcubes/Chernyaev95marchingcubes_2.png}
+	}
+	\only<6>
+	{
+		\centering
+			\includegraphics[width=0.7\textwidth]{../images/marchingcubes/Lewiner03efficientimplementation_2.png}
+	}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Discusión}
+
+	\begin{varblock}[\textwidth]{Formas de evitar estos problemas}
+		\begin{enumerate}
+			\item<2-> Usando otras subdivisiones.
+			\item<3-> Tetraedros, es la descomposición lineal más simple en tres dimensiones.
+			\item<4-> Cinco divisiones tetraédricas.
+			\item<5-> Doce divisiones tetraédricas.
+		\end{enumerate}
+	\end{varblock}
+
+	\only<4>
+	{
+		\centering
+			\includegraphics[width=0.7\textwidth]{../images/marchingcubes/GueziecHummel95exploitingtriangulated_1.png}
+	}
+	\only<5>
+	{
+		\centering
+			\includegraphics[width=0.5\textwidth]{../images/marchingcubes/Bloomenthal88polygonizationof_2.png}
+	}
+
+\end{frame}
+
+\section{Propuesta}
+\subsection{Flujo de Trabajo}
+
+\begin{frame}
+	\frametitle{Flujo de Trabajo}
+
+	\begin{figure}
+		\centering
+			\includegraphics[width=0.45\textwidth]{../images/misc/workflow.pdf}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Flujo de Trabajo}
+
+	\begin{varblock}[\textwidth]{Extracción de Datos}
+		\begin{enumerate}
+			\item<2-> Para extraer una superficie de una nube de puntos es necesario recolectar esos puntos.
+			\item<3-> Existen diversas técnicas, pero para el propósito de este trabajo, se utilizarán \emph{datasets}.
+				\begin{enumerate}
+					\item<4-> Imágenes por resonancia magnética.
+					\item<5-> Funciones en tres dimensiones.
+				\end{enumerate}
+		\end{enumerate}
+	\end{varblock}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Flujo de Trabajo}
+
+	Imágenes por resonancia magnética
+
+	\begin{figure}
+		\centering
+			\includegraphics[width=0.55\textwidth]{../images/misc/mri_joe.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Flujo de Trabajo}
+
+	Funciones en tres dimensiones
+
+	\begin{figure}
+		\centering
+			\includegraphics[width=0.7\textwidth]{../images/misc/contour_1_using_eps2eps.pdf}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Flujo de Trabajo}
+
+	Funciones en tres dimensiones
+
+	\begin{figure}
+		\centering
+			\includegraphics[width=0.7\textwidth]{../images/misc/contour_2_using_eps2eps.pdf}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Flujo de Trabajo}
+
+	\begin{varblock}[\textwidth]{Conversión de imágenes}
+		\begin{enumerate}
+			\item<2-> Debido a las distintas posibles fuentes de datos, las imágenes estarán en distintos formatos.
+			\item<3-> Garantizar independencia de esto.
+			\item<4-> Unificación.
+			\item<5-> Un formato común.
+			\item<6-> PGM \emph{Portable GreyMap}.
+		\end{enumerate}
+	\end{varblock}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Flujo de Trabajo}
+
+	\begin{varblock}[\textwidth]{Selección del Isovalor}
+		\begin{enumerate}
+			\item<2-> Es una constante que define qué pixeles estarán dentro o fuera.
+			\item<3-> Ejemplo de iluminación.
+			\item<4-> Ambito médico, no es trivial.
+				\begin{enumerate}
+					\item<5-> Puede marcar diferencia entre ver al nivel de la piel, o nivel de los huesos.
+				\end{enumerate}
+			\item<6-> Escala porcentual.
+		\end{enumerate}
+	\end{varblock}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Flujo de Trabajo}
+
+	Distintos isovalores
+
+	\only<2>
+	{
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.5\textwidth]{../images/flujo/isovalue/screenshot_15.png}
+			\caption{isovalor: 15\%}
+		\end{figure}
+	}
+	\only<3>
+	{
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.5\textwidth]{../images/flujo/isovalue/screenshot_20.png}
+			\caption{isovalor: 20\%}
+		\end{figure}
+	}
+	\only<4>
+	{
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.5\textwidth]{../images/flujo/isovalue/screenshot_25.png}
+			\caption{isovalor: 25\%}
+		\end{figure}
+	}
+	\only<5>
+	{
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.5\textwidth]{../images/flujo/isovalue/screenshot_30.png}
+			\caption{isovalor: 30\%}
+		\end{figure}
+	}
+	\only<6>
+	{
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.5\textwidth]{../images/flujo/isovalue/screenshot_40.png}
+			\caption{isovalor: 40\%}
+		\end{figure}
+	}
+	\only<7>
+	{
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.5\textwidth]{../images/flujo/isovalue/screenshot_45.png}
+			\caption{isovalor: 45\%}
+		\end{figure}
+	}
+	\only<8>
+	{
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.5\textwidth]{../images/flujo/isovalue/screenshot_50.png}
+			\caption{isovalor: 50\%}
+		\end{figure}
+	}
+	\only<9>
+	{
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.5\textwidth]{../images/flujo/isovalue/screenshot_60.png}
+			\caption{isovalor: 60\%}
+		\end{figure}
+	}
+	\only<10>
+	{
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.5\textwidth]{../images/flujo/isovalue/screenshot_65.png}
+			\caption{isovalor: 65\%}
+		\end{figure}
+	}
+	\only<11>
+	{
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.5\textwidth]{../images/flujo/isovalue/screenshot_75.png}
+			\caption{isovalor: 75\%}
+		\end{figure}
+	}
+	\only<12>
+	{
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.5\textwidth]{../images/flujo/isovalue/screenshot_80.png}
+			\caption{isovalor: 80\%}
+		\end{figure}
+	}
+	\only<13>
+	{
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.5\textwidth]{../images/flujo/isovalue/screenshot_90.png}
+			\caption{isovalor: 90\%}
+		\end{figure}
+	}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Flujo de Trabajo}
+
+	\begin{varblock}[\textwidth]{Extracción de la superficie}
+		\begin{enumerate}
+			\item<2-> Luego de escoger el isovalor adecuado, se procede a extraer una superficie.
+			\item<3-> Isosuperficie.
+		\end{enumerate}
+	\end{varblock}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Flujo de Trabajo}
+
+	\begin{varblock}[\textwidth]{Extracción de la superficie}
+		\begin{enumerate}[<+->]
+			\item Este trabajo tiene su mayor enfoque en esta parte.
+				\begin{enumerate}[<+->]
+					\item Se hizo un programa que implementa Marching Cubes, y genera una superficie usando un isovalor ajustable.
+					\item Permite visualizar y navegar en tres dimensiones el modelo generado.
+					\item Permite modificar el isovalor en tiempo real, y volver a generar el modelo, mientras se navega.
+					\item Permite sacar capturas de pantalla, y exportación de los modelos generados a un archivo de modelos 3D estándar y abierto: \emph{OFF}.
+				\end{enumerate}
+		\end{enumerate}
+	\end{varblock}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Flujo de Trabajo}
+
+	LLego el momento!
+
+	\only<2>
+	{
+		\begin{figure}
+			\centering
+				\includegraphics[width=1.0\textwidth]{images/joe0.jpg}
+		\end{figure}
+	}
+	\only<3>
+	{
+		\begin{figure}
+			\centering
+				\includegraphics[width=1.0\textwidth]{images/joe1.jpg}
+		\end{figure}
+	}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Flujo de Trabajo}
+
+	\begin{varblock}[\textwidth]{Refinamiento}
+		\begin{enumerate}
+			\item<2-> Luego de extraer la isosuperficie, es momento de refinar con el fin de mejorar su calidad, en los términos que se estimen convenientes pasa cada propósito.
+				\begin{enumerate}
+					\item<3-> Cantidad de triángulos.
+					\item<4-> Aliasing.
+					\item<5-> Topología.
+				\end{enumerate}
+		\end{enumerate}
+	\end{varblock}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Flujo de Trabajo}
+
+	\begin{varblock}[\textwidth]{Refinamiento}
+		\begin{enumerate}
+			\item<2-> CGAL.
+				\begin{enumerate}
+					\item<3-> \emph{The Computational Geometry Algorithms Library}.
+					\item<4-> C++.
+					\item<5-> Acceso fácil y eficiente a una colección de algoritmos geométricos.
+				\end{enumerate}
+					\begin{enumerate}
+						\item<6-> Triangulaciones.
+						\item<7-> Generación de mallas.
+						\item<8-> Procesamiento geométrico (esto se busca).
+					\end{enumerate}
+				\item<9-> Toma una colección de puntos con sus normales orientadas, y genera una superficie calculando una funcion implícita.
+		\end{enumerate}
+	\end{varblock}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Flujo de Trabajo}
+
+	\only<1>
+	{
+		\begin{figure}
+			\centering
+				\includegraphics[width=0.5\textwidth]{../images/flujo/refinamiento_1_0.jpg}
+		\end{figure}
+	}
+	\only<2>
+	{
+		\begin{figure}
+			\centering
+				\includegraphics[width=0.5\textwidth]{../images/flujo/refinamiento_1_1.jpg}
+		\end{figure}
+	}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Flujo de Trabajo}
+
+	\begin{varblock}[\textwidth]{Exportación}
+		\begin{enumerate}
+			\item<2-> Hasta este punto ya se tiene la isosuperficie buscada.
+				\begin{enumerate}
+					\item<2-> Extracción.
+					\item<2-> Selección del isovalor.
+					\item<2-> Extracción de superficie.
+					\item<2-> Refinamiento.
+				\end{enumerate}
+			\item<2-> El último paso, es exportar al formato útil para el proósito.
+		\end{enumerate}
+	\end{varblock}
+
+\end{frame}
+
+\section{Conclusiones}
+
+\begin{frame}
+	\frametitle{Conclusiones}
+
+	\begin{varblock}[\textwidth]{En general}
+		\begin{enumerate}
+			\item<2-> Mallas geométricas, son una gran herramienta en la ciencia e ingienería.
+			\item<3-> Implicaciones físicas: no se puede hacer un estudio infinitesimal.
+		\end{enumerate}
+	\end{varblock}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Conclusiones}
+
+	\begin{varblock}[\textwidth]{Para fines de visualización}
+		\begin{enumerate}
+			\item<2-> Existen divesas técnicas basadas en elementos finitos.
+				\begin{enumerate}
+					\item<3-> Marching Squares.
+					\item<4-> Marching Cubes.
+					\item<5-> Marching Tetrahedrons.
+				\end{enumerate}
+			\item<6-> Pero tienen sus debilidades.
+				\begin{enumerate}
+					\item<7-> Malas aproximaciones.
+					\item<8-> Mejorarlas requieren un mayor poder de cómputo.
+					\item<9-> Problemas topológicos, errores de calculo importantes.
+				\end{enumerate}
+		\end{enumerate}
+	\end{varblock}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Conclusiones}
+
+	\begin{varblock}[\textwidth]{Objetivos}
+		\begin{enumerate}
+			\item<2-> Se cumplen los objetivos de estre trabajo.
+				\begin{itemize}
+					\item<3-> Se propuso un flujo de trabajo que permite la extracción de una superficie
+					desde la recolección de los datos (nube de puntos) hasta el modelo final.
+					\item<4-> Se mostró la importancia de tomar buenas decisiones en los primeros pasos del flujo, además se facilitó el proceso de selección de un isovalor adecuado.
+					\item<5-> Se estudió y se implementó el algoritmo de Marching Cubes.
+					\item<6-> Extrae una superficie.
+					\item<7-> Y con ello se construyó una herramienta de visualización y navegación que ayudará a la correcta elección del isovalor para poder extraer una superficie con un nivel de detalle controlable por el investigador.
+				\end{itemize}
+		\end{enumerate}
+	\end{varblock}
+
+\end{frame}
+
+\section{Trabajo a Futuro}
+
+\begin{frame}
+	\frametitle{Trabajo a Futuro}
+
+	\begin{varblock}[\textwidth]{}
+		\begin{enumerate}
+			\item<2-> Se propuso un flujo de trabajo y se hizo especial énfasis en el paso de extracción de la superficie.
+			\item<3-> Este proceso puede ser mejorado.
+				\begin{itemize}
+					\item<4-> La posición de los vértices obtenidos es calculada usando una interpolación lineal.
+					\item<5-> Escala porcentual del isovalor.
+					\item<6-> Paralelismo.
+					\item<7-> Resolución fija, métodos adaptativos.
+					\item<8-> Se implementó el algoritmo de Marching Cubes propuesto por Lorensen y Cline, se pueden ocupar versiones mejoradas.
+				\end{itemize}
+		\end{enumerate}
+	\end{varblock}
+
+\end{frame}
 
 \section*{End}
+
 \begin{frame}
-\frametitle{Questions?}
-\begin{center}
-\end{center}
+	\frametitle{EOF}
+\end{frame}
+
+\begin{frame}
+	\frametitle{¿Preguntas?}
 \end{frame}
 
 \end{document}
-
